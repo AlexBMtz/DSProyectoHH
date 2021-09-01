@@ -5,9 +5,7 @@ VisualStudioVersion = 16.0.31605.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{AEF92B94-0B46-4D2D-B312-F2AFF476FB66}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{F50145EC-A375-45EE-833D-4979BE729617}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSProyectoHH.Web", "DSProyectoHH.Web\DSProyectoHH.Web.csproj", "{D4B634E2-6B8F-4B2F-8BA7-365FEF29BF6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSProyectoHH.Web", "DSProyectoHH.Web\DSProyectoHH.Web.csproj", "{D4B634E2-6B8F-4B2F-8BA7-365FEF29BF6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
