@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
-    public class Project:IEntity
+    public class OralQuiz : IEntity
     {
         public int Id { get; set; }
-        public int Research { get; set; }
-        public int ProductQuality { get; set; }
-        public int CollabWork { get; set; }
-        public int Creativity { get; set; }
+        public int Communication { get; set; }
+        public int Grammar { get; set; }
+        public int Vocabulary { get; set; }
+        public int ConversationS { get; set; }
         public int Fluency { get; set; }
 
     }

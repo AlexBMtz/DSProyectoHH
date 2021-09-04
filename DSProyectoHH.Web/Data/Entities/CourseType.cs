@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
-    public class Proyect
+    public class CourseType:IEntity
     {
+        public int Id { get; set; }
+        public string Description { get; set; }
     }
 }
