@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
-    public class Student
+    public class Student : IEntity
     {
+      /*
         private int id;
         private string name;
         private string lastName;
@@ -14,14 +15,15 @@ namespace DSProyectoHH.Web.Data.Entities
         private string email;
         private string adress;
         private DateTime admissionDate;
+      */
 
-        public int Id { get { return id; } set { id = value; } }
-        public string Name { get { return name; } set { name = value; } }
-        public string LastName { get { return lastName; } set { lastName = value; } }
-        public int PhoneNumber { get { return phoneNumber; } set { phoneNumber = value; } }
-        public string Email { get { return email; } set { email = value; } }
-        public string Adress { get { return adress; } set { adress = value; } }
-        public DateTime AdmissionDate{ get { return admissionDate; }set { admissionDate = value; } }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public int PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string Adress { get; set; }
+        public DateTime AdmissionDate { get; set; }
 
     }
 }
