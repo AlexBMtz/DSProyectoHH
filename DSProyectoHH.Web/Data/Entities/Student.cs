@@ -7,21 +7,21 @@ namespace DSProyectoHH.Web.Data.Entities
 {
     public class Student
     {
-        private int id_student;
-        private string name_student;
-        private string last_name_student;
-        private int telephone;
+        private int id;
+        private string name;
+        private string lastName;
+        private int phoneNumber;
         private string email;
         private string adress;
-        private DateTime admission_date;
+        private DateTime admissionDate;
 
-        public int Id_Student { get { return id_student; } set { id_student = value; } }
-        public string Name_Student { get { return name_student; } set { name_student = value; } }
-        public string Last_Name_Student { get { return last_name_student; } set { last_name_student = value; } }
-        public int Telephone { get { return telephone; } set { telephone = value; } }
+        public int Id { get { return id; } set { id = value; } }
+        public string Name { get { return name; } set { name = value; } }
+        public string LastName { get { return lastName; } set { lastName = value; } }
+        public int PhoneNumber { get { return phoneNumber; } set { phoneNumber = value; } }
         public string Email { get { return email; } set { email = value; } }
         public string Adress { get { return adress; } set { adress = value; } }
-        public DateTime Admission_Date{ get { return admission_date; }set { admission_date = value; } }
+        public DateTime AdmissionDate{ get { return admissionDate; }set { admissionDate = value; } }
 
     }
 }
