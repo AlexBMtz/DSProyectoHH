@@ -14,5 +14,7 @@ namespace DSProyectoHH.Web.Data.Entities
         public int Creativity { get; set; }
         public int Fluency { get; set; }
 
+        public CourseDetail courseDetail { get; set; }
+
     }
 }

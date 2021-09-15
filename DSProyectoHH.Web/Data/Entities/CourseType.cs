@@ -9,5 +9,10 @@ namespace DSProyectoHH.Web.Data.Entities
     {
         public int Id { get; set; }
         public string Description { get; set; }
+        public string Schedule { get; set; }
+        public string Frequency { get; set; }
+
+        public Teacher teacher { get; set; }
+        public ICollection<Course> courses { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,5 +14,7 @@ namespace DSProyectoHH.Web.Data.Entities
         public int SpokenInteraction { get; set; }
         public int SpokenProduction { get; set; }
         public int Fluency { get; set; }
+
+        public Unit unit { get; set; }
     }
 }

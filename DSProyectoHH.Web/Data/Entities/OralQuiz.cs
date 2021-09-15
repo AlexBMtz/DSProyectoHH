@@ -14,5 +14,6 @@ namespace DSProyectoHH.Web.Data.Entities
         public int ConversationS { get; set; }
         public int Fluency { get; set; }
 
+        public Unit unit { get; set; }
     }
 }

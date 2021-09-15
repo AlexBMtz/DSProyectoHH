@@ -8,11 +8,13 @@ namespace DSProyectoHH.Web.Data.Entities
     public class CourseDetail:IEntity
     {
         public int Id { get; set; }
-        public Unit  Unit1 { get; set; }
-        public Unit Unit2 { get; set; }
-        public Unit Unit3 { get; set; }
         public Project FinalProject { get; set; }
         public double FinalScore { get; set; }
+
+        public Course course { get; set; }
+        public Project project { get; set; }
+        public ICollection<Unit> units { get; set; }
+        public ICollection<Student> students { get; set; }
 
         public void Calculate_Final_Score()
         {

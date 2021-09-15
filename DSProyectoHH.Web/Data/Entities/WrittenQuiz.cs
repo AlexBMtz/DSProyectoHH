@@ -15,5 +15,7 @@ namespace DSProyectoHH.Web.Data.Entities
         public int SectionE { get; set; }
         public int SectionF { get; set; }
 
+        public Unit unit { get; set; }
+
     }
 }
