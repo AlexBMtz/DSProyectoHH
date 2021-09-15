@@ -13,7 +13,7 @@ namespace DSProyectoHH.Web.Data.Entities
         public string LastName { get; set; }
         public int PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
         public DateTime AdmissionDate { get; set; }
 
         public CourseDetail courseDetail { get; set; }
