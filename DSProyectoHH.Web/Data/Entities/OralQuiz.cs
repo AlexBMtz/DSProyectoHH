@@ -35,7 +35,5 @@ namespace DSProyectoHH.Web.Data.Entities
         [MaxLength(2)]
         [Range(1, 5)]
         public int Fluency { get; set; }
-
-        public Unit Unit { get; set; }
     }
 }

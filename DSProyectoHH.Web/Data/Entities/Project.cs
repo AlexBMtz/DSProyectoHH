@@ -31,8 +31,5 @@ namespace DSProyectoHH.Web.Data.Entities
         [Required(ErrorMessage = "Campo requerido")]
         [MaxLength(1)]
         public int Fluency { get; set; }
-
-        public GradeGrid courseDetail { get; set; }
-
     }
 }

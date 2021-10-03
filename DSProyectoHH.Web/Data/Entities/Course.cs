@@ -20,7 +20,6 @@ namespace DSProyectoHH.Web.Data.Entities
         [Display(Name = "Fecha de inicio")]
         [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime StartingDate { get; set; }
-
         public GradeGrid GradeGrid { get; set; }
         public ICollection<CourseType> CourseTypes { get; set; }
     }

@@ -27,7 +27,6 @@ namespace DSProyectoHH.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -45,6 +44,9 @@ namespace DSProyectoHH.Web
                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConection"));
             });
 
+            services.AddTransient<Seeder>();
+            services.AddScoped<IUserHelper, UserHelper>();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

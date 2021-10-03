@@ -35,7 +35,5 @@ namespace DSProyectoHH.Web.Data.Entities
         [MaxLength(2)]
         public int SectionF { get; set; }
 
-        public Unit Unit { get; set; }
-
     }
 }

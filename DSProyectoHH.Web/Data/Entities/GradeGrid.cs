@@ -17,8 +17,6 @@ namespace DSProyectoHH.Web.Data.Entities
 
         [MaxLength (10)]
         public double FinalScore { get; set; }
-
-        public Course course { get; set; }
         public Project project { get; set; }
 
         [Required(ErrorMessage ="Campo requerido")]

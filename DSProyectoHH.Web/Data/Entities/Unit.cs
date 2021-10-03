@@ -19,10 +19,6 @@ namespace DSProyectoHH.Web.Data.Entities
 
         [Required(ErrorMessage = "Campo requerido")]
         public ClassParticipation ClassParticipation { get; set; }
-
-        public OralQuiz oralQuiz { get; set; }
-        public WrittenQuiz writtenQuiz { get; set; }
-        public ClassParticipation classParticipation { get; set; }
         public GradeGrid courseDetail { get; set; }
     }
 }
