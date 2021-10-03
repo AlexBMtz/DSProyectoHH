@@ -9,10 +9,11 @@ namespace DSProyectoHH.Web.Data.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Id requerida")]
-        [MaxLength(7)]
+        [Display(Name = "Id de Curso")]
         public int CourseId { get; set; }
 
         [Required(ErrorMessage = "Descripción requerida")]
+        [Display(Name = "Nombre del Curso")]
         [StringLength(15)]
         public string CourseName { get; set; }
 

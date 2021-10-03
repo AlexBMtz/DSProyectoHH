@@ -29,6 +29,7 @@ namespace DSProyectoHH.Web.Data.Entities
                 await CheckCourse(2025, "Course 2", DateTime.Today);
                 await CheckCourse(2137, "Course 3", DateTime.Today);
             }
+
         }
 
         private async Task CheckCourse(int courseId, string courseName, DateTime startingDate)
