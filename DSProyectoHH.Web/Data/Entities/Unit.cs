@@ -23,6 +23,6 @@ namespace DSProyectoHH.Web.Data.Entities
         public OralQuiz oralQuiz { get; set; }
         public WrittenQuiz writtenQuiz { get; set; }
         public ClassParticipation classParticipation { get; set; }
-        public CourseDetail courseDetail { get; set; }
+        public GradeGrid courseDetail { get; set; }
     }
 }

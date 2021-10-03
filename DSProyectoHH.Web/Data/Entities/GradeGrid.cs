@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
-    public class CourseDetail:IEntity
+    public class GradeGrid:IEntity
     {
         [MaxLength(2)]
         public int Id { get; set; }

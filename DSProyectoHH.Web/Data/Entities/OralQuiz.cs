@@ -9,30 +9,33 @@ namespace DSProyectoHH.Web.Data.Entities
 {
     public class OralQuiz : IEntity
     {
-        [MaxLength(2)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
         [MaxLength(2)]
+        [Range(1,5)]
         public int Communication { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
         [MaxLength(2)]
+        [Range(1, 5)]
         public int Grammar { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
         [MaxLength(2)]
+        [Range(1, 5)]
         public int Vocabulary { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
         [MaxLength(2)]
+        [Range(1, 5)]
         public int ConversationS { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
         [MaxLength(2)]
+        [Range(1, 5)]
         public int Fluency { get; set; }
 
-        [Required(ErrorMessage = "Campo requerido")]
-        public Unit unit { get; set; }
+        public Unit Unit { get; set; }
     }
 }

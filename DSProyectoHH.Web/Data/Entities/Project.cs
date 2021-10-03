@@ -32,7 +32,7 @@ namespace DSProyectoHH.Web.Data.Entities
         [MaxLength(1)]
         public int Fluency { get; set; }
 
-        public CourseDetail courseDetail { get; set; }
+        public GradeGrid courseDetail { get; set; }
 
     }
 }

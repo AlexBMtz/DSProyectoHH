@@ -1,31 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
-    public class CourseType:IEntity
+    public class CourseType : IEntity
     {
-        [MaxLength(2)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Descripción requerida")]
+        [Required(ErrorMessage = "Nombre del tipo de curso requerido")]
         [StringLength(200)]
-        //[RegularExpression("Preteen|Adults|TOEFL", ErrorMessage ="Curso no valido")]
-        public string Description { get; set; }
+        public string CourseTypeName { get; set; }
 
-        [Required(ErrorMessage = "Campo requerida")]
-        [StringLength(15)]
-        public string Schedule { get; set; }
+        public Teacher Teacher { get; set; }
+        public Course Course { get; set; }
+        public ICollection<Schedule> Schedules { get; set; }
+        public ICollection<Frequency> Frequencies { get; set; }
 
-        [Required(ErrorMessage = "Campo requerida")]
-        [StringLength(15)]
-        public string Frequency { get; set; }
-
-        public Teacher teacher { get; set; }
-        public ICollection<Course> courses { get; set; }
     }
 }

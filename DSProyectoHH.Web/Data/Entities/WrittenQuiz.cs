@@ -9,8 +9,6 @@ namespace DSProyectoHH.Web.Data.Entities
 {
     public class WrittenQuiz : IEntity
     {
-        
-        [MaxLength(2)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
@@ -37,7 +35,7 @@ namespace DSProyectoHH.Web.Data.Entities
         [MaxLength(2)]
         public int SectionF { get; set; }
 
-        public Unit unit { get; set; }
+        public Unit Unit { get; set; }
 
     }
 }
