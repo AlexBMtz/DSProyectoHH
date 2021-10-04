@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSProyectoHH.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211004053134_Initial")]
+    [Migration("20211004140850_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,16 +145,11 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("float")
                         .HasMaxLength(10);
 
-                    b.Property<int?>("projectId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FinalProjectId");
 
-                    b.HasIndex("projectId");
-
-                    b.ToTable("CourseDetails");
+                    b.ToTable("GradeGrids");
                 });
 
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.OralQuiz", b =>
@@ -293,24 +288,24 @@ namespace DSProyectoHH.Web.Migrations
                     b.Property<int>("ClassParticipationId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("GradeGridId")
+                        .HasColumnType("int");
+
                     b.Property<int>("OralQuizId")
                         .HasColumnType("int");
 
                     b.Property<int>("WrittenQuizId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("courseDetailId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClassParticipationId");
 
+                    b.HasIndex("GradeGridId");
+
                     b.HasIndex("OralQuizId");
 
                     b.HasIndex("WrittenQuizId");
-
-                    b.HasIndex("courseDetailId");
 
                     b.ToTable("Units");
                 });
@@ -585,16 +580,12 @@ namespace DSProyectoHH.Web.Migrations
                         .HasForeignKey("FinalProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("DSProyectoHH.Web.Data.Entities.Project", "project")
-                        .WithMany()
-                        .HasForeignKey("projectId");
                 });
 
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Student", b =>
                 {
                     b.HasOne("DSProyectoHH.Web.Data.Entities.GradeGrid", "CourseDetail")
-                        .WithMany("students")
+                        .WithMany("Students")
                         .HasForeignKey("CourseDetailId");
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.User", "User")
@@ -617,6 +608,10 @@ namespace DSProyectoHH.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.GradeGrid", "GradeGrid")
+                        .WithMany("Units")
+                        .HasForeignKey("GradeGridId");
+
                     b.HasOne("DSProyectoHH.Web.Data.Entities.OralQuiz", "OralQuiz")
                         .WithMany()
                         .HasForeignKey("OralQuizId")
@@ -628,10 +623,6 @@ namespace DSProyectoHH.Web.Migrations
                         .HasForeignKey("WrittenQuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("DSProyectoHH.Web.Data.Entities.GradeGrid", "courseDetail")
-                        .WithMany("units")
-                        .HasForeignKey("courseDetailId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

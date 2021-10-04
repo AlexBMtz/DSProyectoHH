@@ -17,13 +17,12 @@ namespace DSProyectoHH.Web.Data.Entities
 
         [MaxLength (10)]
         public double FinalScore { get; set; }
-        public Project project { get; set; }
 
         [Required(ErrorMessage ="Campo requerido")]
-        public ICollection<Unit> units { get; set; }
+        public ICollection<Unit> Units { get; set; }
 
         [Required(ErrorMessage ="Campo requerido")]
-        public ICollection<Student> students { get; set; }
+        public ICollection<Student> Students { get; set; }
 
         public void Calculate_Final_Score()
         {

@@ -19,6 +19,6 @@ namespace DSProyectoHH.Web.Data.Entities
 
         [Required(ErrorMessage = "Campo requerido")]
         public ClassParticipation ClassParticipation { get; set; }
-        public GradeGrid courseDetail { get; set; }
+        public GradeGrid GradeGrid { get; set; }
     }
 }

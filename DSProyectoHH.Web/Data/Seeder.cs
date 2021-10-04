@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
@@ -25,9 +26,15 @@ namespace DSProyectoHH.Web.Data.Entities
 
             if (!this.dataContext.Courses.Any())
             {
-                await CheckCourse(1984,"Course 1", DateTime.Today);
-                await CheckCourse(2025, "Course 2", DateTime.Today);
-                await CheckCourse(2137, "Course 3", DateTime.Today);
+                var gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(g => g.Id == 1);
+                ICollection<CourseType> courseTypes = this.dataContext.CourseTypes.ToList<CourseType>();
+                await CheckCourse(1984,"Course 1", DateTime.Today, gradeGrid, courseTypes);
+
+                gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(g => g.Id == 2);
+                await CheckCourse(2025, "Course 2", DateTime.Today, gradeGrid, courseTypes);
+
+                gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(g => g.Id == 3);
+                await CheckCourse(2137, "Course 3", DateTime.Today, gradeGrid, courseTypes);
             }
 
             if(!this.dataContext.Students.Any())
@@ -113,17 +120,52 @@ namespace DSProyectoHH.Web.Data.Entities
                 await CheckCourseType("Preteens", course, teacher, frequency, schedule);
             }
 
+            if (!this.dataContext.GradeGrids.Any())
+            {
+                var project = this.dataContext.Projects.FirstOrDefault(c => c.Id == 1);
+                ICollection<Student> students = this.dataContext.Students.ToList<Student>();
+                ICollection<Unit> units = this.dataContext.Units.ToList<Unit>();
+                await CheckGradeGrid(project, 7.8, students, units);
+
+                project = this.dataContext.Projects.FirstOrDefault(c => c.Id == 2);
+                await CheckGradeGrid(project, 9.2, students, units);
+
+                project = this.dataContext.Projects.FirstOrDefault(c => c.Id == 3);
+                await CheckGradeGrid(project, 8.8, students, units);
+            }
+
+            if (!this.dataContext.Units.Any())
+            {
+                var classParticipartion = this.dataContext.ClassParticipations.FirstOrDefault(c => c.Id == 1);
+                var gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(t => t.Id == 1);
+                var oralQuiz = this.dataContext.OralQuizzes.FirstOrDefault(f => f.Id == 1);
+                var writtenQuiz = this.dataContext.WrittenQuizzes.FirstOrDefault(s => s.Id == 1);
+                await CheckUnit(classParticipartion, gradeGrid, oralQuiz, writtenQuiz);
+
+                classParticipartion = this.dataContext.ClassParticipations.FirstOrDefault(c => c.Id == 2);
+                gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(t => t.Id == 2);
+                oralQuiz = this.dataContext.OralQuizzes.FirstOrDefault(f => f.Id == 2);
+                writtenQuiz = this.dataContext.WrittenQuizzes.FirstOrDefault(s => s.Id == 2);
+                await CheckUnit(classParticipartion, gradeGrid, oralQuiz, writtenQuiz);
+
+                classParticipartion = this.dataContext.ClassParticipations.FirstOrDefault(c => c.Id == 3);
+                gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(t => t.Id == 3);
+                oralQuiz = this.dataContext.OralQuizzes.FirstOrDefault(f => f.Id == 3);
+                writtenQuiz = this.dataContext.WrittenQuizzes.FirstOrDefault(s => s.Id == 3);
+                await CheckUnit(classParticipartion, gradeGrid, oralQuiz, writtenQuiz);
+            }
         }
 
-        private async Task CheckCourse(int courseId, string courseName, DateTime startingDate)
+        private async Task CheckCourse(int courseId, string courseName, DateTime startingDate, GradeGrid gradeGrid, ICollection<CourseType> courseTypes)
         {
             this.dataContext.Courses.Add(new Course
             {
                 CourseId = courseId,
-                CourseName=courseName,
-                StartingDate=startingDate,
-                
-            }) ;
+                CourseName = courseName,
+                StartingDate = startingDate,
+                GradeGrid = gradeGrid,
+                CourseTypes = courseTypes
+            });
             await this.dataContext.SaveChangesAsync();
         }
 
@@ -235,6 +277,30 @@ namespace DSProyectoHH.Web.Data.Entities
                 Reading = reading,
                 SpokenInteraction = sInteraction,
                 SpokenProduction = sProduction
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckGradeGrid(Project finalProject, double finalScore, ICollection<Student> students, ICollection<Unit> units)
+        {
+            this.dataContext.GradeGrids.Add(new GradeGrid
+            {
+                FinalProject = finalProject,
+                FinalScore = finalScore,
+                Students = students,
+                Units = units,
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckUnit(ClassParticipation classParticipation, GradeGrid gradeGrid, OralQuiz oralQuiz, WrittenQuiz writtenQuiz)
+        {
+            this.dataContext.Units.Add(new Unit
+            {
+                ClassParticipation = classParticipation,
+                GradeGrid = gradeGrid,
+                OralQuiz = oralQuiz,
+                WrittenQuiz = writtenQuiz
             });
             await this.dataContext.SaveChangesAsync();
         }
