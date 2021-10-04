@@ -1,0 +1,65 @@
+﻿@model IEnumerable<DSProyectoHH.Web.Data.Entities.CourseType>
+
+@{
+    ViewData["Title"] = "Tipos de Curso";
+}
+
+<h1>Tipos de Curso</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-success">Crear nuevo tipo de curso</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th align="center">
+                @Html.DisplayNameFor(model => model.Course)
+            </th>
+            <th align="center">
+                @Html.DisplayNameFor(model => model.CourseTypeName)
+            </th>
+            <th align="center">
+                @Html.DisplayNameFor(model => model.Frequency)
+            </th>
+            <th align="center">
+                @Html.DisplayNameFor(model => model.Schedule.StartingHour)
+            </th>
+            <th align="center">
+                @Html.DisplayNameFor(model => model.Schedule.EndingHour)
+            </th>
+            <th align="center">
+                @Html.DisplayNameFor(model => model.Teacher.User.FullName)
+            </th>
+            <th align="center"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td align="center">
+                @Html.DisplayFor(modelItem => item.Course.CourseName)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelItem => item.CourseTypeName)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelItem => item.Frequency.Name)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelItem => item.Schedule.StartingHour)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelItem => item.Schedule.EndingHour)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(model => item.Teacher.User.FullName)
+            </td>
+            <td align="center">
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -16,6 +16,15 @@
                 @Html.DisplayNameFor(model => model.StudentId)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.User.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.PhoneNumber)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.AdmissionDate)
             </th>
             <th></th>
@@ -28,10 +37,19 @@
                 @Html.DisplayFor(modelItem => item.StudentId)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.PhoneNumber)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.AdmissionDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary" >Editar</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
             </td>
