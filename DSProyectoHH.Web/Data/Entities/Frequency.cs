@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
@@ -8,8 +9,9 @@ namespace DSProyectoHH.Web.Data.Entities
 
         [Required(ErrorMessage = "Nombre de la frecuencia requerido")]
         [StringLength(200)]
-        public string name { get; set; }
+        [Display(Name = "Frecuencia")]
+        public string Name { get; set; }
 
-        public CourseType CourseType { get; set; }
+        public ICollection<CourseType> CourseTypes { get; set; }
     }
 }

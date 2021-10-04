@@ -1,0 +1,35 @@
+﻿@model IEnumerable<DSProyectoHH.Web.Data.Entities.Frequency>
+
+@{
+    ViewData["Title"] = "Frencuencias";
+}
+
+<h1>Frecuencias</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-success">Crear nueva frecuencia</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

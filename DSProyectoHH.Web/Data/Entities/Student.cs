@@ -17,7 +17,6 @@ namespace DSProyectoHH.Web.Data.Entities
 
         [Required(ErrorMessage = "La Fecha de admisión es requerida")]
         [Display(Name = "Fecha de admisión")]
-        [StringLength(10)]
         [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString ="{0:dd/MM/yyyy}")]
         public DateTime AdmissionDate { get; set; }
 
