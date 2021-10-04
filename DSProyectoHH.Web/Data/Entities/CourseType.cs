@@ -9,6 +9,7 @@ namespace DSProyectoHH.Web.Data.Entities
 
         [Required(ErrorMessage = "Nombre del tipo de curso requerido")]
         [StringLength(200)]
+        [Display(Name = "Nombre del tipo de curso")]
         public string CourseTypeName { get; set; }
 
         public Teacher Teacher { get; set; }

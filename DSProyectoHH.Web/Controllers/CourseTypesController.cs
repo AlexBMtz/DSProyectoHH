@@ -10,22 +10,22 @@ using DSProyectoHH.Web.Data.Entities;
 
 namespace DSProyectoHH.Web.Controllers
 {
-    public class StudentsController : Controller
+    public class CourseTypesController : Controller
     {
         private readonly DataContext _context;
 
-        public StudentsController(DataContext context)
+        public CourseTypesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Students
+        // GET: CourseTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.Include(u=>u.User).ToListAsync());
+            return View(await _context.CourseTypes.Include(c=>c.Course).Include(f=>f.Frequency).Include(s => s.Schedule).Include(t => t.Teacher.User).ToListAsync());
         }
 
-        // GET: Students/Details/5
+        // GET: CourseTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var courseType = await _context.CourseTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (courseType == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(courseType);
         }
 
-        // GET: Students/Create
+        // GET: CourseTypes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+        // POST: CourseTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Student student)
+        public async Task<IActionResult> Create(CourseType courseType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
+                _context.Add(courseType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(courseType);
         }
 
-        // GET: Students/Edit/5
+        // GET: CourseTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
+            var courseType = await _context.CourseTypes.FindAsync(id);
+            if (courseType == null)
             {
                 return NotFound();
             }
-            return View(student);
+            return View(courseType);
         }
 
-        // POST: Students/Edit/5
+        // POST: CourseTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,Student student)
+        public async Task<IActionResult> Edit(int id, CourseType courseType)
         {
-            if (id != student.Id)
+            if (id != courseType.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace DSProyectoHH.Web.Controllers
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(courseType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.Id))
+                    if (!CourseTypeExists(courseType.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace DSProyectoHH.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(courseType);
         }
 
-        // GET: Students/Delete/5
+        // GET: CourseTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var courseType = await _context.CourseTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (courseType == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(courseType);
         }
 
-        // POST: Students/Delete/5
+        // POST: CourseTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Students.FindAsync(id);
-            _context.Students.Remove(student);
+            var courseType = await _context.CourseTypes.FindAsync(id);
+            _context.CourseTypes.Remove(courseType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentExists(int id)
+        private bool CourseTypeExists(int id)
         {
-            return _context.Students.Any(e => e.Id == id);
+            return _context.CourseTypes.Any(e => e.Id == id);
         }
     }
 }
