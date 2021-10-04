@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSProyectoHH.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211004005621_Prueba")]
-    partial class Prueba
+    [Migration("20211004013945_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,12 +96,22 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
+                    b.Property<int?>("FrequencyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ScheduleId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("FrequencyId");
+
+                    b.HasIndex("ScheduleId");
 
                     b.HasIndex("TeacherId");
 
@@ -115,17 +125,12 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CourseTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CourseTypeId");
 
                     b.ToTable("Frequencies");
                 });
@@ -194,28 +199,22 @@ namespace DSProyectoHH.Web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasMaxLength(2)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CollabWork")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("Creativity")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("Fluency")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductQuality")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("Research")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -229,9 +228,6 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CourseTypeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("EndingHour")
                         .HasColumnType("datetime2");
 
@@ -239,8 +235,6 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CourseTypeId");
 
                     b.ToTable("Schedules");
                 });
@@ -253,8 +247,7 @@ namespace DSProyectoHH.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("AdmissionDate")
-                        .HasColumnType("datetime2")
-                        .HasMaxLength(10);
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("CourseDetailId")
                         .HasColumnType("int");
@@ -287,8 +280,7 @@ namespace DSProyectoHH.Web.Migrations
                         .HasMaxLength(13);
 
                     b.Property<int>("TeacherId")
-                        .HasColumnType("int")
-                        .HasMaxLength(6);
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -589,16 +581,17 @@ namespace DSProyectoHH.Web.Migrations
                         .WithMany("CourseTypes")
                         .HasForeignKey("CourseId");
 
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.Frequency", "Frequency")
+                        .WithMany("CourseTypes")
+                        .HasForeignKey("FrequencyId");
+
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.Schedule", "Schedule")
+                        .WithMany("CourseTypes")
+                        .HasForeignKey("ScheduleId");
+
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Teacher", "Teacher")
                         .WithMany("CourseTypes")
                         .HasForeignKey("TeacherId");
-                });
-
-            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Frequency", b =>
-                {
-                    b.HasOne("DSProyectoHH.Web.Data.Entities.CourseType", "CourseType")
-                        .WithMany("Frequencies")
-                        .HasForeignKey("CourseTypeId");
                 });
 
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.GradeGrid", b =>
@@ -612,13 +605,6 @@ namespace DSProyectoHH.Web.Migrations
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Project", "project")
                         .WithMany()
                         .HasForeignKey("projectId");
-                });
-
-            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Schedule", b =>
-                {
-                    b.HasOne("DSProyectoHH.Web.Data.Entities.CourseType", "CourseType")
-                        .WithMany("Schedules")
-                        .HasForeignKey("CourseTypeId");
                 });
 
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Student", b =>

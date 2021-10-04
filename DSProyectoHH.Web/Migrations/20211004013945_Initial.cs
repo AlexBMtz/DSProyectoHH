@@ -99,13 +99,13 @@ namespace DSProyectoHH.Web.Migrations
                 name: "Projects",
                 columns: table => new
                 {
-                    Id = table.Column<int>(maxLength: 2, nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Research = table.Column<int>(maxLength: 1, nullable: false),
-                    ProductQuality = table.Column<int>(maxLength: 1, nullable: false),
-                    CollabWork = table.Column<int>(maxLength: 1, nullable: false),
-                    Creativity = table.Column<int>(maxLength: 1, nullable: false),
-                    Fluency = table.Column<int>(maxLength: 1, nullable: false)
+                    Research = table.Column<int>(nullable: false),
+                    ProductQuality = table.Column<int>(nullable: false),
+                    CollabWork = table.Column<int>(nullable: false),
+                    Creativity = table.Column<int>(nullable: false),
+                    Fluency = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -326,8 +326,8 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId = table.Column<int>(maxLength: 7, nullable: false),
-                    AdmissionDate = table.Column<DateTime>(maxLength: 10, nullable: false),
+                    StudentId = table.Column<int>(nullable: false),
+                    AdmissionDate = table.Column<DateTime>(nullable: false),
                     CourseDetailId = table.Column<int>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },

@@ -9,27 +9,27 @@ namespace DSProyectoHH.Web.Data.Entities
 {
     public class Project:IEntity
     {
-        [MaxLength(2)]
+        
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(1)]
+        [Range(0, 2)]
         public int Research { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(1)]
+        [Range(0, 2)]
         public int ProductQuality { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(1)]
+        [Range(0, 2)]
         public int CollabWork { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(1)]
+        [Range(0,2)]
         public int Creativity { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(1)]
+        [Range(0, 2)]
         public int Fluency { get; set; }
     }
 }

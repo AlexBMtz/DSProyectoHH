@@ -31,15 +31,18 @@ namespace DSProyectoHH.Web.Data.Entities
             }
             if(!this.dataContext.Students.Any())
             {
-                await CheckStudent(1945, DateTime.Today);
-                await CheckStudent(1345, DateTime.Today);
-                await CheckStudent(0945, DateTime.Today);
+                var user = await CheckUser("Marco", "Hernandez", "2221136875", "Hernan_Marc@Outlook", "153456");
+                await CheckStudent(user,"Student",1945, DateTime.Today);
+
+                 user = await CheckUser("Karla", "Alvarez", "4221136875", "aknm@gmail.com", "123cuatro56");
+                await CheckStudent(user, "Student", 1948, DateTime.Today);
+
             }
             if(!this.dataContext.Projects.Any())
             {
-               await CheckProject(9, 10, 10, 10, 10);
-               await CheckProject(10, 6, 6, 10, 10);
-               await CheckProject(10, 10, 10, 7, 10);
+               await CheckProject(0, 2, 2, 2, 2);
+               await CheckProject(1, 1, 0, 2, 2);
+               await CheckProject(2, 0, 2, 0, 1);
             }
 
 
@@ -149,14 +152,16 @@ namespace DSProyectoHH.Web.Data.Entities
             await userHelper.AddUserToRoleAsync(user, role);
         }
 
-        private async Task CheckStudent(int studentId, DateTime admissionDate)
+        private async Task CheckStudent(User user,string role,int studentId, DateTime admissionDate)
         {
             this.dataContext.Students.Add(new Student
             {
+                User = user,
                 StudentId = studentId,
                 AdmissionDate = admissionDate
             });
             await this.dataContext.SaveChangesAsync();
+            await userHelper.AddUserToRoleAsync(user, role);
         }
 
         private async Task CheckProject(int research,int productQuality, int collabWork, int creativity, int fluency)

@@ -197,28 +197,22 @@ namespace DSProyectoHH.Web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasMaxLength(2)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CollabWork")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("Creativity")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("Fluency")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductQuality")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<int>("Research")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -251,8 +245,7 @@ namespace DSProyectoHH.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("AdmissionDate")
-                        .HasColumnType("datetime2")
-                        .HasMaxLength(10);
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("CourseDetailId")
                         .HasColumnType("int");
