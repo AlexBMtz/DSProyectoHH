@@ -29,6 +29,19 @@ namespace DSProyectoHH.Web.Data.Entities
                 await CheckCourse(2025, "Course 2", DateTime.Today);
                 await CheckCourse(2137, "Course 3", DateTime.Today);
             }
+            if(!this.dataContext.Students.Any())
+            {
+                await CheckStudent(1945, DateTime.Today);
+                await CheckStudent(1345, DateTime.Today);
+                await CheckStudent(0945, DateTime.Today);
+            }
+            if(!this.dataContext.Projects.Any())
+            {
+               await CheckProject(9, 10, 10, 10, 10);
+               await CheckProject(10, 6, 6, 10, 10);
+               await CheckProject(10, 10, 10, 7, 10);
+            }
+
 
         }
 
@@ -42,6 +55,30 @@ namespace DSProyectoHH.Web.Data.Entities
             }) ;
             await this.dataContext.SaveChangesAsync();
         }
+
+        private async Task CheckStudent(int studentId, DateTime admissionDate)
+        {
+            this.dataContext.Students.Add(new Student
+            {
+                StudentId = studentId,
+                AdmissionDate = admissionDate
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckProject(int research,int productQuality, int collabWork, int creativity, int fluency)
+        {
+            this.dataContext.Projects.Add(new Project
+            {
+               Research = research,
+               ProductQuality = productQuality,
+               CollabWork = collabWork,
+               Creativity = creativity,
+               Fluency = fluency
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
+
 
         private async Task<User> CheckUser(string firstName, string lastName, string phoneNumber, string email, string password)
         {

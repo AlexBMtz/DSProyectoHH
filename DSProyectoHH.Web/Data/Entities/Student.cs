@@ -12,7 +12,7 @@ namespace DSProyectoHH.Web.Data.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage ="La Id del alumno es requerida")]
-        [MaxLength(7)]
+        [Display(Name = "Id del Alumno")]
         public int StudentId { get; set; }
 
         [Required(ErrorMessage = "La Fecha de admisión es requerida")]

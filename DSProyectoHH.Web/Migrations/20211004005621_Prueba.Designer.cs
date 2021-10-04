@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSProyectoHH.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211003183518_Initial")]
-    partial class Initial
+    [Migration("20211004005621_Prueba")]
+    partial class Prueba
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.15")
+                .HasAnnotation("ProductVersion", "3.1.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -61,8 +61,7 @@ namespace DSProyectoHH.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("int")
-                        .HasMaxLength(7);
+                        .HasColumnType("int");
 
                     b.Property<string>("CourseName")
                         .IsRequired()
@@ -261,8 +260,7 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("StudentId")
-                        .HasColumnType("int")
-                        .HasMaxLength(7);
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

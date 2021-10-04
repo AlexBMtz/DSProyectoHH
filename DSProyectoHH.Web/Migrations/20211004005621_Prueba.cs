@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DSProyectoHH.Web.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Prueba : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -277,7 +277,7 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseId = table.Column<int>(maxLength: 7, nullable: false),
+                    CourseId = table.Column<int>(nullable: false),
                     CourseName = table.Column<string>(maxLength: 15, nullable: false),
                     StartingDate = table.Column<DateTime>(nullable: false),
                     GradeGridId = table.Column<int>(nullable: true)
@@ -299,7 +299,7 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId = table.Column<int>(maxLength: 7, nullable: false),
+                    StudentId = table.Column<int>(nullable: false),
                     AdmissionDate = table.Column<DateTime>(maxLength: 10, nullable: false),
                     CourseDetailId = table.Column<int>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
