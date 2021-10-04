@@ -30,6 +30,51 @@ namespace DSProyectoHH.Web.Data.Entities
                 await CheckCourse(2137, "Course 3", DateTime.Today);
             }
 
+            if(!this.dataContext.Teachers.Any())
+            {
+                var user = await CheckUser("Alejandro", "Barroeta", "2221136875", "abm@gmail.com", "123456");
+                await CheckTeacher(user,"Teacher",3007134,"BAMA010416Q95");
+
+                user = await CheckUser("Carlos", "Vaca", "2225369758", "c.vaca@gmail.com", "789101");
+                await CheckTeacher(user, "Teacher", 3007135, "VAMC051218H92");
+            }
+
+            if(!this.dataContext.Schedules.Any())
+            {
+                await CheckSchedule(new DateTime(2020,10,3,6,0,0), new DateTime(2020, 10, 3, 8, 0, 0));
+                await CheckSchedule(new DateTime(2020, 10, 3, 3, 00, 0), new DateTime(2020, 10, 3, 6, 00, 0));
+                await CheckSchedule(new DateTime(2020, 10, 3, 6, 30, 0), new DateTime(2020, 10, 3, 8, 30, 0));
+                await CheckSchedule(new DateTime(2020, 10, 3, 9, 00, 0), new DateTime(2020, 10, 3, 11, 00, 0));
+            }
+
+            if(!this.dataContext.Frequencies.Any())
+            {
+                await CheckFrequency("Free Friday");
+                await CheckFrequency("Saturday");
+                await CheckFrequency("Sunday");
+            }
+
+            if(!this.dataContext.CourseTypes.Any())
+            {
+                var course = this.dataContext.Courses.FirstOrDefault(c => c.Id == 1);
+                var teacher = this.dataContext.Teachers.FirstOrDefault(t => t.Id == 1);
+                var frequency = this.dataContext.Frequencies.FirstOrDefault(f => f.Id == 1);
+                var schedule = this.dataContext.Schedules.FirstOrDefault(s => s.Id == 1);
+                await CheckCourseType("Preteens", course, teacher, frequency, schedule);
+
+                course = this.dataContext.Courses.FirstOrDefault(c => c.Id == 1);
+                teacher = this.dataContext.Teachers.FirstOrDefault(t => t.Id == 2);
+                frequency = this.dataContext.Frequencies.FirstOrDefault(f => f.Id == 1);
+                schedule = this.dataContext.Schedules.FirstOrDefault(s => s.Id == 2);
+                await CheckCourseType("Preteens", course, teacher, frequency, schedule);
+
+                course = this.dataContext.Courses.FirstOrDefault(c => c.Id == 1);
+                teacher = this.dataContext.Teachers.FirstOrDefault(t => t.Id == 1);
+                frequency = this.dataContext.Frequencies.FirstOrDefault(f => f.Id == 1);
+                schedule = this.dataContext.Schedules.FirstOrDefault(s => s.Id == 3);
+                await CheckCourseType("Preteens", course, teacher, frequency, schedule);
+            }
+
         }
 
         private async Task CheckCourse(int courseId, string courseName, DateTime startingDate)
@@ -38,9 +83,57 @@ namespace DSProyectoHH.Web.Data.Entities
             {
                 CourseId = courseId,
                 CourseName=courseName,
-                StartingDate=startingDate
+                StartingDate=startingDate,
+                
             }) ;
             await this.dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckCourseType(string courseTypeName,Course course, Teacher teacher, Frequency frequency,Schedule schedule)
+        {
+            this.dataContext.CourseTypes.Add(new CourseType { 
+                CourseTypeName=courseTypeName,
+                Course=course,
+                Teacher=teacher,
+                Frequency=frequency,
+                Schedule=schedule,
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckFrequency(string name)
+        {
+            this.dataContext.Frequencies.Add(new Frequency
+            {
+                Name=name
+            }
+            );
+            await this.dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckSchedule(DateTime startingHour, DateTime endingHour)
+        {
+            this.dataContext.Schedules.Add(new Schedule
+            {
+                StartingHour = startingHour,
+                EndingHour = endingHour
+
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckTeacher(User user, string role, int teacherId,string rfc)
+        {
+            this.dataContext.Teachers.Add(new Teacher
+            {
+                TeacherId=teacherId,
+                User=user,
+                RFC=rfc
+            }
+            );
+
+            await this.dataContext.SaveChangesAsync();
+            await userHelper.AddUserToRoleAsync(user, role);
         }
 
         private async Task<User> CheckUser(string firstName, string lastName, string phoneNumber, string email, string password)

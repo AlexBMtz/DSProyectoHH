@@ -66,6 +66,19 @@ namespace DSProyectoHH.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Frequencies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Frequencies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OralQuizzes",
                 columns: table => new
                 {
@@ -97,6 +110,20 @@ namespace DSProyectoHH.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schedules",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartingHour = table.Column<DateTime>(nullable: false),
+                    EndingHour = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schedules", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,7 +256,7 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TeacherId = table.Column<int>(maxLength: 6, nullable: false),
+                    TeacherId = table.Column<int>(nullable: false),
                     RFC = table.Column<string>(maxLength: 13, nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
@@ -277,7 +304,7 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseId = table.Column<int>(maxLength: 7, nullable: false),
+                    CourseId = table.Column<int>(nullable: false),
                     CourseName = table.Column<string>(maxLength: 15, nullable: false),
                     StartingDate = table.Column<DateTime>(nullable: false),
                     GradeGridId = table.Column<int>(nullable: true)
@@ -369,7 +396,9 @@ namespace DSProyectoHH.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CourseTypeName = table.Column<string>(maxLength: 200, nullable: false),
                     TeacherId = table.Column<int>(nullable: true),
-                    CourseId = table.Column<int>(nullable: true)
+                    CourseId = table.Column<int>(nullable: true),
+                    ScheduleId = table.Column<int>(nullable: true),
+                    FrequencyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -381,50 +410,21 @@ namespace DSProyectoHH.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_CourseTypes_Frequencies_FrequencyId",
+                        column: x => x.FrequencyId,
+                        principalTable: "Frequencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CourseTypes_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_CourseTypes_Teachers_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Teachers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Frequencies",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(maxLength: 200, nullable: false),
-                    CourseTypeId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Frequencies", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Frequencies_CourseTypes_CourseTypeId",
-                        column: x => x.CourseTypeId,
-                        principalTable: "CourseTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Schedules",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StartingHour = table.Column<DateTime>(nullable: false),
-                    EndingHour = table.Column<DateTime>(nullable: false),
-                    CourseTypeId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Schedules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Schedules_CourseTypes_CourseTypeId",
-                        column: x => x.CourseTypeId,
-                        principalTable: "CourseTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -489,19 +489,19 @@ namespace DSProyectoHH.Web.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CourseTypes_FrequencyId",
+                table: "CourseTypes",
+                column: "FrequencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseTypes_ScheduleId",
+                table: "CourseTypes",
+                column: "ScheduleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CourseTypes_TeacherId",
                 table: "CourseTypes",
                 column: "TeacherId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Frequencies_CourseTypeId",
-                table: "Frequencies",
-                column: "CourseTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_CourseTypeId",
-                table: "Schedules",
-                column: "CourseTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_CourseDetailId",
@@ -557,10 +557,7 @@ namespace DSProyectoHH.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Frequencies");
-
-            migrationBuilder.DropTable(
-                name: "Schedules");
+                name: "CourseTypes");
 
             migrationBuilder.DropTable(
                 name: "Students");
@@ -572,7 +569,16 @@ namespace DSProyectoHH.Web.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "CourseTypes");
+                name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "Frequencies");
+
+            migrationBuilder.DropTable(
+                name: "Schedules");
+
+            migrationBuilder.DropTable(
+                name: "Teachers");
 
             migrationBuilder.DropTable(
                 name: "ClassParticipations");
@@ -582,12 +588,6 @@ namespace DSProyectoHH.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "WrittenQuizzes");
-
-            migrationBuilder.DropTable(
-                name: "Courses");
-
-            migrationBuilder.DropTable(
-                name: "Teachers");
 
             migrationBuilder.DropTable(
                 name: "CourseDetails");

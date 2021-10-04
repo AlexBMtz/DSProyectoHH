@@ -12,10 +12,11 @@ namespace DSProyectoHH.Web.Data.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage ="La ID es requerida")]
-        [MaxLength(6)]
+        [DisplayName("Clave del maestro")]
         public int TeacherId { get; set; }
 
-        [Required(ErrorMessage =("RFC requerida"))]
+        [Required(ErrorMessage ="RFC requerida")]
+        [DisplayName("RFC")]
         [StringLength(13)]
         public string RFC { get; set; }
 

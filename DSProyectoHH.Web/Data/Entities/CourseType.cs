@@ -13,8 +13,8 @@ namespace DSProyectoHH.Web.Data.Entities
 
         public Teacher Teacher { get; set; }
         public Course Course { get; set; }
-        public ICollection<Schedule> Schedules { get; set; }
-        public ICollection<Frequency> Frequencies { get; set; }
+        public Schedule Schedule { get; set; }
+        public Frequency Frequency { get; set; }
 
     }
 }
