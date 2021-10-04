@@ -10,22 +10,22 @@ using DSProyectoHH.Web.Data.Entities;
 
 namespace DSProyectoHH.Web.Controllers
 {
-    public class StudentsController : Controller
+    public class ClassParticipationsController : Controller
     {
         private readonly DataContext _context;
 
-        public StudentsController(DataContext context)
+        public ClassParticipationsController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Students
+        // GET: ClassParticipations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
+            return View(await _context.ClassParticipations.ToListAsync());
         }
 
-        // GET: Students/Details/5
+        // GET: ClassParticipations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var classParticipation = await _context.ClassParticipations
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (classParticipation == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(classParticipation);
         }
 
-        // GET: Students/Create
+        // GET: ClassParticipations/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+        // POST: ClassParticipations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Student student)
+        public async Task<IActionResult> Create(ClassParticipation classParticipation)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
+                _context.Add(classParticipation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(classParticipation);
         }
 
-        // GET: Students/Edit/5
+        // GET: ClassParticipations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
+            var classParticipation = await _context.ClassParticipations.FindAsync(id);
+            if (classParticipation == null)
             {
                 return NotFound();
             }
-            return View(student);
+            return View(classParticipation);
         }
 
-        // POST: Students/Edit/5
+        // POST: ClassParticipations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Student student)
+        public async Task<IActionResult> Edit(int id, ClassParticipation classParticipation)
         {
-            if (id != student.Id)
+            if (id != classParticipation.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace DSProyectoHH.Web.Controllers
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(classParticipation);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.Id))
+                    if (!ClassParticipationExists(classParticipation.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace DSProyectoHH.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(classParticipation);
         }
 
-        // GET: Students/Delete/5
+        // GET: ClassParticipations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var classParticipation = await _context.ClassParticipations
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (classParticipation == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(classParticipation);
         }
 
-        // POST: Students/Delete/5
+        // POST: ClassParticipations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Students.FindAsync(id);
-            _context.Students.Remove(student);
+            var classParticipation = await _context.ClassParticipations.FindAsync(id);
+            _context.ClassParticipations.Remove(classParticipation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentExists(int id)
+        private bool ClassParticipationExists(int id)
         {
-            return _context.Students.Any(e => e.Id == id);
+            return _context.ClassParticipations.Any(e => e.Id == id);
         }
     }
 }

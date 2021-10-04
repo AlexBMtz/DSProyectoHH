@@ -10,22 +10,22 @@ using DSProyectoHH.Web.Data.Entities;
 
 namespace DSProyectoHH.Web.Controllers
 {
-    public class StudentsController : Controller
+    public class WrittenQuizsController : Controller
     {
         private readonly DataContext _context;
 
-        public StudentsController(DataContext context)
+        public WrittenQuizsController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Students
+        // GET: WrittenQuizs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
+            return View(await _context.WrittenQuizzes.ToListAsync());
         }
 
-        // GET: Students/Details/5
+        // GET: WrittenQuizs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var writtenQuiz = await _context.WrittenQuizzes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (writtenQuiz == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(writtenQuiz);
         }
 
-        // GET: Students/Create
+        // GET: WrittenQuizs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+        // POST: WrittenQuizs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Student student)
+        public async Task<IActionResult> Create(WrittenQuiz writtenQuiz)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
+                _context.Add(writtenQuiz);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(writtenQuiz);
         }
 
-        // GET: Students/Edit/5
+        // GET: WrittenQuizs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
+            var writtenQuiz = await _context.WrittenQuizzes.FindAsync(id);
+            if (writtenQuiz == null)
             {
                 return NotFound();
             }
-            return View(student);
+            return View(writtenQuiz);
         }
 
-        // POST: Students/Edit/5
+        // POST: WrittenQuizs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Student student)
+        public async Task<IActionResult> Edit(int id, WrittenQuiz writtenQuiz)
         {
-            if (id != student.Id)
+            if (id != writtenQuiz.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace DSProyectoHH.Web.Controllers
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(writtenQuiz);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.Id))
+                    if (!WrittenQuizExists(writtenQuiz.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace DSProyectoHH.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(writtenQuiz);
         }
 
-        // GET: Students/Delete/5
+        // GET: WrittenQuizs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var writtenQuiz = await _context.WrittenQuizzes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (writtenQuiz == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(writtenQuiz);
         }
 
-        // POST: Students/Delete/5
+        // POST: WrittenQuizs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Students.FindAsync(id);
-            _context.Students.Remove(student);
+            var writtenQuiz = await _context.WrittenQuizzes.FindAsync(id);
+            _context.WrittenQuizzes.Remove(writtenQuiz);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentExists(int id)
+        private bool WrittenQuizExists(int id)
         {
-            return _context.Students.Any(e => e.Id == id);
+            return _context.WrittenQuizzes.Any(e => e.Id == id);
         }
     }
 }

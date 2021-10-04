@@ -12,28 +12,28 @@ namespace DSProyectoHH.Web.Data.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(2)]
-        [Range(1,5)]
+        [Display(Name = "Comunicación")]
+        [Range(1, 5, ErrorMessage = "El valor ingresado debe estar entre 1 y 5")]
         public int Communication { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(2)]
-        [Range(1, 5)]
+        [Display(Name = "Gramática")]
+        [Range(1, 5, ErrorMessage = "El valor ingresado debe estar entre 1 y 5")]
         public int Grammar { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(2)]
-        [Range(1, 5)]
+        [Display(Name = "Vocabulario")]
+        [Range(1, 5, ErrorMessage = "El valor ingresado debe estar entre 1 y 5")]
         public int Vocabulary { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(2)]
-        [Range(1, 5)]
-        public int ConversationS { get; set; }
+        [Display(Name = "Conversaciones")]
+        [Range(1, 5, ErrorMessage = "El valor ingresado debe estar entre 1 y 5")]
+        public int Conversations { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [MaxLength(2)]
-        [Range(1, 5)]
+        [Display(Name = "Fluidez")]
+        [Range(1, 5, ErrorMessage = "El valor ingresado debe estar entre 1 y 5")]
         public int Fluency { get; set; }
     }
 }

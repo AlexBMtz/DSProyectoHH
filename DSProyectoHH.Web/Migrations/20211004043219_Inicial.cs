@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DSProyectoHH.Web.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,11 +54,11 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Listening = table.Column<int>(maxLength: 2, nullable: false),
-                    Reading = table.Column<int>(maxLength: 2, nullable: false),
-                    SpokenInteraction = table.Column<int>(maxLength: 2, nullable: false),
-                    SpokenProduction = table.Column<int>(maxLength: 2, nullable: false),
-                    Fluency = table.Column<int>(maxLength: 2, nullable: false)
+                    Listening = table.Column<int>(nullable: false),
+                    Reading = table.Column<int>(nullable: false),
+                    SpokenInteraction = table.Column<int>(nullable: false),
+                    SpokenProduction = table.Column<int>(nullable: false),
+                    Fluency = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,11 +84,11 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Communication = table.Column<int>(maxLength: 2, nullable: false),
-                    Grammar = table.Column<int>(maxLength: 2, nullable: false),
-                    Vocabulary = table.Column<int>(maxLength: 2, nullable: false),
-                    ConversationS = table.Column<int>(maxLength: 2, nullable: false),
-                    Fluency = table.Column<int>(maxLength: 2, nullable: false)
+                    Communication = table.Column<int>(nullable: false),
+                    Grammar = table.Column<int>(nullable: false),
+                    Vocabulary = table.Column<int>(nullable: false),
+                    Conversations = table.Column<int>(nullable: false),
+                    Fluency = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,12 +132,12 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SectionA = table.Column<int>(maxLength: 2, nullable: false),
-                    SectionB = table.Column<int>(maxLength: 2, nullable: false),
-                    SectionC = table.Column<int>(maxLength: 2, nullable: false),
-                    SectionD = table.Column<int>(maxLength: 2, nullable: false),
-                    SectionE = table.Column<int>(maxLength: 2, nullable: false),
-                    SectionF = table.Column<int>(maxLength: 2, nullable: false)
+                    SectionA = table.Column<int>(nullable: false),
+                    SectionB = table.Column<int>(nullable: false),
+                    SectionC = table.Column<int>(nullable: false),
+                    SectionD = table.Column<int>(nullable: false),
+                    SectionE = table.Column<int>(nullable: false),
+                    SectionF = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

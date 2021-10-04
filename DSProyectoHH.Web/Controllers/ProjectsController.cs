@@ -54,7 +54,7 @@ namespace DSProyectoHH.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Research,ProductQuality,CollabWork,Creativity,Fluency")] Project project)
+        public async Task<IActionResult> Create(Project project)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace DSProyectoHH.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Research,ProductQuality,CollabWork,Creativity,Fluency")] Project project)
+        public async Task<IActionResult> Edit(int id, Project project)
         {
             if (id != project.Id)
             {

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<DSProyectoHH.Web.Data.Entities.WrittenQuiz>
+
+@{
+    ViewData["Title"] = "Examen Escrito";
+}
+
+<h1>Examen Escrito</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-success">Crear nuevo examen</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SectionA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SectionB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SectionC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SectionD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SectionE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SectionF)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionF)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

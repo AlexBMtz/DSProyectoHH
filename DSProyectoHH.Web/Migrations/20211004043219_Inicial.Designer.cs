@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSProyectoHH.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211004013945_Initial")]
-    partial class Initial
+    [Migration("20211004043219_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,24 +29,19 @@ namespace DSProyectoHH.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Fluency")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("Listening")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("Reading")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("SpokenInteraction")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("SpokenProduction")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -170,24 +165,19 @@ namespace DSProyectoHH.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Communication")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
-                    b.Property<int>("ConversationS")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                    b.Property<int>("Conversations")
+                        .HasColumnType("int");
 
                     b.Property<int>("Fluency")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("Grammar")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("Vocabulary")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -409,28 +399,22 @@ namespace DSProyectoHH.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("SectionA")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("SectionB")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("SectionC")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("SectionD")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("SectionE")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.Property<int>("SectionF")
-                        .HasColumnType("int")
-                        .HasMaxLength(2);
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

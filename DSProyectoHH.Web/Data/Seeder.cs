@@ -29,6 +29,7 @@ namespace DSProyectoHH.Web.Data.Entities
                 await CheckCourse(2025, "Course 2", DateTime.Today);
                 await CheckCourse(2137, "Course 3", DateTime.Today);
             }
+
             if(!this.dataContext.Students.Any())
             {
                 var user = await CheckUser("Marco", "Hernandez", "2221136875", "Hernan_Marc@Outlook", "153456");
@@ -38,6 +39,7 @@ namespace DSProyectoHH.Web.Data.Entities
                 await CheckStudent(user, "Student", 1948, DateTime.Today);
 
             }
+
             if(!this.dataContext.Projects.Any())
             {
                await CheckProject(0, 2, 2, 2, 2);
@@ -45,8 +47,28 @@ namespace DSProyectoHH.Web.Data.Entities
                await CheckProject(2, 0, 2, 0, 1);
             }
 
+            if (!this.dataContext.WrittenQuizzes.Any())
+            {
+                await CheckWrittenQuiz(7, 8, 9, 8, 7, 8);
+                await CheckWrittenQuiz(5, 2, 8, 6, 4, 7);
+                await CheckWrittenQuiz(3, 6, 9, 8, 5, 2);
+            }
 
-            if(!this.dataContext.Teachers.Any())
+            if (!this.dataContext.OralQuizzes.Any())
+            {
+                await CheckOralQuiz(5, 4, 3, 4, 5);
+                await CheckOralQuiz(3, 2, 3, 4, 2);
+                await CheckOralQuiz(2, 1, 2, 3, 4);
+            }
+
+            if (!this.dataContext.ClassParticipations.Any())
+            {
+                await CheckClassParticipation(0, 1, 2, 1, 0);
+                await CheckClassParticipation(1, 2, 0, 2, 1);
+                await CheckClassParticipation(0, 2, 1, 2, 0);
+            }
+
+            if (!this.dataContext.Teachers.Any())
             {
                 var user = await CheckUser("Alejandro", "Barroeta", "2221136875", "abm@gmail.com", "123456");
                 await CheckTeacher(user,"Teacher",3007134,"BAMA010416Q95");
@@ -177,6 +199,45 @@ namespace DSProyectoHH.Web.Data.Entities
             await this.dataContext.SaveChangesAsync();
         }
 
+        private async Task CheckWrittenQuiz(int sectionA, int sectionB, int sectionC, int sectionD, int sectionE, int sectionF)
+        {
+            this.dataContext.WrittenQuizzes.Add(new WrittenQuiz
+            {
+                SectionA = sectionA,
+                SectionB = sectionB,
+                SectionC = sectionC,
+                SectionD = sectionD,
+                SectionE = sectionE,
+                SectionF = sectionF
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckOralQuiz(int communication, int conversation, int fluency, int grammar, int vocabulary)
+        {
+            this.dataContext.OralQuizzes.Add(new OralQuiz
+            {
+                Communication = communication,
+                Conversations = conversation,
+                Fluency = fluency,
+                Grammar = grammar,
+                Vocabulary = vocabulary,
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckClassParticipation(int fluency, int listening, int reading, int sInteraction, int sProduction)
+        {
+            this.dataContext.ClassParticipations.Add(new ClassParticipation
+            {
+                Fluency = fluency,
+                Listening = listening,
+                Reading = reading,
+                SpokenInteraction = sInteraction,
+                SpokenProduction = sProduction
+            });
+            await this.dataContext.SaveChangesAsync();
+        }
 
         private async Task<User> CheckUser(string firstName, string lastName, string phoneNumber, string email, string password)
         {
