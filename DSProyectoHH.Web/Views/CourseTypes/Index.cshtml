@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<DSProyectoHH.Web.Data.Entities.CourseType>
 
 @{
-    ViewData["Title"] = "Tipos de Curso";
+    ViewData["Title"] = "Tipos de Cursos";
 }
 
-<h1>Tipos de Curso</h1>
+<h1>Tipos de Cursos</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-outline-success">Crear nuevo tipo de curso</a>
@@ -12,21 +12,19 @@
 <table class="table">
     <thead>
         <tr>
-            <th align="center">
+            <th>
                 @Html.DisplayNameFor(model => model.CourseTypeName)
             </th>
-
-            <th align="center"></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td align="center">
+            <td>
                 @Html.DisplayFor(modelItem => item.CourseTypeName)
             </td>
-
-            <td align="center">
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>

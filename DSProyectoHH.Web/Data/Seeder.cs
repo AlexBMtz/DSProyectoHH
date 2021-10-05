@@ -133,7 +133,6 @@ namespace DSProyectoHH.Web.Data.Entities
 
             if (!this.dataContext.CourseTypes.Any())
             {
-
                 await CheckCourseType("Preteens");
                 await CheckCourseType("Adults");
                 await CheckCourseType("Teens");

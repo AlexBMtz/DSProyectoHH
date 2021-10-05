@@ -1,12 +1,12 @@
 ﻿@model DSProyectoHH.Web.Data.Entities.CourseType
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear";
 }
 
-<h1>Create</h1>
+<h1>Crear</h1>
 
-<h4>CourseType</h4>
+<h4>Tipos de Cursos</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,14 +18,11 @@
                 <span asp-validation-for="CourseTypeName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-outline-success" /> |
+                <a asp-action="Index" class="btn btn-outline-secondary">Regresar a la Lista</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

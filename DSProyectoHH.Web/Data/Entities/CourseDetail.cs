@@ -8,7 +8,6 @@ namespace DSProyectoHH.Web.Data.Entities
     public class CourseDetail:IEntity
     {
         public int Id { get; set; }
-
         public ICollection<Student> Students { get; set; }
         public GradeGrid GradeGrid { get; set; }
     }

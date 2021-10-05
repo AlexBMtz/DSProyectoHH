@@ -1,20 +1,20 @@
 ﻿@model DSProyectoHH.Web.Data.Entities.CourseType
 
 @{
-    ViewData["Title"] = "Eliminar Tipo de Curso";
+    ViewData["Title"] = "Eliminar";
 }
 
-<h1>Eliminar Tipo de Curso</h1>
+<h1>Eliminar</h1>
 
-<h3>¿Estás seguro de eliminar este tipo de curso?</h3>
+<h3>¿Está seguro que quieres eliminar este tipo de curso?</h3>
 <div>
     <h4>Tipo de Curso</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CourseTypeName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CourseTypeName)
         </dd>
     </dl>
