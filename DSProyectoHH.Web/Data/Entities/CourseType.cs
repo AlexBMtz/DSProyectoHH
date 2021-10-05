@@ -12,10 +12,8 @@ namespace DSProyectoHH.Web.Data.Entities
         [Display(Name = "Nombre del tipo de curso")]
         public string CourseTypeName { get; set; }
 
-        public Teacher Teacher { get; set; }
-        public Course Course { get; set; }
-        public Schedule Schedule { get; set; }
-        public Frequency Frequency { get; set; }
+        public ICollection<Course> Courses { get; set; }
+
 
     }
 }

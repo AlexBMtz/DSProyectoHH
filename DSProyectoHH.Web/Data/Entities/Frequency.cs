@@ -12,6 +12,6 @@ namespace DSProyectoHH.Web.Data.Entities
         [Display(Name = "Frecuencia")]
         public string Name { get; set; }
 
-        public ICollection<CourseType> CourseTypes { get; set; }
+        public ICollection<Course> Courses { get; set; }
     }
 }

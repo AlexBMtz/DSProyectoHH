@@ -20,13 +20,5 @@ namespace DSProyectoHH.Web.Data.Entities
 
         [Required(ErrorMessage ="Campo requerido")]
         public ICollection<Unit> Units { get; set; }
-
-        [Required(ErrorMessage ="Campo requerido")]
-        public ICollection<Student> Students { get; set; }
-
-        public void Calculate_Final_Score()
-        {
-            //finalscore = (unit1 * 0.3) + (unit2 * 0.3) + (unit3 * 0.3) + (finalproyect * 0.1);
-        }
     }
 }

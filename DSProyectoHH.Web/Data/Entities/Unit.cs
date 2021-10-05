@@ -8,7 +8,6 @@ namespace DSProyectoHH.Web.Data.Entities
 {
     public class Unit:IEntity
     {
-        [MaxLength(2)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]

@@ -12,6 +12,7 @@ namespace DSProyectoHH.Web.Data
     {
         public DbSet<ClassParticipation> ClassParticipations { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseDetail> CourseDetails { get; set; }
         public DbSet<CourseType> CourseTypes { get; set; }
         public DbSet<Frequency> Frequencies { get; set; }
         public DbSet<GradeGrid> GradeGrids { get; set; }

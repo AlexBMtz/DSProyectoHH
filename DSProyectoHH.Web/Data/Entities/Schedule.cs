@@ -18,7 +18,7 @@ namespace DSProyectoHH.Web.Data.Entities
         [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:t}")]
         public DateTime EndingHour { get; set; }
 
-        public ICollection<CourseType> CourseTypes { get; set; }
+        public ICollection<Course> Courses { get; set; }
 
 
     }

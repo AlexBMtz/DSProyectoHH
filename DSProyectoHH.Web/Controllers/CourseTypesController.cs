@@ -22,7 +22,7 @@ namespace DSProyectoHH.Web.Controllers
         // GET: CourseTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CourseTypes.Include(c=>c.Course).Include(f=>f.Frequency).Include(s => s.Schedule).Include(t => t.Teacher.User).ToListAsync());
+            return View(await _context.CourseTypes.ToListAsync());
         }
 
         // GET: CourseTypes/Details/5

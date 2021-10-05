@@ -20,7 +20,7 @@ namespace DSProyectoHH.Web.Data.Entities
         [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString ="{0:dd/MM/yyyy}")]
         public DateTime AdmissionDate { get; set; }
 
-        public GradeGrid CourseDetail { get; set; }
+        public CourseDetail CourseDetail { get; set; }
         public User User { get; set; }
 
     }
