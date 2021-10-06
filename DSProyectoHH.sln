@@ -7,6 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{AEF9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSProyectoHH.Web", "DSProyectoHH.Web\DSProyectoHH.Web.csproj", "{D4B634E2-6B8F-4B2F-8BA7-365FEF29BF6C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E6D4FEC8-B260-4763-ACF2-637B9D32B61A}"
+	ProjectSection(SolutionItems) = preProject
+		F:\Users\Edwin Lozada\Descargas\DiagramaDeClasesDSPA_01 = F:\Users\Edwin Lozada\Descargas\DiagramaDeClasesDSPA_01
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
