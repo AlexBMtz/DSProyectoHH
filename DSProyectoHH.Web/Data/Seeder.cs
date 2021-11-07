@@ -25,6 +25,15 @@ namespace DSProyectoHH.Web.Data.Entities
             await userHelper.CheckRoleAsync("Student");
             await userHelper.CheckRoleAsync("Teacher");
 
+            if (!this.dataContext.Coordinators.Any())
+            {
+                var user = await CheckUser("Carlos", "Chávez", "2223242526", "carlos.ch@gmail.com", "123456");
+                await CheckCoordinator(user, "Coordinator", 3007136, new DateTime(2020, 10, 3, 6, 0, 0), "CHAC010416R35");
+
+                user = await CheckUser("Paulina", "Pérez", "2728293031", "pau.perez@gmail.com", "334455");
+                await CheckCoordinator(user, "Coordinator", 3007137, new DateTime(2020, 10, 3, 6, 0, 0), "PERP051218O12");
+            }
+
             if (!this.dataContext.Teachers.Any())
             {
                 var user = await CheckUser("Alejandro", "Barroeta", "2221136875", "abm@gmail.com", "123456");
@@ -156,6 +165,20 @@ namespace DSProyectoHH.Web.Data.Entities
 
                 await CheckCourse(203193, "Course 1", new DateTime(2021, 10, 5), frequency, schedule, courseType, courseDetail, teacher);
             }
+        }
+
+        private async Task CheckCoordinator(User user, string role, int coordinatorId, DateTime hiringDate, string rfc)
+        {
+            this.dataContext.Coordinators.Add(new Coordinator
+            {
+                CoordinatorId = coordinatorId,
+                HiringDate = hiringDate,
+                RFC = rfc,
+                User = user
+            }) ;
+
+            await this.dataContext.SaveChangesAsync();
+            await userHelper.AddUserToRoleAsync(user, role);
         }
 
         private async Task CheckCourse(int courseId, string courseName, DateTime startingDate, Frequency frequency, Schedule schedule, CourseType courseType, CourseDetail courseDetail,Teacher teacher)

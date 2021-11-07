@@ -46,6 +46,37 @@ namespace DSProyectoHH.Web.Migrations
                     b.ToTable("ClassParticipations");
                 });
 
+            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Coordinator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CoordinatorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("HiringDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RFC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(13)")
+                        .HasMaxLength(13);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Coordinators");
+                });
+
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Course", b =>
                 {
                     b.Property<int>("Id")
@@ -568,6 +599,13 @@ namespace DSProyectoHH.Web.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Coordinator", b =>
+                {
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Course", b =>

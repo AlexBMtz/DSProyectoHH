@@ -264,6 +264,29 @@ namespace DSProyectoHH.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Coordinators",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CoordinatorId = table.Column<int>(nullable: false),
+                    HiringDate = table.Column<DateTime>(nullable: false),
+                    RFC = table.Column<string>(maxLength: 13, nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Coordinators", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Coordinators_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teachers",
                 columns: table => new
                 {
@@ -484,6 +507,11 @@ namespace DSProyectoHH.Web.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Coordinators_UserId",
+                table: "Coordinators",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CourseDetails_GradeGridId",
                 table: "CourseDetails",
                 column: "GradeGridId");
@@ -570,6 +598,9 @@ namespace DSProyectoHH.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Coordinators");
 
             migrationBuilder.DropTable(
                 name: "Courses");

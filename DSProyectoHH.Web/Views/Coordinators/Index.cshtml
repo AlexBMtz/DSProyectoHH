@@ -1,0 +1,74 @@
+﻿@model IEnumerable<DSProyectoHH.Web.Data.Entities.Coordinator>
+
+@{
+    ViewData["Title"] = "Coordinadores";
+}
+<h1>Coordinadores</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-success"> Nuevo coordinador</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.CoordinatorId)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.User.FullName)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.User.Email)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.User.PhoneNumber)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.RFC)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.HiringDate)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CoordinatorId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HiringDate)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@Url.Content(item.ImageUrl)" style="width:100px; height:auto;" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

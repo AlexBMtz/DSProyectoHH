@@ -11,6 +11,7 @@ namespace DSProyectoHH.Web.Data
     public class DataContext : IdentityDbContext<User>
     {
         public DbSet<ClassParticipation> ClassParticipations { get; set; }
+        public DbSet<Coordinator> Coordinators { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseDetail> CourseDetails { get; set; }
         public DbSet<CourseType> CourseTypes { get; set; }
