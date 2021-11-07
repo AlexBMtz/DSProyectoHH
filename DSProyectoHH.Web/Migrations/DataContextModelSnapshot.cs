@@ -252,6 +252,9 @@ namespace DSProyectoHH.Web.Migrations
                     b.Property<int?>("CourseDetailId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
@@ -276,6 +279,9 @@ namespace DSProyectoHH.Web.Migrations
 
                     b.Property<DateTime>("HiringDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RFC")
                         .IsRequired()

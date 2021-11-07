@@ -25,8 +25,11 @@ namespace DSProyectoHH.Web.Data.Entities
         [StringLength(13)]
         public string RFC { get; set; }
 
-        public ICollection<Course> Courses { get; set; }
-        public User User { get; set; }
+        [Display(Name = "Foto del Maestro")]
+        public string ImageUrl { get; set; }
 
+        public ICollection<Course> Courses { get; set; }
+
+        public User User { get; set; }
     }
 }

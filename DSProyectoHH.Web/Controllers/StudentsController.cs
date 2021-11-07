@@ -1,28 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DSProyectoHH.Web.Data;
+using DSProyectoHH.Web.Data.Entities;
+using DSProyectoHH.Web.Helpers;
+using DSProyectoHH.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DSProyectoHH.Web.Data;
-using DSProyectoHH.Web.Data.Entities;
 
 namespace DSProyectoHH.Web.Controllers
 {
     public class StudentsController : Controller
     {
         private readonly DataContext _context;
+        private readonly IImageHelper imageHelper;
 
-        public StudentsController(DataContext context)
+        public StudentsController(DataContext context,
+            IImageHelper imageHelper)
         {
             _context = context;
+            this.imageHelper = imageHelper;
         }
 
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.Include(u=>u.User).ToListAsync());
+            return View(await _context.Students.Include(u => u.User).ToListAsync());
         }
 
         // GET: Students/Details/5
@@ -43,26 +45,31 @@ namespace DSProyectoHH.Web.Controllers
             return View(student);
         }
 
-        // GET: Students/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Student student)
+        public async Task<IActionResult> Create(StudentViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var student = new Student
+                {
+                    
+                    ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                        model.ImageFile,
+                        model.User.FullName,
+                        "Teachers") : string.Empty)
+                };
                 _context.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(model);
         }
 
         // GET: Students/Edit/5
@@ -86,7 +93,7 @@ namespace DSProyectoHH.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,Student student)
+        public async Task<IActionResult> Edit(int id, Student student)
         {
             if (id != student.Id)
             {

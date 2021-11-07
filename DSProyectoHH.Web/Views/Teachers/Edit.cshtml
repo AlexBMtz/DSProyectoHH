@@ -44,6 +44,11 @@
                 <span asp-validation-for="RFC" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-outline-primary" /> |
                 <a asp-action="Index" class="btn btn-outline-secondary">Regresar a la Lista</a>
             </div>

@@ -1,28 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DSProyectoHH.Web.Data;
+using DSProyectoHH.Web.Data.Entities;
+using DSProyectoHH.Web.Helpers;
+using DSProyectoHH.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DSProyectoHH.Web.Data;
-using DSProyectoHH.Web.Data.Entities;
 
 namespace DSProyectoHH.Web.Controllers
 {
     public class TeachersController : Controller
     {
         private readonly DataContext _context;
+        private readonly IImageHelper imageHelper;
 
-        public TeachersController(DataContext context)
+        public TeachersController(DataContext context,
+            IImageHelper imageHelper)
         {
             _context = context;
+            this.imageHelper = imageHelper;
         }
 
         // GET: Teachers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Teachers.Include(u=>u.User).ToListAsync());
+            return View(await _context.Teachers.Include(u => u.User).ToListAsync());
         }
 
         // GET: Teachers/Details/5
@@ -33,7 +35,7 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var teacher = await _context.Teachers.Include(u=>User)
+            var teacher = await _context.Teachers.Include(u => User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (teacher == null)
             {
@@ -54,15 +56,26 @@ namespace DSProyectoHH.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Teacher teacher)
+        public async Task<IActionResult> Create(TeacherViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var teacher = new Teacher
+                {
+                    TeacherId = model.TeacherId,
+                    Courses = model.Courses,
+                    HiringDate = model.HiringDate,
+                    RFC = model.RFC,
+                    ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                        model.ImageFile,
+                        model.User.FullName,
+                        "Teachers") : string.Empty)
+                };
                 _context.Add(teacher);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(teacher);
+            return View(model);
         }
 
         // GET: Teachers/Edit/5
@@ -86,7 +99,7 @@ namespace DSProyectoHH.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,Teacher teacher)
+        public async Task<IActionResult> Edit(int id, Teacher teacher)
         {
             if (id != teacher.Id)
             {

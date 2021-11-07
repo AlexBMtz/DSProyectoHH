@@ -272,6 +272,7 @@ namespace DSProyectoHH.Web.Migrations
                     TeacherId = table.Column<int>(nullable: false),
                     HiringDate = table.Column<DateTime>(nullable: false),
                     RFC = table.Column<string>(maxLength: 13, nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -422,6 +423,7 @@ namespace DSProyectoHH.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(nullable: false),
                     AdmissionDate = table.Column<DateTime>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
                     CourseDetailId = table.Column<int>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
