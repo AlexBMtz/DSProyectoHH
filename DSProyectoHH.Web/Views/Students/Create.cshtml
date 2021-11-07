@@ -4,9 +4,9 @@
     ViewData["Title"] = "Crear";
 }
 
-<h1>Crear</h1>
+<h1>Crear nuevo estudiante</h1>
 
-<h4>Student</h4>
+<h4>Estudiante</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,21 +14,41 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="StudentId" class="control-label"></label>
-                <input asp-for="StudentId" class="form-control" />
+                <input asp-for="StudentId" class="form-control" maxlength="6"/>
                 <span asp-validation-for="StudentId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="User.FirstName" class="control-label"></label>
+                <input asp-for="User.FirstName" class="form-control" />
+                <span asp-validation-for="User.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.LastName" class="control-label"></label>
+                <input asp-for="User.LastName" class="form-control" />
+                <span asp-validation-for="User.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Email" class="control-label"></label>
+                <input asp-for="User.Email" class="form-control" />
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.PhoneNumber" class="control-label"></label>
+                <input asp-for="User.PhoneNumber" class="form-control" />
+                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="AdmissionDate" class="control-label"></label>
-                <input asp-for="AdmissionDate" class="form-control" />
+                <input asp-for="AdmissionDate" class="form-control" type="date" />
                 <span asp-validation-for="AdmissionDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" class="form-control" type="file"/>
+                <input asp-for="ImageFile" class="form-control" type="file" accept=".png" />
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-outline-success" />
+                <input type="submit" value="Crear" class="btn btn-outline-success" /> |
                 <a asp-action="Index" class="btn btn-outline-secondary">Regresar a la Lista</a>
             </div>
         </form>

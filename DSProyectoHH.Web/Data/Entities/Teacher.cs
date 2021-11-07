@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,21 +9,21 @@ namespace DSProyectoHH.Web.Data.Entities
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="La ID es requerida")]
+        [Required(ErrorMessage = "La ID es requerida")]
         [DisplayName("Clave del maestro")]
         public int TeacherId { get; set; }
 
         [Required(ErrorMessage = "La Fecha de contratación es requerida")]
-        [Display(Name = "Fecha de contratación")]
+        [DisplayName("Fecha de contratación")]
         [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime HiringDate { get; set; }
 
-        [Required(ErrorMessage ="RFC requerida")]
+        [Required(ErrorMessage = "RFC requerida")]
         [DisplayName("RFC")]
-        [StringLength(13)]
+        [MaxLength(13, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         public string RFC { get; set; }
 
-        [Display(Name = "Foto del Maestro")]
+        [DisplayName("Foto del Profesor")]
         public string ImageUrl { get; set; }
 
         public ICollection<Course> Courses { get; set; }

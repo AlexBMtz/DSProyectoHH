@@ -1,12 +1,12 @@
 ﻿@model DSProyectoHH.Web.Data.Entities.Student
 
 @{
-    ViewData["Title"] = "Eliminar";
+    ViewData["Title"] = "Eliminar estudiante";
 }
 
-<h1>Delete</h1>
+<h1>Delete estudiante</h1>
 
-<h3>¿Está seguro que quieres eliminar el curso?</h3>
+<h3>¿Está seguro que quieres eliminar al estudiante?</h3>
 <div>
     <h4>Estudiante</h4>
     <hr />
@@ -18,16 +18,41 @@
             @Html.DisplayFor(model => model.StudentId)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.AdmissionDate)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AdmissionDate)
         </dd>
         <dt class="col-sm-2">
+        </dt>
+        <dd class="col-sm-10">
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ImageUrl)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Url.Content(Model.ImageUrl)" style="width:300px; height:auto;" />
+            }
         </dd>
     </dl>
     

@@ -10,7 +10,7 @@ namespace DSProyectoHH.Web.Helpers
         public async Task<string> UploadImageAsync(IFormFile imageFile, string nameFile, string folder)
         {
             var guid = Guid.NewGuid().ToString();
-            var file = $"{nameFile}{guid}.png";
+            var file = $"{nameFile}-{guid}.png";
             var path = Path.Combine(Directory.GetCurrentDirectory(),
                 $"wwwroot\\images\\{folder}", file);
             using (var stream = new FileStream(path, FileMode.Create))

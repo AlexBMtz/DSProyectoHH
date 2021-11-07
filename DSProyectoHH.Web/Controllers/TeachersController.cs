@@ -2,8 +2,10 @@
 using DSProyectoHH.Web.Data.Entities;
 using DSProyectoHH.Web.Helpers;
 using DSProyectoHH.Web.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,23 +13,25 @@ namespace DSProyectoHH.Web.Controllers
 {
     public class TeachersController : Controller
     {
-        private readonly DataContext _context;
+        private readonly DataContext dataContext;
         private readonly IImageHelper imageHelper;
+        private readonly IUserHelper userHelper;
 
-        public TeachersController(DataContext context,
-            IImageHelper imageHelper)
+        public TeachersController(DataContext dataContext,
+            IImageHelper imageHelper, IUserHelper userHelper)
         {
-            _context = context;
+            this.dataContext = dataContext;
             this.imageHelper = imageHelper;
+            this.userHelper = userHelper;
         }
 
-        // GET: Teachers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Teachers.Include(u => u.User).ToListAsync());
+            return View(await dataContext.Teachers
+                .Include(u => u.User)
+                .ToListAsync());
         }
 
-        // GET: Teachers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,8 +39,9 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var teacher = await _context.Teachers.Include(u => User)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var teacher = await this.dataContext.Teachers
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(t => t.Id == id);
             if (teacher == null)
             {
                 return NotFound();
@@ -45,40 +50,55 @@ namespace DSProyectoHH.Web.Controllers
             return View(teacher);
         }
 
-        // GET: Teachers/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Teachers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TeacherViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var user = await userHelper.GetUserByIdAsync(model.User.Id);
+                if (user == null)
+                {
+                    user = new User
+                    {
+                        FirstName = model.User.FirstName,
+                        LastName = model.User.LastName,
+                        PhoneNumber = model.User.PhoneNumber,
+                        Email = model.User.Email,
+                        UserName = model.User.Email
+                    };
+                    var result = await userHelper.AddUserAsync(user, "123456");
+                    if (result != IdentityResult.Success)
+                    {
+                        throw new InvalidOperationException("ERROR. No se pudo crear el usuario.");
+                    }
+                }
+
                 var teacher = new Teacher
                 {
                     TeacherId = model.TeacherId,
-                    Courses = model.Courses,
                     HiringDate = model.HiringDate,
                     RFC = model.RFC,
                     ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
                         model.ImageFile,
                         model.User.FullName,
-                        "Teachers") : string.Empty)
+                        "Teachers") : string.Empty),
+                    User = await this.dataContext.Users.FindAsync(user.Id)
                 };
-                _context.Add(teacher);
-                await _context.SaveChangesAsync();
+                dataContext.Add(teacher);
+                await dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        // GET: Teachers/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,32 +106,77 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var teacher = await _context.Teachers.FindAsync(id);
+            var teacher = await this.dataContext.Teachers
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(t => t.Id == id);
+            
             if (teacher == null)
             {
                 return NotFound();
             }
-            return View(teacher);
+
+            var model = new TeacherViewModel
+            {
+                Id = teacher.Id,
+                TeacherId = teacher.TeacherId,
+                HiringDate = teacher.HiringDate,
+                ImageUrl = teacher.ImageUrl,
+                RFC = teacher.RFC,
+                User = teacher.User
+            };
+
+            return View(model);
         }
 
-        // POST: Teachers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Teacher teacher)
+        public async Task<IActionResult> Edit(TeacherViewModel model)
         {
-            if (id != teacher.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
+                // TODO: No actualiza datos propios del usuario, pero si de profesor
+                var user = new User
+                {
+                    Id = model.User.Id,
+                    FirstName = model.User.FirstName,
+                    LastName = model.User.LastName,
+                    PhoneNumber = model.User.PhoneNumber,
+                    Email = model.User.Email,
+                    UserName = model.User.Email
+                };
                 try
                 {
-                    _context.Update(teacher);
-                    await _context.SaveChangesAsync();
+                    dataContext.Update(user);
+                    await dataContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(user.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                var teacher = new Teacher
+                {
+                    Id = model.Id,
+                    TeacherId = model.TeacherId,
+                    HiringDate = model.HiringDate,
+                    RFC = model.RFC,
+                    ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                        model.ImageFile,
+                        model.User.FullName,
+                        "Teachers") : model.ImageUrl),
+                    User = await this.dataContext.Users.FindAsync(model.User.Id)
+                };
+                try
+                {
+                    dataContext.Update(teacher);
+                    await dataContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,10 +191,9 @@ namespace DSProyectoHH.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(teacher);
+            return View(model);
         }
 
-        // GET: Teachers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,8 +201,9 @@ namespace DSProyectoHH.Web.Controllers
                 return NotFound();
             }
 
-            var teacher = await _context.Teachers.Include(u => User)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var teacher = await this.dataContext.Teachers
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(t => t.Id == id);
             if (teacher == null)
             {
                 return NotFound();
@@ -147,20 +212,29 @@ namespace DSProyectoHH.Web.Controllers
             return View(teacher);
         }
 
-        // POST: Teachers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var teacher = await _context.Teachers.FindAsync(id);
-            _context.Teachers.Remove(teacher);
-            await _context.SaveChangesAsync();
+            var teacher = await this.dataContext.Teachers
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(t => t.Id == id);
+            dataContext.Teachers.Remove(teacher);
+            var user = await dataContext.Users.FindAsync(teacher.User.Id);
+            dataContext.Users.Remove(user);
+
+            await dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TeacherExists(int id)
         {
-            return _context.Teachers.Any(e => e.Id == id);
+            return dataContext.Teachers.Any(e => e.Id == id);
+        }
+
+        private bool UserExists(string id)
+        {
+            return dataContext.Users.Any(e => e.Id == id);
         }
     }
 }

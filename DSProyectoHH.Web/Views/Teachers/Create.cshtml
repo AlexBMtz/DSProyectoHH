@@ -3,9 +3,9 @@
     ViewData["Title"] = "Crear";
 }
 
-<h1>Crear</h1>
+<h1>Crear nuevo profesor</h1>
 
-<h4>Teacher</h4>
+<h4>Profesor</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -13,7 +13,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="TeacherId" class="control-label"></label>
-                <input asp-for="TeacherId" class="form-control" />
+                <input asp-for="TeacherId" class="form-control" maxlength="6"/>
                 <span asp-validation-for="TeacherId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -42,8 +42,13 @@
                 <span asp-validation-for="RFC" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="HiringDate" class="control-label"></label>
+                <input asp-for="HiringDate" class="form-control" type="date" />
+                <span asp-validation-for="HiringDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" class="form-control" type="file"/>
+                <input asp-for="ImageFile" class="form-control" type="file" accept=".png" />
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group">
