@@ -21,9 +21,9 @@ namespace DSProyectoHH.Web.Data.Entities
         {
             await dataContext.Database.EnsureCreatedAsync();
             await userHelper.CheckRoleAsync("Admin");
+            await userHelper.CheckRoleAsync("Coordinator");
             await userHelper.CheckRoleAsync("Student");
             await userHelper.CheckRoleAsync("Teacher");
-
 
             if (!this.dataContext.Teachers.Any())
             {

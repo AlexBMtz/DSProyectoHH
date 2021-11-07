@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="~/images/HH_icon.jpeg">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/home"/>
 </head>
 <body>
     <header>
@@ -17,34 +18,56 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catálogos</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #000000;">
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Units" asp-action="Index">Unidades</a>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="ClassParticipations" asp-action="Index">Participaciones en Clase</a>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="OralQuizs" asp-action="Index">Examenes Orales</a>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="WrittenQuizs" asp-action="Index">Examenes Escritos</a>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Projects" asp-action="Index">Proyecto</a>
-                                <div class="dropdown-divider border-warning"></div>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Courses" asp-action="Index">Cursos</a>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="CourseDetails" asp-action="Index">Detalles de Cursos</a>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="GradeGrids" asp-action="Index">Listas de Calificaciones</a>
-                                <div class="dropdown-divider border-warning"></div>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Frequencies" asp-action="Index">Frecuencias</a>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Schedules" asp-action="Index">Horarios</a>
-                                <a class="nav-link text-warning" asp-area="" asp-controller="CourseTypes" asp-action="Index">Tipo de Cursos</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a class="nav-link text-warning" asp-area="" asp-controller="Teachers" asp-action="Index">Profesores</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-warning" asp-area="" asp-controller="Students" asp-action="Index">Estudiantes</a>
-                        </li>
-                    </ul>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #FAEA10">Catálogos</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #000000;">
+                                    <a class="nav-link" asp-area="" asp-controller="Units" asp-action="Index" style="color: #FAEA10">Unidades</a>
+                                    <a class="nav-link" asp-area="" asp-controller="ClassParticipations" asp-action="Index" style="color: #FAEA10">Participaciones en Clase</a>
+                                    <a class="nav-link" asp-area="" asp-controller="OralQuizs" asp-action="Index" style="color: #FAEA10">Examenes Orales</a>
+                                    <a class="nav-link" asp-area="" asp-controller="WrittenQuizs" asp-action="Index" style="color: #FAEA10">Examenes Escritos</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Index" style="color: #FAEA10">Proyecto</a>
+                                    <div class="dropdown-divider border-warning"></div>
+                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index" style="color: #FAEA10">Cursos</a>
+                                    <a class="nav-link" asp-area="" asp-controller="CourseDetails" asp-action="Index" style="color: #FAEA10">Detalles de Cursos</a>
+                                    <a class="nav-link" asp-area="" asp-controller="GradeGrids" asp-action="Index" style="color: #FAEA10">Listas de Calificaciones</a>
+                                    <div class="dropdown-divider border-warning"></div>
+                                    <a class="nav-link" asp-area="" asp-controller="Frequencies" asp-action="Index" style="color: #FAEA10">Frecuencias</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Schedules" asp-action="Index" style="color: #FAEA10">Horarios</a>
+                                    <a class="nav-link" asp-area="" asp-controller="CourseTypes" asp-action="Index"style="color: #FAEA10">Tipo de Cursos</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="Teachers" asp-action="Index" style="color: #FAEA10">Profesores</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" asp-area="" asp-controller="Students" asp-action="Index" style="color: #FAEA10">Estudiantes</a>
+                            </li>
+                        </ul>
+                            <ul class="nav navbar navbar-right">
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" style="color:white">@User.Identity.Name</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout" style="color: #FAEA10; font-weight:bold;">Cerrar Sesión</a>
+                                </li>
+                            </ul>
+                 </div>
+                }
+                else
+                {
+                    <div class="navbar-nav flex-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Accounts" asp-action="Login" 
+                                   style="color: #000000; background-color: #FAEA10; border-radius: 5px; font-weight: bold;">Iniciar Sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+                }
             </div>
         </nav>
     </header>
@@ -54,11 +77,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @*<footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - Harmon Hall®
         </div>
-    </footer>
+    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
