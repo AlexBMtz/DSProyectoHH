@@ -6,7 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
 
-   // [Authorize(Roles = "Teacher,Coordinator")]
+   [Authorize(Roles = "Teacher,Coordinator")]
     public class UnitsController : Controller
     {
        

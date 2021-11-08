@@ -9,7 +9,7 @@
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
 
-    //[Authorize(Roles = "Teacher,Coordinator")]
+    [Authorize(Roles = "Teacher,Coordinator")]
     public class GradeGridsController : Controller
     {
         private readonly DataContext dataContext;
@@ -20,7 +20,7 @@
             this.dataContext = dataContext;
             this.combosHelper = combosHelper;
         }
-       // [Authorize(Roles ="Student,Teacher,Coordinator")]
+        [Authorize(Roles ="Student,Teacher,Coordinator")]
         public async Task<IActionResult> Index()
         {
             return View(await dataContext.GradeGrids.ToListAsync());
