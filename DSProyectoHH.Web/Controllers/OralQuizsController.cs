@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DSProyectoHH.Web.Data;
 using DSProyectoHH.Web.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DSProyectoHH.Web.Controllers
 {
+    //[Authorize(Roles = "Teacher,Coordinator")]
+    
     public class OralQuizsController : Controller
     {
         private readonly DataContext _context;

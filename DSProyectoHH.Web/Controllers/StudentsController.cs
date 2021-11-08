@@ -2,6 +2,7 @@
 using DSProyectoHH.Web.Data.Entities;
 using DSProyectoHH.Web.Helpers;
 using DSProyectoHH.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace DSProyectoHH.Web.Controllers
 {
+   // [Authorize(Roles = "Coordinator")]
     public class StudentsController : Controller
     {
         private readonly DataContext dataContext;

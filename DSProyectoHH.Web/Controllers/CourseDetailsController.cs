@@ -1,12 +1,15 @@
 ﻿namespace DSProyectoHH.Web.Controllers
 {
     using DSProyectoHH.Web.Data;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
 
+   // [Authorize(Roles = "Coordinator")]
     public class CourseDetailsController : Controller
     {
+
         private readonly DataContext dataContext;
 
         public CourseDetailsController(DataContext dataContext)
