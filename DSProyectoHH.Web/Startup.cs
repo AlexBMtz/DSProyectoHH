@@ -66,12 +66,14 @@ namespace DSProyectoHH.Web
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseAuthentication();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
