@@ -19,5 +19,17 @@ namespace DSProyectoHH.Web.Helpers
             }
             return $"~/images/{folder}/{file}";
         }
+
+        public async Task<string> UpdateImageAsync(IFormFile imageFile, string url)
+        {
+            string urlTemp = url.Substring(1);
+            urlTemp = $"wwwroot{urlTemp}";
+
+            using (var stream = new FileStream(urlTemp, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+            return url;
+        }
     }
 }

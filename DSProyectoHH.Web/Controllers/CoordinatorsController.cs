@@ -135,32 +135,15 @@ namespace DSProyectoHH.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO: No actualiza datos propios del usuario, pero si de profesor
-                var user = new User
-                {
-                    Id = model.User.Id,
-                    FirstName = model.User.FirstName,
-                    LastName = model.User.LastName,
-                    PhoneNumber = model.User.PhoneNumber,
-                    Email = model.User.Email,
-                    UserName = model.User.Email
-                };
-                try
-                {
-                    dataContext.Update(user);
-                    await dataContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                var user = await this.dataContext.Users.FindAsync(model.User.Id);
+                user.FirstName = model.User.FirstName;
+                user.LastName = model.User.LastName;
+                user.PhoneNumber = model.User.PhoneNumber;
+                user.Email = model.User.Email;
+                user.UserName = model.User.Email;
+
+                this.dataContext.Update(user);
+                await dataContext.SaveChangesAsync();
 
                 var coordinator = new Coordinator
                 {
@@ -168,28 +151,13 @@ namespace DSProyectoHH.Web.Controllers
                     CoordinatorId = model.CoordinatorId,
                     HiringDate = model.HiringDate,
                     RFC = model.RFC,
-                    ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
-                        model.ImageFile,
-                        model.User.FullName,
-                        "Coordinators") : model.ImageUrl),
+                    ImageUrl = (model.ImageFile != null ? await imageHelper.UpdateImageAsync(
+                        model.ImageFile, model.ImageUrl) : model.ImageUrl),
                     User = await this.dataContext.Users.FindAsync(model.User.Id)
                 };
-                try
-                {
-                    dataContext.Update(coordinator);
-                    await dataContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TeacherExists(coordinator.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+
+                this.dataContext.Update(coordinator);
+                await dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(model);

@@ -20,7 +20,8 @@
                 </button>
                 @if (User.Identity.IsAuthenticated)
                 {
-
+                    @if (User.IsInRole("Coordinator"))
+                    {
                         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item dropdown">
@@ -47,8 +48,35 @@
                                 <li>
                                     <a class="nav-link" asp-area="" asp-controller="Students" asp-action="Index" style="color: #FAEA10">Estudiantes</a>
                                 </li>
-                                <li>
+                                @*<li>
                                     <a class="nav-link" asp-area="" asp-controller="Coordinators" asp-action="Index" style="color: #FAEA10">Coordinadores</a>
+                                </li>*@
+                            </ul>
+                            <ul class="nav navbar navbar-right">
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" style="color:white">@User.Identity.Name</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout" style="color: #FAEA10; font-weight:bold;">Cerrar Sesión</a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #FAEA10">Catálogos</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #000000;">
+                                        <a class="nav-link" asp-area="" asp-controller="Units" asp-action="Index" style="color: #FAEA10">Unidades</a>
+                                        <a class="nav-link" asp-area="" asp-controller="ClassParticipations" asp-action="Index" style="color: #FAEA10">Participaciones en Clase</a>
+                                        <a class="nav-link" asp-area="" asp-controller="OralQuizs" asp-action="Index" style="color: #FAEA10">Examenes Orales</a>
+                                        <a class="nav-link" asp-area="" asp-controller="WrittenQuizs" asp-action="Index" style="color: #FAEA10">Examenes Escritos</a>
+                                        <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Index" style="color: #FAEA10">Proyecto</a>
+                                        <div class="dropdown-divider border-warning"></div>
+                                        <a class="nav-link" asp-area="" asp-controller="GradeGrids" asp-action="Index" style="color: #FAEA10">Listas de Calificaciones</a>
+                                    </div>
                                 </li>
                             </ul>
                             <ul class="nav navbar navbar-right">
@@ -60,10 +88,28 @@
                                 </li>
                             </ul>
                         </div>
-                   
                     }
-                    else
+                    @if (User.IsInRole("Student"))
                     {
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li>
+                                    <a class="nav-link" asp-area="" asp-controller="GradeGrids" asp-action="Index" style="color: #FAEA10">Listas de Calificaciones</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar navbar-right">
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" style="color:white">@User.Identity.Name</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout" style="color: #FAEA10; font-weight:bold;">Cerrar Sesión</a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                }
+                else
+                {
                     <div class="navbar-nav flex-row-reverse">
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">

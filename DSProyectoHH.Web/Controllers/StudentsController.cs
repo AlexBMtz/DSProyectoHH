@@ -132,59 +132,27 @@ namespace DSProyectoHH.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO: No actualiza datos propios del usuario, pero si de profesor
-                var user = new User
-                {
-                    Id = model.User.Id,
-                    FirstName = model.User.FirstName,
-                    LastName = model.User.LastName,
-                    PhoneNumber = model.User.PhoneNumber,
-                    Email = model.User.Email,
-                    UserName = model.User.Email
-                };
-                try
-                {
-                    dataContext.Update(user);
-                    await dataContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                var user = await this.dataContext.Users.FindAsync(model.User.Id);
+                user.FirstName = model.User.FirstName;
+                user.LastName = model.User.LastName;
+                user.PhoneNumber = model.User.PhoneNumber;
+                user.Email = model.User.Email;
+                user.UserName = model.User.Email;
+
+                this.dataContext.Update(user);
+                await dataContext.SaveChangesAsync();
 
                 var student = new Student
                 {
                     StudentId = model.StudentId,
                     AdmissionDate = model.AdmissionDate,
-                    ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
-                        model.ImageFile,
-                        model.User.FullName,
-                        "Teachers") : string.Empty),
+                    ImageUrl = (model.ImageFile != null ? await imageHelper.UpdateImageAsync(
+                        model.ImageFile, model.ImageUrl) : model.ImageUrl),
                     User = await this.dataContext.Users.FindAsync(user.Id)
                 };
-                try
-                {
-                    dataContext.Update(student);
-                    await dataContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StudentExists(student.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+
+                this.dataContext.Update(student);
+                await dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
