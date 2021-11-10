@@ -6,8 +6,9 @@
     <title>@ViewData["Title"] - Harmon Hall</title>
     <link rel="shortcut icon" href="~/images/HH_icon.jpeg">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/style-icon.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/home"/>
+    <link rel="stylesheet" href="~/css/home" />
 </head>
 <body>
     <header>
@@ -102,7 +103,9 @@
                                     <a class="nav-link disabled" style="color:white">@User.Identity.Name</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout" style="color: #FAEA10; font-weight:bold;">Cerrar Sesión</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout" style="color: #FAEA10; font-weight:bold;">
+                                        <span class="icon-user"></span>  Cerrar Sesión
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -114,7 +117,9 @@
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Accounts" asp-action="Login"
-                                   style="color: #000000; background-color: #FAEA10; border-radius: 5px; font-weight: bold;">Iniciar Sesión</a>
+                                   style="color: #000000; background-color: #FAEA10; border-radius: 5px; font-weight: bold;">
+                                    <span class="icon-user"></span>  Iniciar Sesión
+                                </a>
                             </li>
                         </ul>
                     </div>

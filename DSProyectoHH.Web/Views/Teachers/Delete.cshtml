@@ -4,6 +4,8 @@
     ViewData["Title"] = "Eliminar profesor";
 }
 
+<link rel="stylesheet" href="~/css/style-icon.css" />
+
 <h1>Eliminar profesor</h1>
 
 <h3>¿Está seguro que quieres eliminar al profesor?</h3>
@@ -65,6 +67,8 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Eliminar" class="btn btn-outline-danger" /> |
-        <a asp-action="Index" class="btn btn-outline-secondary">Regresar a la lista</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <span class="icon-undo2"></span>  Regresar a la lista
+        </a>
     </form>
 </div>
