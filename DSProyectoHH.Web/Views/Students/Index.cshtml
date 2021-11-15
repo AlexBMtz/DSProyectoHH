@@ -9,7 +9,7 @@
 
 <p>
     <a asp-action="Create" class="btn btn-outline-success">
-        <span class="icon-user-plus"></span>  Crear nuevo estudiante</a>
+        <span class="icon-user-plus"></span></a>
 </p>
 <table class="table">
     <thead>
@@ -61,14 +61,11 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">
-                    <span class="icon-pencil"></span>  Editar
-                </a>  
+                    <span class="icon-pencil"></span></a>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">
-                    <span class="icon-list2"></span>  Detalles
-                </a>
+                    <span class="icon-list2"></span></a>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">
-                    <span class="icon-cancel-circle"></span>  Eliminar
-                </a>
+                    <span class="icon-cancel-circle"></span></a>
             </td>
         </tr>
 }

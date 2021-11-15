@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DSProyectoHH.Web.Controllers
 {
-   [Authorize(Roles = "Teacher,Coordinator")]
+   [Authorize(Roles = "Teacher,Coordinator,Admin")]
 
     public class ProjectsController : Controller
     {

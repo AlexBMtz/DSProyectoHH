@@ -6,6 +6,7 @@ namespace DSProyectoHH.Web.Data
 {
     public class DataContext : IdentityDbContext<User>
     {
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<ClassParticipation> ClassParticipations { get; set; }
         public DbSet<Coordinator> Coordinators { get; set; }
         public DbSet<Course> Courses { get; set; }

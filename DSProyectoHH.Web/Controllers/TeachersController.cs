@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DSProyectoHH.Web.Controllers
 {
-    [Authorize(Roles = "Coordinator")] 
+    [Authorize(Roles = "Coordinator,Admin")] 
     public class TeachersController : Controller
     {
         private readonly DataContext dataContext;

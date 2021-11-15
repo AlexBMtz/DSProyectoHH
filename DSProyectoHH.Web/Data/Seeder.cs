@@ -1,8 +1,7 @@
-﻿    using System.Linq;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
@@ -24,6 +23,12 @@ namespace DSProyectoHH.Web.Data.Entities
             await userHelper.CheckRoleAsync("Coordinator");
             await userHelper.CheckRoleAsync("Student");
             await userHelper.CheckRoleAsync("Teacher");
+
+            if (!this.dataContext.Admins.Any())
+            {
+                var user = await CheckUser("Administrador", "", "2222222222", "admin@gmail.com", "123456");
+                await CheckAdmin(user, "Admin");
+            }
 
             if (!this.dataContext.Coordinators.Any())
             {
@@ -104,7 +109,7 @@ namespace DSProyectoHH.Web.Data.Entities
                 await CheckUnit(classParticipartion, oralQuiz, writtenQuiz, gradeGrid);
             }
 
-            if(!this.dataContext.CourseDetails.Any())
+            if (!this.dataContext.CourseDetails.Any())
             {
                 var gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(g => g.Id == 1);
                 await CheckCourseDetail(gradeGrid);
@@ -117,11 +122,11 @@ namespace DSProyectoHH.Web.Data.Entities
             {
                 var user = await CheckUser("Marco", "Hernandez", "2221136875", "Hernan_Marc@Outlook", "153456");
                 var courseDetail = this.dataContext.CourseDetails.FirstOrDefault(c => c.Id == 1);
-                await CheckStudent(user, "Student", 1945, DateTime.Today,courseDetail);
+                await CheckStudent(user, "Student", 1945, DateTime.Today, courseDetail);
 
                 user = await CheckUser("Karla", "Alvarez", "4221136875", "aknm@gmail.com", "123cuatro56");
                 courseDetail = this.dataContext.CourseDetails.FirstOrDefault(c => c.Id == 1);
-                await CheckStudent(user, "Student", 1948, DateTime.Today,courseDetail);
+                await CheckStudent(user, "Student", 1948, DateTime.Today, courseDetail);
 
             }
 
@@ -167,6 +172,17 @@ namespace DSProyectoHH.Web.Data.Entities
             }
         }
 
+        private async Task CheckAdmin(User user, string role)
+        {
+            this.dataContext.Admins.Add(new Admin
+            {
+                User = user
+            });
+
+            await this.dataContext.SaveChangesAsync();
+            await userHelper.AddUserToRoleAsync(user, role);
+        }
+
         private async Task CheckCoordinator(User user, string role, int coordinatorId, DateTime hiringDate, string rfc)
         {
             this.dataContext.Coordinators.Add(new Coordinator
@@ -175,25 +191,25 @@ namespace DSProyectoHH.Web.Data.Entities
                 HiringDate = hiringDate,
                 RFC = rfc,
                 User = user
-            }) ;
+            });
 
             await this.dataContext.SaveChangesAsync();
             await userHelper.AddUserToRoleAsync(user, role);
         }
 
-        private async Task CheckCourse(int courseId, string courseName, DateTime startingDate, Frequency frequency, Schedule schedule, CourseType courseType, CourseDetail courseDetail,Teacher teacher)
+        private async Task CheckCourse(int courseId, string courseName, DateTime startingDate, Frequency frequency, Schedule schedule, CourseType courseType, CourseDetail courseDetail, Teacher teacher)
         {
             this.dataContext.Courses.Add(new Course
             {
                 CourseId = courseId,
                 CourseName = courseName,
                 StartingDate = startingDate,
-                Frequency=frequency,
-                Schedule=schedule,
-                CourseType=courseType,
-                Teacher=teacher,
-                CourseDetail=courseDetail
-                
+                Frequency = frequency,
+                Schedule = schedule,
+                CourseType = courseType,
+                Teacher = teacher,
+                CourseDetail = courseDetail
+
             });
             await this.dataContext.SaveChangesAsync();
         }
@@ -228,13 +244,13 @@ namespace DSProyectoHH.Web.Data.Entities
             await this.dataContext.SaveChangesAsync();
         }
 
-        private async Task CheckTeacher(User user, string role, int teacherId, DateTime hiringDate ,string rfc)
+        private async Task CheckTeacher(User user, string role, int teacherId, DateTime hiringDate, string rfc)
         {
             this.dataContext.Teachers.Add(new Teacher
             {
                 TeacherId = teacherId,
                 User = user,
-                HiringDate=hiringDate,
+                HiringDate = hiringDate,
                 RFC = rfc
             }
             );
@@ -250,7 +266,7 @@ namespace DSProyectoHH.Web.Data.Entities
                 User = user,
                 StudentId = studentId,
                 AdmissionDate = admissionDate,
-                CourseDetail=courseDetail
+                CourseDetail = courseDetail
             });
             await this.dataContext.SaveChangesAsync();
             await userHelper.AddUserToRoleAsync(user, role);
@@ -327,7 +343,7 @@ namespace DSProyectoHH.Web.Data.Entities
                 OralQuiz = oralQuiz,
                 WrittenQuiz = writtenQuiz,
                 GradeGrid = gradeGrid
-            }) ;
+            });
             await this.dataContext.SaveChangesAsync();
         }
 
@@ -336,7 +352,7 @@ namespace DSProyectoHH.Web.Data.Entities
             this.dataContext.CourseDetails.Add(new CourseDetail
             {
                 GradeGrid = gradeGrid
-            }) ;
+            });
 
             await dataContext.SaveChangesAsync();
         }

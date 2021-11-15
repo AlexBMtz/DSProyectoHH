@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DSProyectoHH.Web.Controllers
 {
-    [Authorize(Roles = "Coordinator")] 
+    [Authorize(Roles = "Coordinator,Admin")] 
     public class SchedulesController : Controller
     {
         private readonly DataContext _context;
