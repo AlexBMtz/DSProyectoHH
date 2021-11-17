@@ -26,25 +26,25 @@ namespace DSProyectoHH.Web.Data.Entities
 
             if (!this.dataContext.Admins.Any())
             {
-                var user = await CheckUser("Administrador", "", "2222222222", "admin@gmail.com", "123456");
+                var user = await CheckUser("Administrador", "", "2222222222", "admin@gmail.com", "1234567");
                 await CheckAdmin(user, "Admin");
             }
 
             if (!this.dataContext.Coordinators.Any())
             {
-                var user = await CheckUser("Carlos", "Chávez", "2223242526", "carlos.ch@gmail.com", "123456");
+                var user = await CheckUser("Carlos", "Chávez", "2223242526", "carlos.ch@gmail.com", "1234567");
                 await CheckCoordinator(user, "Coordinator", 3007136, new DateTime(2020, 10, 3, 6, 0, 0), "CHAC010416R35");
 
-                user = await CheckUser("Paulina", "Pérez", "2728293031", "pau.perez@gmail.com", "334455");
+                user = await CheckUser("Paulina", "Pérez", "2728293031", "pau.perez@gmail.com", "3344557");
                 await CheckCoordinator(user, "Coordinator", 3007137, new DateTime(2020, 10, 3, 6, 0, 0), "PERP051218O12");
             }
 
             if (!this.dataContext.Teachers.Any())
             {
-                var user = await CheckUser("Alejandro", "Barroeta", "2221136875", "abm@gmail.com", "123456");
+                var user = await CheckUser("Alejandro", "Barroeta", "2221136875", "abm@gmail.com", "1234567");
                 await CheckTeacher(user, "Teacher", 3007134, new DateTime(2020, 10, 3, 6, 0, 0), "BAMA010416Q95");
 
-                user = await CheckUser("Carlos", "Vaca", "2225369758", "c.vaca@gmail.com", "789101");
+                user = await CheckUser("Carlos", "Vaca", "2225369758", "c.vaca@gmail.com", "7891017");
                 await CheckTeacher(user, "Teacher", 3007135, new DateTime(2020, 10, 3, 6, 0, 0), "VAMC051218H92");
             }
 
@@ -76,55 +76,18 @@ namespace DSProyectoHH.Web.Data.Entities
                 await CheckOralQuiz(2, 1, 2, 3, 4);
             }
 
-            if (!this.dataContext.GradeGrids.Any())
-            {
-                var project = this.dataContext.Projects.FirstOrDefault(c => c.Id == 1);
-                await CheckGradeGrid(project, 7.8);
-
-                project = this.dataContext.Projects.FirstOrDefault(c => c.Id == 2);
-                await CheckGradeGrid(project, 9.2);
-
-                project = this.dataContext.Projects.FirstOrDefault(c => c.Id == 3);
-                await CheckGradeGrid(project, 8.8);
-            }
-
-            if (!this.dataContext.Units.Any())
-            {
-                var classParticipartion = this.dataContext.ClassParticipations.FirstOrDefault(c => c.Id == 1);
-                var oralQuiz = this.dataContext.OralQuizzes.FirstOrDefault(f => f.Id == 1);
-                var writtenQuiz = this.dataContext.WrittenQuizzes.FirstOrDefault(s => s.Id == 1);
-                var gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(g => g.Id == 1);
-                await CheckUnit(classParticipartion, oralQuiz, writtenQuiz, gradeGrid);
-
-                classParticipartion = this.dataContext.ClassParticipations.FirstOrDefault(c => c.Id == 2);
-                oralQuiz = this.dataContext.OralQuizzes.FirstOrDefault(f => f.Id == 2);
-                writtenQuiz = this.dataContext.WrittenQuizzes.FirstOrDefault(s => s.Id == 2);
-                gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(g => g.Id == 1);
-                await CheckUnit(classParticipartion, oralQuiz, writtenQuiz, gradeGrid);
-
-                classParticipartion = this.dataContext.ClassParticipations.FirstOrDefault(c => c.Id == 3);
-                oralQuiz = this.dataContext.OralQuizzes.FirstOrDefault(f => f.Id == 3);
-                writtenQuiz = this.dataContext.WrittenQuizzes.FirstOrDefault(s => s.Id == 3);
-                gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(g => g.Id == 1);
-                await CheckUnit(classParticipartion, oralQuiz, writtenQuiz, gradeGrid);
-            }
-
             if (!this.dataContext.CourseDetails.Any())
             {
-                var gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(g => g.Id == 1);
-                await CheckCourseDetail(gradeGrid);
-
-                gradeGrid = this.dataContext.GradeGrids.FirstOrDefault(g => g.Id == 2);
-                await CheckCourseDetail(gradeGrid);
+                
             }
 
             if (!this.dataContext.Students.Any())
             {
-                var user = await CheckUser("Marco", "Hernandez", "2221136875", "Hernan_Marc@Outlook", "153456");
+                var user = await CheckUser("Marco", "Hernandez", "2221136875", "Hernan_Marc@outlook.com", "1534567");
                 var courseDetail = this.dataContext.CourseDetails.FirstOrDefault(c => c.Id == 1);
                 await CheckStudent(user, "Student", 1945, DateTime.Today, courseDetail);
 
-                user = await CheckUser("Karla", "Alvarez", "4221136875", "aknm@gmail.com", "123cuatro56");
+                user = await CheckUser("Karla", "Alvarez", "4221136875", "aknm@gmail.com", "123karl");
                 courseDetail = this.dataContext.CourseDetails.FirstOrDefault(c => c.Id == 1);
                 await CheckStudent(user, "Student", 1948, DateTime.Today, courseDetail);
 
@@ -325,33 +288,11 @@ namespace DSProyectoHH.Web.Data.Entities
             await this.dataContext.SaveChangesAsync();
         }
 
-        private async Task CheckGradeGrid(Project finalProject, double finalScore)
-        {
-            this.dataContext.GradeGrids.Add(new GradeGrid
-            {
-                FinalProject = finalProject,
-                FinalScore = finalScore
-            });
-            await this.dataContext.SaveChangesAsync();
-        }
-
-        private async Task CheckUnit(ClassParticipation classParticipation, OralQuiz oralQuiz, WrittenQuiz writtenQuiz, GradeGrid gradeGrid)
-        {
-            this.dataContext.Units.Add(new Unit
-            {
-                ClassParticipation = classParticipation,
-                OralQuiz = oralQuiz,
-                WrittenQuiz = writtenQuiz,
-                GradeGrid = gradeGrid
-            });
-            await this.dataContext.SaveChangesAsync();
-        }
-
-        private async Task CheckCourseDetail(GradeGrid gradeGrid)
+        private async Task CheckCourseDetail()
         {
             this.dataContext.CourseDetails.Add(new CourseDetail
             {
-                GradeGrid = gradeGrid
+                
             });
 
             await dataContext.SaveChangesAsync();

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DSProyectoHH.Web.Migrations
 {
-    public partial class Inital : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -329,80 +329,21 @@ namespace DSProyectoHH.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GradeGrids",
+                name: "CourseDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(maxLength: 2, nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FinalProjectId = table.Column<int>(nullable: false),
                     FinalScore = table.Column<double>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GradeGrids", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_GradeGrids_Projects_FinalProjectId",
-                        column: x => x.FinalProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CourseDetails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GradeGridId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
                     table.PrimaryKey("PK_CourseDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CourseDetails_GradeGrids_GradeGridId",
-                        column: x => x.GradeGridId,
-                        principalTable: "GradeGrids",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Units",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    WrittenQuizId = table.Column<int>(nullable: false),
-                    OralQuizId = table.Column<int>(nullable: false),
-                    ClassParticipationId = table.Column<int>(nullable: false),
-                    GradeGridId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Units", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Units_ClassParticipations_ClassParticipationId",
-                        column: x => x.ClassParticipationId,
-                        principalTable: "ClassParticipations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Units_GradeGrids_GradeGridId",
-                        column: x => x.GradeGridId,
-                        principalTable: "GradeGrids",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Units_OralQuizzes_OralQuizId",
-                        column: x => x.OralQuizId,
-                        principalTable: "OralQuizzes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Units_WrittenQuizzes_WrittenQuizId",
-                        column: x => x.WrittenQuizId,
-                        principalTable: "WrittenQuizzes",
+                        name: "FK_CourseDetails_Projects_FinalProjectId",
+                        column: x => x.FinalProjectId,
+                        principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -486,6 +427,46 @@ namespace DSProyectoHH.Web.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WrittenQuizId = table.Column<int>(nullable: false),
+                    OralQuizId = table.Column<int>(nullable: false),
+                    ClassParticipationId = table.Column<int>(nullable: false),
+                    CourseDetailId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Units_ClassParticipations_ClassParticipationId",
+                        column: x => x.ClassParticipationId,
+                        principalTable: "ClassParticipations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Units_CourseDetails_CourseDetailId",
+                        column: x => x.CourseDetailId,
+                        principalTable: "CourseDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Units_OralQuizzes_OralQuizId",
+                        column: x => x.OralQuizId,
+                        principalTable: "OralQuizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Units_WrittenQuizzes_WrittenQuizId",
+                        column: x => x.WrittenQuizId,
+                        principalTable: "WrittenQuizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_UserId",
                 table: "Admins",
@@ -536,9 +517,9 @@ namespace DSProyectoHH.Web.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseDetails_GradeGridId",
+                name: "IX_CourseDetails_FinalProjectId",
                 table: "CourseDetails",
-                column: "GradeGridId");
+                column: "FinalProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Courses_CourseDetailId",
@@ -566,11 +547,6 @@ namespace DSProyectoHH.Web.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GradeGrids_FinalProjectId",
-                table: "GradeGrids",
-                column: "FinalProjectId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Students_CourseDetailId",
                 table: "Students",
                 column: "CourseDetailId");
@@ -591,9 +567,9 @@ namespace DSProyectoHH.Web.Migrations
                 column: "ClassParticipationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Units_GradeGridId",
+                name: "IX_Units_CourseDetailId",
                 table: "Units",
-                column: "GradeGridId");
+                column: "CourseDetailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Units_OralQuizId",
@@ -654,10 +630,10 @@ namespace DSProyectoHH.Web.Migrations
                 name: "Teachers");
 
             migrationBuilder.DropTable(
-                name: "CourseDetails");
+                name: "ClassParticipations");
 
             migrationBuilder.DropTable(
-                name: "ClassParticipations");
+                name: "CourseDetails");
 
             migrationBuilder.DropTable(
                 name: "OralQuizzes");
@@ -667,9 +643,6 @@ namespace DSProyectoHH.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "GradeGrids");
 
             migrationBuilder.DropTable(
                 name: "Projects");

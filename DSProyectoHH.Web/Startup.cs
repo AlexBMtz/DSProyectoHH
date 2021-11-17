@@ -36,7 +36,7 @@ namespace DSProyectoHH.Web
                 cfg.Password.RequireLowercase = false;
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequireUppercase = false;
-                cfg.Password.RequiredLength = 6; 
+                cfg.Password.RequiredLength = 7; 
             })
 
            .AddEntityFrameworkStores<DataContext>();

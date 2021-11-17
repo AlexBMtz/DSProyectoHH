@@ -75,11 +75,12 @@ namespace DSProyectoHH.Web.Controllers
                         Email = model.User.Email,
                         UserName = model.User.Email
                     };
-                    var result = await userHelper.AddUserAsync(user, "123456");
+                    var result = await userHelper.AddUserAsync(user, model.StudentId.ToString());
                     if (result != IdentityResult.Success)
                     {
                         throw new InvalidOperationException("ERROR. No se pudo crear el usuario.");
                     }
+                    await userHelper.AddUserToRoleAsync(user, "Student");
                 }
 
                 var student = new Student
