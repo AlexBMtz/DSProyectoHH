@@ -16,12 +16,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="StartingHour" class="control-label"></label>
-                <input asp-for="StartingHour" class="form-control" />
+                <input asp-for="StartingHour" class="form-control" type="time"/>
                 <span asp-validation-for="StartingHour" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EndingHour" class="control-label"></label>
-                <input asp-for="EndingHour" class="form-control" />
+                <input asp-for="EndingHour" class="form-control" type="time" />
                 <span asp-validation-for="EndingHour" class="text-danger"></span>
             </div>
             <div class="form-group">

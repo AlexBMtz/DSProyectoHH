@@ -3,29 +3,48 @@
 @{
     ViewData["Title"] = "Cursos";
 }
+<link rel="stylesheet" href="~/css/style-icon.css" />
 
 <h1>Cursos</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-outline-success">Crear nuevo curso</a>
+    <a asp-action="Create" class="btn btn-outline-success">
+        <span class="icon-plus"></span>
+    </a>
 </p>
-<table class="table">
+<table class="table" style="text-align:center;">
     <thead>
         <tr>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.CourseId)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.CourseName)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.StartingDate)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.CourseType.CourseTypeName)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Frequency.Name)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Schedule.StartingHour)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Schedule.EndingHour)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Teacher.User.FullName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.CourseId)
@@ -37,11 +56,33 @@
                 @Html.DisplayFor(modelItem => item.StartingDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+                @Html.DisplayFor(modelItem => item.CourseType.CourseTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Frequency.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule.StartingHour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule.EndingHour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.User.FullName)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">
+                    <span class="icon-pencil"></span>
+                </a>
+                @*<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">
+                <span class="icon-list2"></span>
+            </a>*@
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">
+                    <span class="icon-cancel-circle"></span>
+                </a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

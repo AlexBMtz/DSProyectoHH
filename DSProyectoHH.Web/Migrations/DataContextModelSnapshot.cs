@@ -626,11 +626,13 @@ namespace DSProyectoHH.Web.Migrations
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Frequency", "Frequency")
                         .WithMany("Courses")
-                        .HasForeignKey("FrequencyId");
+                        .HasForeignKey("FrequencyId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Schedule", "Schedule")
                         .WithMany("Courses")
-                        .HasForeignKey("ScheduleId");
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Teacher", "Teacher")
                         .WithMany("Courses")

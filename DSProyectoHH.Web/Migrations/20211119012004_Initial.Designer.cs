@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSProyectoHH.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211117215212_initial")]
-    partial class initial
+    [Migration("20211119012004_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -628,11 +628,13 @@ namespace DSProyectoHH.Web.Migrations
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Frequency", "Frequency")
                         .WithMany("Courses")
-                        .HasForeignKey("FrequencyId");
+                        .HasForeignKey("FrequencyId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Schedule", "Schedule")
                         .WithMany("Courses")
-                        .HasForeignKey("ScheduleId");
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Teacher", "Teacher")
                         .WithMany("Courses")
