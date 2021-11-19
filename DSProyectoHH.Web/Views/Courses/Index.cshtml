@@ -4,7 +4,7 @@
     ViewData["Title"] = "Cursos";
 }
 <link rel="stylesheet" href="~/css/style-icon.css" />
-
+<link href="~/css/estilo-home.css" type="text/css" rel="stylesheet" />
 <h1>Cursos</h1>
 
 <p>
@@ -37,7 +37,7 @@
                 @Html.DisplayNameFor(model => model.Schedule.EndingHour)
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.Teacher.User.FullName)
+                <label>Nombre del Teacher </label>
             </th>
             <th></th>
         </tr>
