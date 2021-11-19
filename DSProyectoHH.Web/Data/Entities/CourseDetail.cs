@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
@@ -7,14 +8,14 @@ namespace DSProyectoHH.Web.Data.Entities
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Campo requerido")]
-        public Project FinalProject { get; set; }
+        public int StudentId { get { return GradeGrids == null ? 0 : GradeGrids.FirstOrDefault(s => s.StudentId == StudentId).StudentId; } }
 
+        public string StudentName { get { return GradeGrids == null ? "" : GradeGrids.FirstOrDefault(s => s.StudentId == StudentId).StudentName; } }
         [MaxLength(10)]
         public double FinalScore { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
         public ICollection<Unit> Units { get; set; }
-        public ICollection<Student> Students { get; set; }
+        public IEnumerable<GradeGrid> GradeGrids { get; set; }
     }
 }

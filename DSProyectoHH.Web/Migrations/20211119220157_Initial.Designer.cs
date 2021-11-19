@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSProyectoHH.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211119012004_Initial")]
+    [Migration("20211119220157_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -151,16 +151,11 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("FinalProjectId")
-                        .HasColumnType("int");
-
                     b.Property<double>("FinalScore")
                         .HasColumnType("float")
                         .HasMaxLength(10);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FinalProjectId");
 
                     b.ToTable("CourseDetails");
                 });
@@ -197,6 +192,45 @@ namespace DSProyectoHH.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Frequencies");
+                });
+
+            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.GradeGrid", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CourseDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentId1")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseDetailId");
+
+                    b.HasIndex("StudentId1");
+
+                    b.ToTable("GradeGrids");
+                });
+
+            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.GradeGridTemp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("StudentId1")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId1");
+
+                    b.ToTable("GradeGridTemps");
                 });
 
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.OralQuiz", b =>
@@ -628,32 +662,39 @@ namespace DSProyectoHH.Web.Migrations
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Frequency", "Frequency")
                         .WithMany("Courses")
-                        .HasForeignKey("FrequencyId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
+                        .HasForeignKey("FrequencyId");
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Schedule", "Schedule")
                         .WithMany("Courses")
-                        .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
+                        .HasForeignKey("ScheduleId");
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherId");
                 });
 
-            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.CourseDetail", b =>
+            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.GradeGrid", b =>
                 {
-                    b.HasOne("DSProyectoHH.Web.Data.Entities.Project", "FinalProject")
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.CourseDetail", null)
+                        .WithMany("GradeGrids")
+                        .HasForeignKey("CourseDetailId");
+
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("FinalProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudentId1");
+                });
+
+            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.GradeGridTemp", b =>
+                {
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId1");
                 });
 
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Student", b =>
                 {
                     b.HasOne("DSProyectoHH.Web.Data.Entities.CourseDetail", "CourseDetail")
-                        .WithMany("Students")
+                        .WithMany()
                         .HasForeignKey("CourseDetailId");
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.User", "User")
