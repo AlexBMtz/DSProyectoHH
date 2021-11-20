@@ -315,7 +315,7 @@ namespace DSProyectoHH.Web.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -338,7 +338,7 @@ namespace DSProyectoHH.Web.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -361,13 +361,13 @@ namespace DSProyectoHH.Web.Migrations
                         column: x => x.CourseDetailId,
                         principalTable: "CourseDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Students_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -395,7 +395,7 @@ namespace DSProyectoHH.Web.Migrations
                         column: x => x.CourseDetailId,
                         principalTable: "CourseDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Units_OralQuizzes_OralQuizId",
                         column: x => x.OralQuizId,
@@ -433,13 +433,13 @@ namespace DSProyectoHH.Web.Migrations
                         column: x => x.CourseDetailId,
                         principalTable: "CourseDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Courses_CourseTypes_CourseTypeId",
                         column: x => x.CourseTypeId,
                         principalTable: "CourseTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Courses_Frequencies_FrequencyId",
                         column: x => x.FrequencyId,
@@ -466,7 +466,7 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId1 = table.Column<int>(nullable: true),
+                    StudentId = table.Column<int>(nullable: true),
                     CourseDetailId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -477,13 +477,13 @@ namespace DSProyectoHH.Web.Migrations
                         column: x => x.CourseDetailId,
                         principalTable: "CourseDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_GradeGrids_Students_StudentId1",
-                        column: x => x.StudentId1,
+                        name: "FK_GradeGrids_Students_StudentId",
+                        column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -492,17 +492,17 @@ namespace DSProyectoHH.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId1 = table.Column<int>(nullable: true)
+                    StudentId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GradeGridTemps", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GradeGridTemps_Students_StudentId1",
-                        column: x => x.StudentId1,
+                        name: "FK_GradeGridTemps_Students_StudentId",
+                        column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -585,14 +585,14 @@ namespace DSProyectoHH.Web.Migrations
                 column: "CourseDetailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GradeGrids_StudentId1",
+                name: "IX_GradeGrids_StudentId",
                 table: "GradeGrids",
-                column: "StudentId1");
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GradeGridTemps_StudentId1",
+                name: "IX_GradeGridTemps_StudentId",
                 table: "GradeGridTemps",
-                column: "StudentId1");
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_CourseDetailId",

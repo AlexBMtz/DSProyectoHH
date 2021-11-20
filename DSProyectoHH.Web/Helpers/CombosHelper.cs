@@ -75,6 +75,21 @@ namespace DSProyectoHH.Web.Helpers
             return list;
         }
 
+        public IEnumerable<SelectListItem> GetComboStudents()
+        {
+            var list = this.dataContext.Students.Select(s => new SelectListItem
+            {
+                Text = s.User.FullName,
+                Value = $"{s.Id}"
+            }).ToList();
+            list.Insert(0, new SelectListItem
+            {
+                Text = "(Selecciona un alumno)",
+                Value = "0"
+            });
+            return list;
+        }
+
         public IEnumerable<SelectListItem> GetComboTeachers()
         {
             var list = this.dataContext.Teachers.Select(t => new SelectListItem

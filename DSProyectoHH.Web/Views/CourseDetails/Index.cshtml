@@ -6,16 +6,16 @@
 <h1>Lista de alumnos</h1>
 
 <p>
-    <a asp-action="AddStudent" class="btn btn-dark">Añadir alumno</a>
+    <a asp-action="Create" class="btn btn-dark">Añadir alumno</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StudentId)
+                <label>Id del alumno</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StudentName)
+                <label>Nombre</label>
             </th>
 
             <th>
@@ -27,17 +27,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StudentId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StudentName)
                 </td>
                 <td>
                     <a asp-action="Grade" asp-route-id="@item.Id" class="btn btn-secondary">Editar</a>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalles</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
                 </td>
-            </tr>}
+            </tr>
+          }
 
     </tbody>
 </table>

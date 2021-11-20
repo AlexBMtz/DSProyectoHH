@@ -1,16 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
     public class CourseDetail : IEntity
     {
+        //TODO: Mostrar los datos del alumno en la lista de calificaciones
         public int Id { get; set; }
 
-        public int StudentId { get { return GradeGrids == null ? 0 : GradeGrids.FirstOrDefault(s => s.StudentId == StudentId).StudentId; } }
-
-        public string StudentName { get { return GradeGrids == null ? "" : GradeGrids.FirstOrDefault(s => s.StudentId == StudentId).StudentName; } }
         [MaxLength(10)]
         public double FinalScore { get; set; }
 

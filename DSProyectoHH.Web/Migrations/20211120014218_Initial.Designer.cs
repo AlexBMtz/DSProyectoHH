@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DSProyectoHH.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211119220157_Initial")]
+    [Migration("20211120014218_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,14 +204,14 @@ namespace DSProyectoHH.Web.Migrations
                     b.Property<int?>("CourseDetailId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentId1")
+                    b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseDetailId");
 
-                    b.HasIndex("StudentId1");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("GradeGrids");
                 });
@@ -223,12 +223,12 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("StudentId1")
+                    b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId1");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("GradeGridTemps");
                 });
@@ -681,14 +681,14 @@ namespace DSProyectoHH.Web.Migrations
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId1");
+                        .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.GradeGridTemp", b =>
                 {
                     b.HasOne("DSProyectoHH.Web.Data.Entities.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId1");
+                        .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Student", b =>

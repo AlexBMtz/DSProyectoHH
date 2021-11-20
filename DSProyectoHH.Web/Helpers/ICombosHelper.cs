@@ -10,6 +10,7 @@ namespace DSProyectoHH.Web.Helpers
         public IEnumerable<SelectListItem> GetComboFrequencies();
         public IEnumerable<SelectListItem> GetComboTeachers();
         public IEnumerable<SelectListItem> GetComboSchedules();
+        public IEnumerable<SelectListItem> GetComboStudents();
 
     }
 }

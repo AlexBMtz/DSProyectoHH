@@ -22,11 +22,11 @@ namespace DSProyectoHH.Web.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await dataContext.Courses
-                .Include(c=>c.CourseType)
-                .Include(f=>f.Frequency)
-                .Include(s=>s.Schedule)
+                .Include(c => c.CourseType)
+                .Include(f => f.Frequency)
                 .Include(s => s.Schedule)
-                .Include(t=>t.Teacher).ThenInclude(t=>t.User)
+                .Include(s => s.Schedule)
+                .Include(t => t.Teacher).ThenInclude(t => t.User)
                 .ToListAsync());
         }
         public IActionResult Create()
@@ -34,9 +34,9 @@ namespace DSProyectoHH.Web.Controllers
             var model = new CourseViewModel
             {
                 CourseTypes = this.comboHelper.GetComboCourseTypes(),
-                Frequencies= this.comboHelper.GetComboFrequencies(),
-                Teachers= this.comboHelper.GetComboTeachers(),
-                Schedules= this.comboHelper.GetComboSchedules()
+                Frequencies = this.comboHelper.GetComboFrequencies(),
+                Teachers = this.comboHelper.GetComboTeachers(),
+                Schedules = this.comboHelper.GetComboSchedules()
 
             };
 
@@ -44,19 +44,19 @@ namespace DSProyectoHH.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>Create(CourseViewModel model)
+        public async Task<IActionResult> Create(CourseViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var course = new Course
                 {
-                    CourseId=model.CourseId,
-                    CourseName=model.CourseName,
-                                        StartingDate=model.StartingDate,
-                    CourseType=await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId),
-                    Frequency= await this.dataContext.Frequencies.FindAsync(model.FrequencyId),
+                    CourseId = model.CourseId,
+                    CourseName = model.CourseName,
+                    StartingDate = model.StartingDate,
+                    CourseType = await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId),
+                    Frequency = await this.dataContext.Frequencies.FindAsync(model.FrequencyId),
                     Schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId),
-                    Teacher= await this.dataContext.Teachers.FindAsync(model.TeacherId)
+                    Teacher = await this.dataContext.Teachers.FindAsync(model.TeacherId)
                 };
                 this.dataContext.Add(course);
                 await this.dataContext.SaveChangesAsync();
@@ -65,7 +65,7 @@ namespace DSProyectoHH.Web.Controllers
             return View(model);
         }
 
-        
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -104,8 +104,8 @@ namespace DSProyectoHH.Web.Controllers
                 CourseTypes = this.comboHelper.GetComboCourseTypes(),
                 Frequencies = this.comboHelper.GetComboFrequencies(),
                 Schedules = this.comboHelper.GetComboSchedules(),
-                Teachers= this.comboHelper.GetComboTeachers()
-        
+                Teachers = this.comboHelper.GetComboTeachers()
+
             };
 
             return View(model);
@@ -125,7 +125,7 @@ namespace DSProyectoHH.Web.Controllers
                     StartingDate = model.StartingDate,
 
                     Frequency = await this.dataContext.Frequencies.FindAsync(model.FrequencyId),
-                   
+
                     Schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId),
 
                     CourseType = await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId),
@@ -177,7 +177,7 @@ namespace DSProyectoHH.Web.Controllers
                 .Include(t => t.Teacher).ThenInclude(t => t.User)
                 .FirstOrDefaultAsync(t => t.Id == id);
             dataContext.Courses.Remove(course);
-           
+
 
 
             await dataContext.SaveChangesAsync();
