@@ -22,9 +22,18 @@
                 @Html.DisplayNameFor(model => model.CourseName)
             </th>
             <th scope="col">
+                @Html.DisplayNameFor(model => model.StartingDate)
+            </th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.CourseType.CourseTypeName)
             </th>
             <th scope="col">
+                @Html.DisplayNameFor(model => model.Frequency.Name)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Schedule.StartingHour)
+            </th>
+            <th scope="col" valign="bottom">
                 <label>Nombre del Profesor</label>
             </th>
             <th></th>
@@ -41,12 +50,20 @@
                 @Html.DisplayFor(modelItem => item.CourseName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.StartingDate)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CourseType.CourseTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Frequency.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule.StartingHour)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Teacher.User.FullName)
             </td>
-
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">
                     <span class="icon-pencil"></span>

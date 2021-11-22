@@ -10,93 +10,41 @@
 
 <hr />
 <div class="row">
-    <div class="col-sm-5">
-        <dl class="row">
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.CourseId)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.CourseId)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.CourseName)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.CourseName)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.StartingDate)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.StartingDate)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Teacher)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Teacher.User.FullName)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Schedule)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Schedule)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Frequency)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Frequency)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.CourseType)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.CourseType.CourseTypeName)
-            </dd>
-            <dt class="col-sm-4">
-            </dt>
-            <dd class="col-sm-6">
-            </dd>
-        </dl>
-    </div>
-    <div class="col-sm-7">
-        <table class="table">
-            <thead>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <label>Id del Estudiante</label>
+                </th>
+                <th>
+                    <label>Nombre del Estudiante</label>
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.GradeGrid)
+            {
                 <tr>
-                    <th>
-                        <label>Id del Estudiante</label>
-                    </th>
-                    <th>
-                        <label>Nombre del Estudiante</label>
-                    </th>
-                    <th>
-                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.StudentId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.User.FullName)
+                    </td>
+                    <td>
+                        <a asp-action="EditStudent" asp-route-id="@item.Id" class="btn btn-outline-primary">
+                            <span class="icon-pencil"></span>
+                        </a>
+                        <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
+                            <span class="icon-cancel-circle"></span>
+                        </a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.GradeGrid)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Student.StudentId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Student.User.FullName)
-                        </td>
-                        <td>
-                            <a asp-action="EditStudent" asp-route-id="@item.Id" class="btn btn-outline-primary">
-                                <span class="icon-pencil"></span>
-                            </a>
-                            <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
-                                <span class="icon-cancel-circle"></span>
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">

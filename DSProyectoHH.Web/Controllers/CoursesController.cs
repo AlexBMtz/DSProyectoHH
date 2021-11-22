@@ -26,8 +26,10 @@
         public IActionResult Index()
         {
             return View(this.dataContext.Courses
-                .Include(d => d.GradeGrid)
-                .ThenInclude(s => s.Student)
+                .Include(s => s.Schedule)
+                .Include(f => f.Frequency)
+                .Include(c => c.CourseType)
+                .Include(t => t.Teacher)
                 .ThenInclude(u => u.User));
         }
 
@@ -67,6 +69,10 @@
             }
 
             var course = await this.dataContext.Courses
+                .Include(s => s.Schedule)
+                .Include(f => f.Frequency)
+                .Include(c => c.CourseType)
+                .Include(t => t.Teacher)
                 .Include(c=>c.GradeGrid)
                 .ThenInclude(gg=>gg.Student)
                 .ThenInclude(s => s.User)
@@ -88,6 +94,11 @@
                 StartingDate = course.StartingDate,
                 Teacher = course.Teacher,
 
+                CourseTypeId = course.CourseType.Id,
+                FrequencyId = course.Frequency.Id,
+                ScheduleId = course.Schedule.Id,
+                TeacherId = course.Teacher.Id,
+
                 CourseTypes = this.combosHelper.GetComboCourseTypes(),
                 Frequencies = this.combosHelper.GetComboFrequencies(),
                 Schedules = this.combosHelper.GetComboSchedules(),
@@ -101,34 +112,19 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CourseViewModel model)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                var courseType = await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId);
-                if (courseType == null)
-                    return NotFound();
-
-                var frequency = await this.dataContext.Frequencies.FindAsync(model.FrequencyId);
-                if (frequency == null)
-                    return NotFound();
-
-                var schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId);
-                if (schedule == null)
-                    return NotFound();
-
-                var teacher = await this.dataContext.Teachers.FindAsync(model.TeacherId);
-                if (teacher == null)
-                    return NotFound();
-
                 var course = new Course
                 {
+                    Id = model.Id,
                     CourseId = model.CourseId,
                     CourseName = model.CourseName,
-                    CourseType = courseType,
-                    Frequency = frequency,
+                    CourseType = await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId),
+                    Frequency = await this.dataContext.Frequencies.FindAsync(model.FrequencyId),
                     GradeGrid = model.GradeGrid,
-                    Schedule = schedule,
+                    Schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId),
                     StartingDate = model.StartingDate,
-                    Teacher = teacher
+                    Teacher = await this.dataContext.Teachers.FindAsync(model.TeacherId)
                 };
 
                 this.dataContext.Update(course);

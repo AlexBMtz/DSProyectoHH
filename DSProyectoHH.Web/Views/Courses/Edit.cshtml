@@ -13,10 +13,11 @@
     <div class="col-md-5">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Frequency.Id" />
-            <input type="hidden" asp-for="Schedule.Id" />
-            <input type="hidden" asp-for="Teacher.Id" />
-            <input type="hidden" asp-for="CourseType.Id" />
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Frequencies" />
+            <input type="hidden" asp-for="Schedules" />
+            <input type="hidden" asp-for="Teachers" />
+            <input type="hidden" asp-for="CourseTypes" />
             <input type="hidden" asp-for="GradeGrid" />
 
             <div class="form-group">
@@ -40,26 +41,26 @@
             <div class="form-group">
                 <label asp-for="CourseTypeId" class="control-label"></label>
                 <select asp-for="CourseTypeId" asp-items="Model.CourseTypes" class="form-control"></select>
-                <span asp-validation-for="CourseType" class="text-danger"></span>
+                <span asp-validation-for="CourseTypeId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="FrequencyId" class="control-label"></label>
                 <select asp-for="FrequencyId" asp-items="Model.Frequencies" class="form-control"></select>
-                <span asp-validation-for="Frequency" class="text-danger"></span>
+                <span asp-validation-for="FrequencyId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="ScheduleId" class="control-label"></label>
                 <select asp-for="ScheduleId" asp-items="Model.Schedules" class="form-control"></select>
-                <span asp-validation-for="Schedule" class="text-danger"></span>
+                <span asp-validation-for="ScheduleId" class="text-danger"></span>
             </div>
 
 
             <div class="form-group">
                 <label asp-for="TeacherId" class="control-label"></label>
                 <select asp-for="TeacherId" asp-items="Model.Teachers" class="form-control"></select>
-                <span asp-validation-for="Teacher" class="text-danger"></span>
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
