@@ -19,7 +19,6 @@ namespace DSProyectoHH.Web.Data.Entities
         [Display(Name = "Foto del Estudiante")]
         public string ImageUrl { get; set; }
 
-        public CourseDetail CourseDetail { get; set; }
         public User User { get; set; }
 
     }

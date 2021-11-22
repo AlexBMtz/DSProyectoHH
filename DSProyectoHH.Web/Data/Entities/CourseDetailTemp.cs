@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
-    public class CourseDetail : IEntity
-    { 
+    public class CourseDetailTemp : IEntity
+    {
         public int Id { get; set; }
         public Student Student { get; set; }
 

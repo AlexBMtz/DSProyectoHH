@@ -11,7 +11,6 @@ namespace DSProyectoHH.Web.Data.Entities
         [StringLength(200)]
         [Display(Name = "Tipo de curso")]
         public string CourseTypeName { get; set; }
-
         public ICollection<Course> Courses { get; set; }
 
 

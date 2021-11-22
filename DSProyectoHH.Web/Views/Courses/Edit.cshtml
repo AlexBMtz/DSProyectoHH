@@ -1,17 +1,23 @@
-﻿
-@model DSProyectoHH.Web.Models.CourseViewModel
+﻿@model DSProyectoHH.Web.Models.CourseViewModel
 @{
     ViewData["Title"] = "Editar Curso";
 }
 
+<link rel="stylesheet" href="~/css/style-icon.css" />
 <link href="~/css/estilo-home.css" type="text/css" rel="stylesheet" />
+
 <h1>Editar Curso</h1>
+
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type ="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Frequency.Id" />
+            <input type="hidden" asp-for="Schedule.Id" />
+            <input type="hidden" asp-for="Teacher.Id" />
+            <input type="hidden" asp-for="CourseType.Id" />
+            <input type="hidden" asp-for="GradeGrid" />
 
             <div class="form-group">
                 <label asp-for="CourseId" class="control-label"></label>
@@ -63,6 +69,43 @@
                 </a>
             </div>
         </form>
+    </div>
+    <div class="col-md-7">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <label>Id del Estudiante</label>
+                    </th>
+                    <th>
+                        <label>Nombre del Estudiante</label>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.GradeGrid)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Student.StudentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Student.User.FullName)
+                        </td>
+                        <td>
+                            <a asp-action="EditStudent" asp-route-id="@item.Id" class="btn btn-outline-primary">
+                                <span class="icon-pencil"></span>
+                            </a>
+                            <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
+                                <span class="icon-cancel-circle"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 

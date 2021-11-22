@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
-    public class Project:IEntity
+    public class Project : IEntity
     {
-        
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
@@ -25,7 +21,7 @@ namespace DSProyectoHH.Web.Data.Entities
         public int CollabWork { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        [Range(0,2)]
+        [Range(0, 2)]
         public int Creativity { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]

@@ -26,8 +26,6 @@ namespace DSProyectoHH.Web.Data.Entities
         public Schedule Schedule { get; set; }
         public Frequency Frequency { get; set; }
         public CourseType CourseType { get; set; }
-        public CourseDetail CourseDetail { get; set; }
-
-
+        public IEnumerable<CourseDetail> GradeGrid { get; set; }
     }
 }

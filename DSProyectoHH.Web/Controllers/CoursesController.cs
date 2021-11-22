@@ -1,70 +1,63 @@
-﻿using DSProyectoHH.Web.Data;
-using DSProyectoHH.Web.Data.Entities;
-using DSProyectoHH.Web.Helpers;
-using DSProyectoHH.Web.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-
-namespace DSProyectoHH.Web.Controllers
+﻿namespace DSProyectoHH.Web.Controllers
 {
+    using DSProyectoHH.Web.Data;
+    using DSProyectoHH.Web.Data.Entities;
+    using DSProyectoHH.Web.Helpers;
+    using DSProyectoHH.Web.Models;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    [Authorize(Roles = "Coordinator,Admin")]
     public class CoursesController : Controller
     {
-        private readonly DataContext dataContext;
-        private readonly ICombosHelper comboHelper;
 
-        public CoursesController(DataContext dataContext, ICombosHelper comboHelper)
+        private readonly DataContext dataContext;
+        private readonly ICombosHelper combosHelper;
+
+        public CoursesController(DataContext dataContext, ICombosHelper combosHelper)
         {
             this.dataContext = dataContext;
-            this.comboHelper = comboHelper;
+            this.combosHelper = combosHelper;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await dataContext.Courses
-                .Include(c => c.CourseType)
-                .Include(f => f.Frequency)
-                .Include(s => s.Schedule)
-                .Include(s => s.Schedule)
-                .Include(t => t.Teacher).ThenInclude(t => t.User)
-                .ToListAsync());
+            return View(this.dataContext.Courses
+                .Include(d => d.GradeGrid)
+                .ThenInclude(s => s.Student)
+                .ThenInclude(u => u.User));
         }
+
         public IActionResult Create()
         {
-            var model = new CourseViewModel
-            {
-                CourseTypes = this.comboHelper.GetComboCourseTypes(),
-                Frequencies = this.comboHelper.GetComboFrequencies(),
-                Teachers = this.comboHelper.GetComboTeachers(),
-                Schedules = this.comboHelper.GetComboSchedules()
-
-            };
-
+            var model = this.dataContext.CourseDetailTemps
+                .Include(sd => sd.Student)
+                .ThenInclude(ud => ud.User);
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CourseViewModel model)
+        public async Task<IActionResult> Details(int? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                var course = new Course
-                {
-                    CourseId = model.CourseId,
-                    CourseName = model.CourseName,
-                    StartingDate = model.StartingDate,
-                    CourseType = await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId),
-                    Frequency = await this.dataContext.Frequencies.FindAsync(model.FrequencyId),
-                    Schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId),
-                    Teacher = await this.dataContext.Teachers.FindAsync(model.TeacherId)
-                };
-                this.dataContext.Add(course);
-                await this.dataContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            return View(model);
-        }
 
+            var course = await this.dataContext.Courses
+                .Include(cd => cd.GradeGrid)
+                .ThenInclude(gg => gg.Student)
+                .ThenInclude(s => s.User)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return View(course);
+        }
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -74,12 +67,10 @@ namespace DSProyectoHH.Web.Controllers
             }
 
             var course = await this.dataContext.Courses
-                .Include(c => c.CourseType)
-                .Include(f => f.Frequency)
-                .Include(s => s.Schedule)
-                .Include(s => s.Schedule)
-                .Include(t => t.Teacher).ThenInclude(t => t.User)
-                .FirstOrDefaultAsync(t => t.Id == id);
+                .Include(c=>c.GradeGrid)
+                .ThenInclude(gg=>gg.Student)
+                .ThenInclude(s => s.User)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (course == null)
             {
@@ -88,24 +79,19 @@ namespace DSProyectoHH.Web.Controllers
 
             var model = new CourseViewModel
             {
-                Id = course.Id,
                 CourseId = course.CourseId,
                 CourseName = course.CourseName,
-                StartingDate = course.StartingDate,
-                Frequency = course.Frequency,
-                FrequencyId = course.Frequency.Id,
-                Schedule = course.Schedule,
-                ScheduleId = course.Schedule.Id,
                 CourseType = course.CourseType,
-                CourseTypeId = course.CourseType.Id,
+                Frequency = course.Frequency,
+                GradeGrid = course.GradeGrid,
+                Schedule = course.Schedule,
+                StartingDate = course.StartingDate,
                 Teacher = course.Teacher,
-                TeacherId = course.Teacher.Id,
 
-                CourseTypes = this.comboHelper.GetComboCourseTypes(),
-                Frequencies = this.comboHelper.GetComboFrequencies(),
-                Schedules = this.comboHelper.GetComboSchedules(),
-                Teachers = this.comboHelper.GetComboTeachers()
-
+                CourseTypes = this.combosHelper.GetComboCourseTypes(),
+                Frequencies = this.combosHelper.GetComboFrequencies(),
+                Schedules = this.combosHelper.GetComboSchedules(),
+                Teachers = this.combosHelper.GetComboTeachers()
             };
 
             return View(model);
@@ -117,25 +103,34 @@ namespace DSProyectoHH.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var courseType = await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId);
+                if (courseType == null)
+                    return NotFound();
+
+                var frequency = await this.dataContext.Frequencies.FindAsync(model.FrequencyId);
+                if (frequency == null)
+                    return NotFound();
+
+                var schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId);
+                if (schedule == null)
+                    return NotFound();
+
+                var teacher = await this.dataContext.Teachers.FindAsync(model.TeacherId);
+                if (teacher == null)
+                    return NotFound();
+
                 var course = new Course
                 {
-                    Id = model.Id,
                     CourseId = model.CourseId,
                     CourseName = model.CourseName,
+                    CourseType = courseType,
+                    Frequency = frequency,
+                    GradeGrid = model.GradeGrid,
+                    Schedule = schedule,
                     StartingDate = model.StartingDate,
-
-                    Frequency = await this.dataContext.Frequencies.FindAsync(model.FrequencyId),
-
-                    Schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId),
-
-                    CourseType = await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId),
-
-                    Teacher = await this.dataContext.Teachers.FindAsync(model.TeacherId)
-
-
-
-
+                    Teacher = teacher
                 };
+
                 this.dataContext.Update(course);
                 await dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -143,46 +138,114 @@ namespace DSProyectoHH.Web.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+
+        //}
+
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+
+        //}
+
+        public IActionResult AddStudent()
+        {
+            var model = new AddStudentViewModel
+            {
+                Students = this.combosHelper.GetComboStudents()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddStudent(AddStudentViewModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                var student = await this.dataContext.Students.FindAsync(model.StudentId);
+                if (student == null)
+                {
+                    return NotFound();
+                }
+
+                var courseDetailTemp = await this.dataContext.CourseDetailTemps
+                    .Where(s => s.Student == student)
+                    .FirstOrDefaultAsync();
+                if (courseDetailTemp == null)
+                {
+                    courseDetailTemp = new CourseDetailTemp
+                    {
+                        Student = student
+                    };
+
+                    this.dataContext.CourseDetailTemps.Add(courseDetailTemp);
+                }
+
+                await this.dataContext.SaveChangesAsync();
+                return this.RedirectToAction("Create");
+            }
+
+            return this.View(model);
+        }
+
+        public async Task<IActionResult> DeleteStudent(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var course = await this.dataContext.Courses
-               .Include(c => c.CourseType)
-                .Include(f => f.Frequency)
-                .Include(s => s.Schedule)
-                .Include(s => s.Schedule)
-                .Include(t => t.Teacher).ThenInclude(t => t.User)
-                .FirstOrDefaultAsync(t => t.Id == id);
-            if (course == null)
+            var courseDetailTemp = await this.dataContext.CourseDetailTemps.FindAsync(id);
+            if (courseDetailTemp == null)
             {
                 return NotFound();
             }
-
-            return View(course);
+            this.dataContext.CourseDetailTemps.Remove(courseDetailTemp);
+            await this.dataContext.SaveChangesAsync();
+            return this.RedirectToAction("Create");
         }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        //public async Task<IActionResult> EditStudent(int? id)
+        //{
+
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> EditStudent(ViewModel model)
+        //{
+
+        //}
+
+        public async Task<IActionResult> SaveList()
         {
-            var course = await this.dataContext.Courses
-                .Include(c => c.CourseType)
-                .Include(f => f.Frequency)
-                .Include(s => s.Schedule)
-                .Include(s => s.Schedule)
-                .Include(t => t.Teacher).ThenInclude(t => t.User)
-                .FirstOrDefaultAsync(t => t.Id == id);
-            dataContext.Courses.Remove(course);
+            var courseDetailTemps = await this.dataContext.CourseDetailTemps
+                .Include(odt => odt.Student)
+                .ThenInclude(udt=>udt.User)
+                .ToListAsync();
 
+            if (courseDetailTemps == null || courseDetailTemps.Count == 0)
+                return NotFound();
 
+            var details = courseDetailTemps.Select(d => new CourseDetail
+            {
+                Student = d.Student
+            }).ToList();
 
-            await dataContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var course = new Course
+            {
+                CourseId = -1,
+                CourseName = "Nuevo_Curso",
+                GradeGrid = details
+            };
+
+            this.dataContext.Courses.Add(course);
+            this.dataContext.CourseDetailTemps.RemoveRange(courseDetailTemps);
+
+            await this.dataContext.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
-
     }
 }

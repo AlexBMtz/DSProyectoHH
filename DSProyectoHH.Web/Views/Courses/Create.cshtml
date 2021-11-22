@@ -1,64 +1,50 @@
-﻿@model DSProyectoHH.Web.Models.CourseViewModel
+﻿@model IEnumerable<DSProyectoHH.Web.Data.Entities.CourseDetailTemp>
 @{
-    ViewData["Title"] = "Agregar Course";
+    ViewData["Title"] = "Nueva Lista de Alumnos";
 }
 
-<link href="~/css/estilo-home.css" type="text/css" rel="stylesheet" />
-<h1>Agregar Curso</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<h1>Nueva Lista</h1>
+<p>
+    <a asp-action="AddStudent" class="btn btn-dark">
+        <span class="icon-plus"></span>  Agregar Alumno
+    </a> 
+    <a asp-action="SaveList" class="btn btn-dark">
+        <span class="icon-floppy-disk"></span>  Guardar Lista
+        </a> |
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <span class="icon-undo2"></span>  Regresar a la Lista
+    </a>
+</p>
 
-            <div class="form-group">
-                <label asp-for="CourseId" class="control-label"></label>
-                <input asp-for="CourseId" class="form-control" />
-                <span asp-validation-for="CourseId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="CourseName" class="control-label"></label>
-                <input asp-for="CourseName" class="form-control" />
-                <span asp-validation-for="CourseName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="StartingDate" class="control-label"></label>
-                <input asp-for="StartingDate" class="form-control" type="date" />
-                <span asp-validation-for="StartingDate" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="CourseTypeId" class="control-label"></label>
-                <select asp-for="CourseTypeId" asp-items="Model.CourseTypes" class="form-control"></select>
-                <span asp-validation-for="CourseType" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="FrequencyId" class="control-label"></label>
-                <select asp-for="FrequencyId" asp-items="Model.Frequencies" class="form-control"></select>
-                <span asp-validation-for="Frequency" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ScheduleId" class="control-label"></label>
-                <select asp-for="ScheduleId" asp-items="Model.Schedules" class="form-control"></select>
-                <span asp-validation-for="Schedule" class="text-danger"></span>
-            </div>
-
-
-            <div class="form-group">
-                <label asp-for="TeacherId" class="control-label"></label>
-                <select asp-for="TeacherId" asp-items="Model.Teachers" class="form-control"></select>
-                <span asp-validation-for="Teacher" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
-                <a asp-action="Index">Back to List</a>
-            </div>
-        </form>
-    </div>
-</div>
-
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.StudentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.User.FullName)
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.StudentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.User.FullName)
+            </td>
+            <td>
+                <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
+                    <span class="icon-cancel-circle"></span>
+                </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
