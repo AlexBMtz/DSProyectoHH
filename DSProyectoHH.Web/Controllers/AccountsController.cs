@@ -46,5 +46,10 @@ namespace DSProyectoHH.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult NotAutorized()
+        {
+            return View();
+        }
+
     }
 }

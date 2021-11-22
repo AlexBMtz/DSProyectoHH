@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DSProyectoHH.Web.Migrations
 {
-    public partial class Initial : Migration
+    public partial class F : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,23 +49,6 @@ namespace DSProyectoHH.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClassParticipations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Listening = table.Column<int>(nullable: false),
-                    Reading = table.Column<int>(nullable: false),
-                    SpokenInteraction = table.Column<int>(nullable: false),
-                    SpokenProduction = table.Column<int>(nullable: false),
-                    Fluency = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClassParticipations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CourseTypes",
                 columns: table => new
                 {
@@ -89,23 +72,6 @@ namespace DSProyectoHH.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Frequencies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OralQuizzes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Communication = table.Column<int>(nullable: false),
-                    Grammar = table.Column<int>(nullable: false),
-                    Vocabulary = table.Column<int>(nullable: false),
-                    Conversations = table.Column<int>(nullable: false),
-                    Fluency = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OralQuizzes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -137,24 +103,6 @@ namespace DSProyectoHH.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Schedules", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WrittenQuizzes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SectionA = table.Column<int>(nullable: false),
-                    SectionB = table.Column<int>(nullable: false),
-                    SectionC = table.Column<int>(nullable: false),
-                    SectionD = table.Column<int>(nullable: false),
-                    SectionE = table.Column<int>(nullable: false),
-                    SectionF = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WrittenQuizzes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -455,50 +403,97 @@ namespace DSProyectoHH.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Units",
+                name: "ClassParticipations",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WrittenQuizId = table.Column<int>(nullable: false),
-                    OralQuizId = table.Column<int>(nullable: false),
-                    ClassParticipationId = table.Column<int>(nullable: false),
+                    Listening = table.Column<int>(nullable: false),
+                    Reading = table.Column<int>(nullable: false),
+                    SpokenInteraction = table.Column<int>(nullable: false),
+                    SpokenProduction = table.Column<int>(nullable: false),
+                    Fluency = table.Column<int>(nullable: false),
                     CourseDetailId = table.Column<int>(nullable: true),
                     CourseDetailTempId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Units", x => x.Id);
+                    table.PrimaryKey("PK_ClassParticipations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Units_ClassParticipations_ClassParticipationId",
-                        column: x => x.ClassParticipationId,
-                        principalTable: "ClassParticipations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Units_CourseDetails_CourseDetailId",
+                        name: "FK_ClassParticipations_CourseDetails_CourseDetailId",
                         column: x => x.CourseDetailId,
                         principalTable: "CourseDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Units_CourseDetailTemps_CourseDetailTempId",
+                        name: "FK_ClassParticipations_CourseDetailTemps_CourseDetailTempId",
                         column: x => x.CourseDetailTempId,
                         principalTable: "CourseDetailTemps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OralQuizzes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Communication = table.Column<int>(nullable: false),
+                    Grammar = table.Column<int>(nullable: false),
+                    Vocabulary = table.Column<int>(nullable: false),
+                    Conversations = table.Column<int>(nullable: false),
+                    Fluency = table.Column<int>(nullable: false),
+                    CourseDetailId = table.Column<int>(nullable: true),
+                    CourseDetailTempId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OralQuizzes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Units_OralQuizzes_OralQuizId",
-                        column: x => x.OralQuizId,
-                        principalTable: "OralQuizzes",
+                        name: "FK_OralQuizzes_CourseDetails_CourseDetailId",
+                        column: x => x.CourseDetailId,
+                        principalTable: "CourseDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Units_WrittenQuizzes_WrittenQuizId",
-                        column: x => x.WrittenQuizId,
-                        principalTable: "WrittenQuizzes",
+                        name: "FK_OralQuizzes_CourseDetailTemps_CourseDetailTempId",
+                        column: x => x.CourseDetailTempId,
+                        principalTable: "CourseDetailTemps",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WrittenQuizzes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SectionA = table.Column<int>(nullable: false),
+                    SectionB = table.Column<int>(nullable: false),
+                    SectionC = table.Column<int>(nullable: false),
+                    SectionD = table.Column<int>(nullable: false),
+                    SectionE = table.Column<int>(nullable: false),
+                    SectionF = table.Column<int>(nullable: false),
+                    CourseDetailId = table.Column<int>(nullable: true),
+                    CourseDetailTempId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WrittenQuizzes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WrittenQuizzes_CourseDetails_CourseDetailId",
+                        column: x => x.CourseDetailId,
+                        principalTable: "CourseDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WrittenQuizzes_CourseDetailTemps_CourseDetailTempId",
+                        column: x => x.CourseDetailTempId,
+                        principalTable: "CourseDetailTemps",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -544,6 +539,16 @@ namespace DSProyectoHH.Web.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClassParticipations_CourseDetailId",
+                table: "ClassParticipations",
+                column: "CourseDetailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClassParticipations_CourseDetailTempId",
+                table: "ClassParticipations",
+                column: "CourseDetailTempId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Coordinators_UserId",
@@ -596,6 +601,16 @@ namespace DSProyectoHH.Web.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OralQuizzes_CourseDetailId",
+                table: "OralQuizzes",
+                column: "CourseDetailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OralQuizzes_CourseDetailTempId",
+                table: "OralQuizzes",
+                column: "CourseDetailTempId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_UserId",
                 table: "Students",
                 column: "UserId");
@@ -606,29 +621,14 @@ namespace DSProyectoHH.Web.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Units_ClassParticipationId",
-                table: "Units",
-                column: "ClassParticipationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Units_CourseDetailId",
-                table: "Units",
+                name: "IX_WrittenQuizzes_CourseDetailId",
+                table: "WrittenQuizzes",
                 column: "CourseDetailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Units_CourseDetailTempId",
-                table: "Units",
+                name: "IX_WrittenQuizzes_CourseDetailTempId",
+                table: "WrittenQuizzes",
                 column: "CourseDetailTempId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Units_OralQuizId",
-                table: "Units",
-                column: "OralQuizId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Units_WrittenQuizId",
-                table: "Units",
-                column: "WrittenQuizId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -652,28 +652,25 @@ namespace DSProyectoHH.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Coordinators");
-
-            migrationBuilder.DropTable(
-                name: "Units");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
                 name: "ClassParticipations");
 
             migrationBuilder.DropTable(
-                name: "CourseDetails");
-
-            migrationBuilder.DropTable(
-                name: "CourseDetailTemps");
+                name: "Coordinators");
 
             migrationBuilder.DropTable(
                 name: "OralQuizzes");
 
             migrationBuilder.DropTable(
                 name: "WrittenQuizzes");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "CourseDetails");
+
+            migrationBuilder.DropTable(
+                name: "CourseDetailTemps");
 
             migrationBuilder.DropTable(
                 name: "Courses");

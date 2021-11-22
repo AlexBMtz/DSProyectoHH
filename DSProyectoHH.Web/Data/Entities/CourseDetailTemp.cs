@@ -12,7 +12,9 @@ namespace DSProyectoHH.Web.Data.Entities
         public double FinalScore { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        public ICollection<Unit> Units { get; set; }
+        public ICollection<WrittenQuiz> WrittenQuizzes { get; set; }
+        public ICollection<OralQuiz> OralQuizzes { get; set; }
+        public ICollection<ClassParticipation> ClassParticipations { get; set; }
         public Project Project { get; set; }
     }
 }

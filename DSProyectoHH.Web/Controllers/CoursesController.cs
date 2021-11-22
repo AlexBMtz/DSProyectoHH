@@ -94,10 +94,10 @@
                 StartingDate = course.StartingDate,
                 Teacher = course.Teacher,
 
-                CourseTypeId = course.CourseType.Id,
-                FrequencyId = course.Frequency.Id,
-                ScheduleId = course.Schedule.Id,
-                TeacherId = course.Teacher.Id,
+                CourseTypeId = (course.CourseType != null ? course.CourseType.Id : 0),
+                FrequencyId = (course.Frequency != null ? course.Frequency.Id : 0),
+                ScheduleId = (course.Schedule != null ? course.Schedule.Id : 0),
+                TeacherId = (course.Teacher != null ? course.Teacher.Id : 0),
 
                 CourseTypes = this.combosHelper.GetComboCourseTypes(),
                 Frequencies = this.combosHelper.GetComboFrequencies(),
@@ -134,17 +134,47 @@
             return View(model);
         }
 
-        //public async Task<IActionResult> Delete(int? id)
-        //{
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //}
+            var course = await this.dataContext.Courses
+                .Include(s => s.Schedule)
+                .Include(f => f.Frequency)
+                .Include(c => c.CourseType)
+                .Include(c => c.GradeGrid)
+                .Include(t => t.Teacher)
+                .ThenInclude(s => s.User)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
+            if (course == null)
+            {
+                return NotFound();
+            }
 
-        //}
+            return View(course);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var course = await this.dataContext.Courses
+                .Include(cd => cd.GradeGrid)
+                .ThenInclude(gg => gg.Student)
+                .ThenInclude(s => s.User)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            dataContext.Courses.Remove(course);
+            var courseDetail = await dataContext.CourseDetails.FindAsync();
+            dataContext.CourseDetails.Remove(courseDetail);
+
+            await dataContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
         public IActionResult AddStudent()
         {

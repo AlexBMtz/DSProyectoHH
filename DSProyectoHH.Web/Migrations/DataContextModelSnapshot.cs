@@ -43,6 +43,12 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CourseDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CourseDetailTempId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Fluency")
                         .HasColumnType("int");
 
@@ -59,6 +65,10 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseDetailId");
+
+                    b.HasIndex("CourseDetailTempId");
 
                     b.ToTable("ClassParticipations");
                 });
@@ -241,6 +251,12 @@ namespace DSProyectoHH.Web.Migrations
                     b.Property<int>("Conversations")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CourseDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CourseDetailTempId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Fluency")
                         .HasColumnType("int");
 
@@ -251,6 +267,10 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseDetailId");
+
+                    b.HasIndex("CourseDetailTempId");
 
                     b.ToTable("OralQuizzes");
                 });
@@ -357,43 +377,6 @@ namespace DSProyectoHH.Web.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Unit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ClassParticipationId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CourseDetailId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CourseDetailTempId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OralQuizId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WrittenQuizId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassParticipationId");
-
-                    b.HasIndex("CourseDetailId");
-
-                    b.HasIndex("CourseDetailTempId");
-
-                    b.HasIndex("OralQuizId");
-
-                    b.HasIndex("WrittenQuizId");
-
-                    b.ToTable("Units");
-                });
-
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -477,6 +460,12 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CourseDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CourseDetailTempId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SectionA")
                         .HasColumnType("int");
 
@@ -496,6 +485,10 @@ namespace DSProyectoHH.Web.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseDetailId");
+
+                    b.HasIndex("CourseDetailTempId");
 
                     b.ToTable("WrittenQuizzes");
                 });
@@ -638,6 +631,17 @@ namespace DSProyectoHH.Web.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.ClassParticipation", b =>
+                {
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.CourseDetail", null)
+                        .WithMany("ClassParticipations")
+                        .HasForeignKey("CourseDetailId");
+
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.CourseDetailTemp", null)
+                        .WithMany("ClassParticipations")
+                        .HasForeignKey("CourseDetailTempId");
+                });
+
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Coordinator", b =>
                 {
                     b.HasOne("DSProyectoHH.Web.Data.Entities.User", "User")
@@ -690,6 +694,17 @@ namespace DSProyectoHH.Web.Migrations
                         .HasForeignKey("StudentId");
                 });
 
+            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.OralQuiz", b =>
+                {
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.CourseDetail", null)
+                        .WithMany("OralQuizzes")
+                        .HasForeignKey("CourseDetailId");
+
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.CourseDetailTemp", null)
+                        .WithMany("OralQuizzes")
+                        .HasForeignKey("CourseDetailTempId");
+                });
+
             modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Student", b =>
                 {
                     b.HasOne("DSProyectoHH.Web.Data.Entities.User", "User")
@@ -704,33 +719,15 @@ namespace DSProyectoHH.Web.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.Unit", b =>
+            modelBuilder.Entity("DSProyectoHH.Web.Data.Entities.WrittenQuiz", b =>
                 {
-                    b.HasOne("DSProyectoHH.Web.Data.Entities.ClassParticipation", "ClassParticipation")
-                        .WithMany()
-                        .HasForeignKey("ClassParticipationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DSProyectoHH.Web.Data.Entities.CourseDetail", "CourseDetail")
-                        .WithMany("Units")
+                    b.HasOne("DSProyectoHH.Web.Data.Entities.CourseDetail", null)
+                        .WithMany("WrittenQuizzes")
                         .HasForeignKey("CourseDetailId");
 
                     b.HasOne("DSProyectoHH.Web.Data.Entities.CourseDetailTemp", null)
-                        .WithMany("Units")
+                        .WithMany("WrittenQuizzes")
                         .HasForeignKey("CourseDetailTempId");
-
-                    b.HasOne("DSProyectoHH.Web.Data.Entities.OralQuiz", "OralQuiz")
-                        .WithMany()
-                        .HasForeignKey("OralQuizId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DSProyectoHH.Web.Data.Entities.WrittenQuiz", "WrittenQuiz")
-                        .WithMany()
-                        .HasForeignKey("WrittenQuizId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

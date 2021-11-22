@@ -50,6 +50,12 @@ namespace DSProyectoHH.Web
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddControllersWithViews();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Accounts/NotAutorized";
+                options.AccessDeniedPath = "/Accounts/NotAutorized";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

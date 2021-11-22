@@ -93,9 +93,9 @@ namespace DSProyectoHH.Web.Data.Entities
 
             if (!this.dataContext.Schedules.Any())
             {
-                await CheckSchedule(new DateTime(2020, 10, 3, 6, 0, 0), new DateTime(2020, 10, 3, 8, 0, 0));
-                await CheckSchedule(new DateTime(2020, 10, 3, 3, 00, 0), new DateTime(2020, 10, 3, 6, 00, 0));
-                await CheckSchedule(new DateTime(2020, 10, 3, 6, 30, 0), new DateTime(2020, 10, 3, 8, 30, 0));
+                await CheckSchedule(new DateTime(2020, 10, 3, 18, 0, 0), new DateTime(2020, 10, 3, 20, 0, 0));
+                await CheckSchedule(new DateTime(2020, 10, 3, 15, 00, 0), new DateTime(2020, 10, 3, 18, 00, 0));
+                await CheckSchedule(new DateTime(2020, 10, 3, 19, 00, 0), new DateTime(2020, 10, 3, 20, 30, 0));
                 await CheckSchedule(new DateTime(2020, 10, 3, 9, 00, 0), new DateTime(2020, 10, 3, 11, 00, 0));
             }
 

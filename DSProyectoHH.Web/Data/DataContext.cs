@@ -1,5 +1,4 @@
 ﻿using DSProyectoHH.Web.Data.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +19,6 @@ namespace DSProyectoHH.Web.Data
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Unit> Units { get; set; }
         public DbSet<WrittenQuiz> WrittenQuizzes { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
