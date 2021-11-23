@@ -168,10 +168,7 @@
                 .ThenInclude(s => s.User)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
-            dataContext.Courses.Remove(course);
-            var courseDetail = await dataContext.CourseDetails.FindAsync();
-            dataContext.CourseDetails.Remove(courseDetail);
-
+            this.dataContext.Courses.Remove(course);
             await dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
