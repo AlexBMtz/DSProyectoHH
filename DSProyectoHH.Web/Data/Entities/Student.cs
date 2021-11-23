@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace DSProyectoHH.Web.Data.Entities
 {
@@ -20,6 +22,5 @@ namespace DSProyectoHH.Web.Data.Entities
         public string ImageUrl { get; set; }
 
         public User User { get; set; }
-
     }
 }

@@ -1,0 +1,142 @@
+﻿@model DSProyectoHH.Web.Data.Entities.CourseDetail
+
+@{
+    ViewData["Title"] = "Editar Calificaciones";
+}
+
+<link rel="stylesheet" href="~/css/style-icon.css" />
+<link href="~/css/estilo-home.css" type="text/css" rel="stylesheet" />
+
+<h1>Editar Calificaciones</h1>
+<hr />
+<h2>@Html.DisplayFor(item=>item.Student.User.FullName)</h2>
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="EditStudent" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="StudentGrade.Id" />
+            <input type="hidden" asp-for="Student.Id" />
+            <br />
+            <h1>Written Quiz</h1>
+            <div class="form-group">
+                <label asp-for="StudentGrade.SectionA" class="control-label"></label>
+                <input asp-for="StudentGrade.SectionA" class="form-control" />
+                <span asp-validation-for="StudentGrade.SectionA" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.SectionB" class="control-label"></label>
+                <input asp-for="StudentGrade.SectionB" class="form-control" />
+                <span asp-validation-for="StudentGrade.SectionB" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.SectionC" class="control-label"></label>
+                <input asp-for="StudentGrade.SectionC" class="form-control" />
+                <span asp-validation-for="StudentGrade.SectionC" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.SectionD" class="control-label"></label>
+                <input asp-for="StudentGrade.SectionD" class="form-control" />
+                <span asp-validation-for="StudentGrade.SectionD" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.SectionE" class="control-label"></label>
+                <input asp-for="StudentGrade.SectionE" class="form-control" />
+                <span asp-validation-for="StudentGrade.SectionE" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.SectionF" class="control-label"></label>
+                <input asp-for="StudentGrade.SectionF" class="form-control" />
+                <span asp-validation-for="StudentGrade.SectionF" class="text-danger"></span>
+            </div>
+
+            <h1>Oral Quiz</h1>
+            <div class="form-group">
+                <label asp-for="StudentGrade.Communication" class="control-label"></label>
+                <input asp-for="StudentGrade.Communication" class="form-control" />
+                <span asp-validation-for="StudentGrade.Communication" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.Grammar" class="control-label"></label>
+                <input asp-for="StudentGrade.Grammar" class="form-control" />
+                <span asp-validation-for="StudentGrade.Grammar" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.ConversationStrategies" class="control-label"></label>
+                <input asp-for="StudentGrade.ConversationStrategies" class="form-control" />
+                <span asp-validation-for="StudentGrade.ConversationStrategies" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.Vocabulary" class="control-label"></label>
+                <input asp-for="StudentGrade.Vocabulary" class="form-control" />
+                <span asp-validation-for="StudentGrade.Vocabulary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.Fluency" class="control-label"></label>
+                <input asp-for="StudentGrade.Fluency" class="form-control" />
+                <span asp-validation-for="StudentGrade.Fluency" class="text-danger"></span>
+            </div>
+
+            <h1>Classroom Participation</h1>
+            <div class="form-group">
+                <label asp-for="StudentGrade.Listening" class="control-label"></label>
+                <input asp-for="StudentGrade.Listening" class="form-control" />
+                <span asp-validation-for="StudentGrade.Listening" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.Reading" class="control-label"></label>
+                <input asp-for="StudentGrade.Reading" class="form-control" />
+                <span asp-validation-for="StudentGrade.Reading" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.SpokenInteraction" class="control-label"></label>
+                <input asp-for="StudentGrade.SpokenInteraction" class="form-control" />
+                <span asp-validation-for="StudentGrade.SpokenInteraction" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.SpokenProduction" class="control-label"></label>
+                <input asp-for="StudentGrade.SpokenProduction" class="form-control" />
+                <span asp-validation-for="StudentGrade.SpokenProduction" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.ClassFluency" class="control-label"></label>
+                <input asp-for="StudentGrade.ClassFluency" class="form-control" />
+                <span asp-validation-for="StudentGrade.ClassFluency" class="text-danger"></span>
+            </div>
+
+            <h1>Classroom Participation</h1>
+
+            <div class="form-group">
+                <label asp-for="StudentGrade.FinalProject" class="control-label"></label>
+                <input asp-for="StudentGrade.FinalProject" class="form-control" />
+                <span asp-validation-for="StudentGrade.FinalProject" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-outline-primary" />
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <span class="icon-undo2"></span> Regresar a la Lista
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+

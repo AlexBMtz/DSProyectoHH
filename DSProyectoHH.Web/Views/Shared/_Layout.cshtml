@@ -28,12 +28,6 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #FAEA10">Catálogos</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #000000;">
-                                        <a class="nav-link" asp-area="" asp-controller="CourseDetails" asp-action="Index" style="color: #FAEA10">Lista de alumnos</a>
-                                        <a class="nav-link" asp-area="" asp-controller="ClassParticipations" asp-action="Index" style="color: #FAEA10">Participaciones en Clase</a>
-                                        <a class="nav-link" asp-area="" asp-controller="OralQuizs" asp-action="Index" style="color: #FAEA10">Examenes Orales</a>
-                                        <a class="nav-link" asp-area="" asp-controller="WrittenQuizs" asp-action="Index" style="color: #FAEA10">Examenes Escritos</a>
-                                        <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Index" style="color: #FAEA10">Proyecto</a>
-                                        <div class="dropdown-divider border-warning"></div>
                                         <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index" style="color: #FAEA10">Cursos</a>
                                         <div class="dropdown-divider border-warning"></div>
                                         <a class="nav-link" asp-area="" asp-controller="Frequencies" asp-action="Index" style="color: #FAEA10">Frecuencias</a>
@@ -68,12 +62,6 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #FAEA10">Catálogos</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #000000;">
-                                        <a class="nav-link" asp-area="" asp-controller="CourseDetails" asp-action="Index" style="color: #FAEA10">Lista de alumnos</a>
-                                        <a class="nav-link" asp-area="" asp-controller="ClassParticipations" asp-action="Index" style="color: #FAEA10">Participaciones en Clase</a>
-                                        <a class="nav-link" asp-area="" asp-controller="OralQuizs" asp-action="Index" style="color: #FAEA10">Examenes Orales</a>
-                                        <a class="nav-link" asp-area="" asp-controller="WrittenQuizs" asp-action="Index" style="color: #FAEA10">Examenes Escritos</a>
-                                        <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Index" style="color: #FAEA10">Proyecto</a>
-                                        <div class="dropdown-divider border-warning"></div>
                                         <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="Index" style="color: #FAEA10">Cursos</a>
                                         <div class="dropdown-divider border-warning"></div>
                                         <a class="nav-link" asp-area="" asp-controller="Frequencies" asp-action="Index" style="color: #FAEA10">Frecuencias</a>
@@ -98,20 +86,13 @@
                             </ul>
                         </div>
                     }
+
                     @if (User.IsInRole("Teacher"))
                     {
                         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #FAEA10">Catálogos</a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #000000;">
-                                        <a class="nav-link" asp-area="" asp-controller="ClassParticipations" asp-action="Index" style="color: #FAEA10">Participaciones en Clase</a>
-                                        <a class="nav-link" asp-area="" asp-controller="OralQuizs" asp-action="Index" style="color: #FAEA10">Exámenes Orales</a>
-                                        <a class="nav-link" asp-area="" asp-controller="WrittenQuizs" asp-action="Index" style="color: #FAEA10">Exámenes Escritos</a>
-                                        <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Index" style="color: #FAEA10">Proyecto</a>
-                                        <div class="dropdown-divider border-warning"></div>
-                                        @*<a class="nav-link" asp-area="" asp-controller="GradeGrids" asp-action="Index" style="color: #FAEA10">Calificaciones</a>*@
-                                    </div>
+                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="EditStudent" style="color: #FAEA10">Registrar Calificaciones</a>
                                 </li>
                             </ul>
                             <ul class="nav navbar navbar-right">
@@ -124,12 +105,13 @@
                             </ul>
                         </div>
                     }
+
                     @if (User.IsInRole("Student"))
                     {
                         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
                             <ul class="navbar-nav flex-grow-1">
                                 <li>
-                                    <a class="nav-link" asp-area="" asp-controller="GradeGrids" asp-action="Index" style="color: #FAEA10">Calificaciones</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Courses" asp-action="EditStudent" style="color: #FAEA10">Calificaciones</a>
                                 </li>
                             </ul>
                             <ul class="nav navbar navbar-right">
@@ -137,9 +119,7 @@
                                     <a class="nav-link disabled" style="color:white">@User.Identity.Name</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout" style="color: #FAEA10; font-weight:bold;">
-                                        <span class="icon-user"></span>  Cerrar Sesión
-                                    </a>
+                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout" style="color: #FAEA10; font-weight:bold;">Cerrar Sesión </a>
                                 </li>
                             </ul>
                         </div>

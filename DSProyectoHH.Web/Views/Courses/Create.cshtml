@@ -2,21 +2,23 @@
 @{
     ViewData["Title"] = "Nueva Lista de Alumnos";
 }
+<link rel="stylesheet" href="~/css/style-icon.css" />
+<link href="~/css/estilo-home.css" type="text/css" rel="stylesheet" />
 
 <h1>Nueva Lista</h1>
 <p>
-    <a asp-action="AddStudent" class="btn btn-dark">
-        <span class="icon-plus"></span>  Agregar Alumno
-    </a> 
-    <a asp-action="SaveList" class="btn btn-dark">
-        <span class="icon-floppy-disk"></span>  Guardar Lista
-        </a> |
+    <a asp-action="AddStudent" class="btn btn-outline-success">
+        <span class="icon-plus"></span>
+    </a>
+    <a asp-action="SaveList" class="btn btn-outline-primary">
+        <span class="icon-floppy-disk"></span>
+    </a> |
     <a asp-action="Index" class="btn btn-outline-secondary">
         <span class="icon-undo2"></span>  Regresar a la Lista
     </a>
 </p>
 
-<table class="table">
+<table class="table" style="text-align:center;">
     <thead>
         <tr>
             <th>
@@ -32,19 +34,19 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.StudentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.User.FullName)
-            </td>
-            <td>
-                <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
-                    <span class="icon-cancel-circle"></span>
-                </a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.StudentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.User.FullName)
+                </td>
+                <td>
+                    <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
+                        <span class="icon-cancel-circle"></span>
+                    </a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

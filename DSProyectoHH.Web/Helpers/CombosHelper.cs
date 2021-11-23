@@ -45,21 +45,6 @@ namespace DSProyectoHH.Web.Helpers
             return list;
         }
 
-        public IEnumerable<SelectListItem> GetComboProjects()
-        {
-            var list = this.dataContext.Projects.Select(p => new SelectListItem
-            {
-                Text = Convert.ToString(p.Id),
-                Value = $"{p.Id}"
-            }).ToList();
-            list.Insert(0, new SelectListItem
-            {
-                Text = "(Selecciona un proyecto)",
-                Value = "0"
-            });
-            return list;
-        }
-
         public IEnumerable<SelectListItem> GetComboSchedules()
         {
             var list = this.dataContext.Schedules.Select(s => new SelectListItem

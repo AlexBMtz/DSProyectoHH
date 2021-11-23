@@ -10,7 +10,7 @@
 
 <hr />
 <div class="row">
-    <table class="table">
+    <table class="table" style="text-align:center;">
         <thead>
             <tr>
                 <th>
@@ -20,36 +20,39 @@
                     <label>Nombre del Estudiante</label>
                 </th>
                 <th>
+                    <label>Calificación Final</label>
+                </th>
+                <th>
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.GradeGrid)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Student.StudentId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Student.User.FullName)
-                    </td>
-                    <td>
-                        <a asp-action="EditStudent" asp-route-id="@item.Id" class="btn btn-outline-primary">
-                            <span class="icon-pencil"></span>
-                        </a>
-                        <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
-                            <span class="icon-cancel-circle"></span>
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.StudentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.User.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinalGrade)
+                </td>
+                <td>
+                    <a asp-action="EditStudent" asp-route-id="@item.Id" class="btn btn-outline-primary">
+                        <span class="icon-pencil"></span>
+                    </a>
+                    <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
+                        <span class="icon-cancel-circle"></span>
+                    </a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">
-        <span class="icon-pencil"></span>  Editar
-    </a> |
     <a asp-action="Index" class="btn btn-outline-secondary">
         <span class="icon-undo2"></span>  Regresar a la lista
     </a>
