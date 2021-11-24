@@ -87,10 +87,10 @@ namespace DSProyectoHH.Web.Controllers
                     CoordinatorId = model.CoordinatorId,
                     HiringDate = model.HiringDate,
                     RFC = model.RFC,
-                    ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                    ImageUrl = await imageHelper.UploadImageAsync(
                         model.ImageFile,
                         model.User.FullName,
-                        "Coordinators") : string.Empty),
+                        "Coordinators"),
                     User = await this.dataContext.Users.FindAsync(user.Id)
                 };
                 dataContext.Add(coordinator);
@@ -152,8 +152,11 @@ namespace DSProyectoHH.Web.Controllers
                     CoordinatorId = model.CoordinatorId,
                     HiringDate = model.HiringDate,
                     RFC = model.RFC,
-                    ImageUrl = (model.ImageFile != null ? await imageHelper.UpdateImageAsync(
-                        model.ImageFile, model.ImageUrl) : model.ImageUrl),
+                    ImageUrl = (model.ImageUrl != null ?
+                        (model.ImageUrl.Contains("_default.png") ?
+                        await imageHelper.UploadImageAsync(model.ImageFile, model.User.FullName, "Coordinators") :
+                        await imageHelper.UpdateImageAsync(model.ImageFile, model.ImageUrl)) :
+                        await imageHelper.UploadImageAsync(model.ImageFile, model.User.FullName, "Coordinators")),
                     User = await this.dataContext.Users.FindAsync(model.User.Id)
                 };
 
