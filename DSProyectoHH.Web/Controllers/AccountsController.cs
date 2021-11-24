@@ -31,7 +31,14 @@ namespace DSProyectoHH.Web.Controllers
                 var result = await userHelper.LoginAsync(login.Email, login.Password, login.RememberMe);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    var user = await userHelper.GetUserByEmailAsync(login.Email);
+                    if (await userHelper.IsUserInRoleAsync(user,"Student"))
+                    {
+                        ModelState.AddModelError(string.Empty, "No tienes permisos para entrar al sistema");
+                        return View(login);
+                    }
+                    else
+                        return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError(string.Empty, "Error de inicio de sesión");
                 return View(login);

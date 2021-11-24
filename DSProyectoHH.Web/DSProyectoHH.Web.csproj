@@ -16,9 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\Coordinators\" />
-    <Folder Include="wwwroot\images\Students\" />
-    <Folder Include="wwwroot\images\Teachers\" />
+    <Content Update="wwwroot\images\Teachers\_default.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

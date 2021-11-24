@@ -90,7 +90,7 @@ namespace DSProyectoHH.Web.Controllers
                     ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
                         model.ImageFile,
                         model.User.FullName,
-                        "Teachers") : string.Empty),
+                        "Students") : string.Empty),
                     User = await this.dataContext.Users.FindAsync(user.Id)
                 };
                 dataContext.Add(student);
@@ -145,10 +145,11 @@ namespace DSProyectoHH.Web.Controllers
 
                 var student = new Student
                 {
+                    Id = model.Id,
                     StudentId = model.StudentId,
                     AdmissionDate = model.AdmissionDate,
-                    ImageUrl = (model.ImageFile != null ? await imageHelper.UpdateImageAsync(
-                        model.ImageFile, model.ImageUrl) : model.ImageUrl),
+                    ImageUrl = (model.ImageUrl != null ? await imageHelper.UpdateImageAsync(model.ImageFile, model.ImageUrl) :
+                    await imageHelper.UploadImageAsync(model.ImageFile, model.User.FullName, "Students")),
                     User = await this.dataContext.Users.FindAsync(user.Id)
                 };
 

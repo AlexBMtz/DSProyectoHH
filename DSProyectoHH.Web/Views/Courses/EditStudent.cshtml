@@ -10,14 +10,13 @@
 <h1>Editar Calificaciones</h1>
 <hr />
 <h2>@Html.DisplayFor(item=>item.Student.User.FullName)</h2>
-<div class="row">
-    <div class="col-md-5">
-        <form asp-action="EditStudent" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="StudentGrade.Id" />
-            <input type="hidden" asp-for="Student.Id" />
-            <br />
+<form asp-action="EditStudent" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="StudentGrade.Id" />
+    <input type="hidden" asp-for="Student.Id" />
+    <div class="row">
+        <div class="col-sm-4">
             <h1>Written Quiz</h1>
             <div class="form-group">
                 <label asp-for="StudentGrade.SectionA" class="control-label"></label>
@@ -54,7 +53,8 @@
                 <input asp-for="StudentGrade.SectionF" class="form-control" />
                 <span asp-validation-for="StudentGrade.SectionF" class="text-danger"></span>
             </div>
-
+        </div>
+        <div class="col-sm-4">
             <h1>Oral Quiz</h1>
             <div class="form-group">
                 <label asp-for="StudentGrade.Communication" class="control-label"></label>
@@ -85,7 +85,8 @@
                 <input asp-for="StudentGrade.Fluency" class="form-control" />
                 <span asp-validation-for="StudentGrade.Fluency" class="text-danger"></span>
             </div>
-
+        </div>
+        <div class="col-sm-4">
             <h1>Classroom Participation</h1>
             <div class="form-group">
                 <label asp-for="StudentGrade.Listening" class="control-label"></label>
@@ -116,27 +117,23 @@
                 <input asp-for="StudentGrade.ClassFluency" class="form-control" />
                 <span asp-validation-for="StudentGrade.ClassFluency" class="text-danger"></span>
             </div>
-
-            <h1>Final Project</h1>
-
-            <div class="form-group">
-                <label asp-for="StudentGrade.FinalProject" class="control-label"></label>
-                <input asp-for="StudentGrade.FinalProject" class="form-control" />
-                <span asp-validation-for="StudentGrade.FinalProject" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-outline-primary" />
-                <a asp-action="Index" class="btn btn-outline-secondary">
-                    <span class="icon-undo2"></span> Regresar a la Lista
-                </a>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="col-sm-6">
+        <br />
+        <h1>Final Project</h1>
 
+        <div class="form-group">
+            <label asp-for="StudentGrade.FinalProject" class="control-label"></label>
+            <input asp-for="StudentGrade.FinalProject" class="form-control" />
+            <span asp-validation-for="StudentGrade.FinalProject" class="text-danger"></span>
+        </div>
 
-
-
-
-
+        <div class="form-group">
+            <input type="submit" value="Guardar" class="btn btn-outline-primary" />
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <span class="icon-undo2"></span> Regresar a la Lista
+            </a>
+        </div>
+    </div>
+</form>

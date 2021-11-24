@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="~/css/style-icon.css" />
 <link href="~/css/estilo-home.css" type="text/css" rel="stylesheet" />
 
-<h1>Detalles del curso</h1>
+<h1>Lista de Calificaciones</h1>
 
 <hr />
 <div class="row">
@@ -43,9 +43,12 @@
                     <a asp-action="EditStudent" asp-route-id="@item.Id" class="btn btn-outline-primary">
                         <span class="icon-pencil"></span>
                     </a>
-                    <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
-                        <span class="icon-cancel-circle"></span>
-                    </a>
+                    @if (!User.IsInRole("Teacher"))
+                    {
+                        <a asp-action="DeleteStudent" asp-route-id="@item.Id" class="btn btn-outline-danger">
+                            <span class="icon-cancel-circle"></span>
+                        </a>
+                    }
                 </td>
             </tr>
             }

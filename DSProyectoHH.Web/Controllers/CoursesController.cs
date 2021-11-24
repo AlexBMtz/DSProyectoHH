@@ -4,33 +4,48 @@
     using DSProyectoHH.Web.Data.Entities;
     using DSProyectoHH.Web.Helpers;
     using DSProyectoHH.Web.Models;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using System.Linq;
     using System.Threading.Tasks;
 
-    [Authorize(Roles = "Coordinator,Admin")]
     public class CoursesController : Controller
     {
 
         private readonly DataContext dataContext;
         private readonly ICombosHelper combosHelper;
+        private readonly IUserHelper userHelper;
 
-        public CoursesController(DataContext dataContext, ICombosHelper combosHelper)
+        public CoursesController(DataContext dataContext, ICombosHelper combosHelper, IUserHelper userHelper)
         {
             this.dataContext = dataContext;
             this.combosHelper = combosHelper;
+            this.userHelper = userHelper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(this.dataContext.Courses
+            if (User.IsInRole("Teacher"))
+            {
+                var user = await userHelper.GetUserByEmailAsync(this.User.Identity.Name);
+
+                return View(this.dataContext.Courses
+                .Include(s => s.Schedule)
+                .Include(f => f.Frequency)
+                .Include(c => c.CourseType)
+                .Include(t => t.Teacher)
+                .ThenInclude(u => u.User)
+                .Where(ct => ct.Teacher.User.Id == user.Id));
+            }
+            else
+            {
+                return View(this.dataContext.Courses
                 .Include(s => s.Schedule)
                 .Include(f => f.Frequency)
                 .Include(c => c.CourseType)
                 .Include(t => t.Teacher)
                 .ThenInclude(u => u.User));
+            }
         }
 
         public IActionResult Create()
@@ -47,6 +62,8 @@
             {
                 return NotFound();
             }
+
+            var user = await userHelper.GetUserByEmailAsync(this.User.Identity.Name);
 
             var course = await this.dataContext.Courses
                 .Include(cd => cd.GradeGrid)
@@ -213,7 +230,7 @@
             return this.View(model);
         }
 
-        public async Task<IActionResult> DeleteStudent(int? id)
+        public async Task<IActionResult> DeleteStudentTemp(int? id)
         {
             if (id == null)
             {
@@ -227,6 +244,22 @@
             this.dataContext.CourseDetailTemps.Remove(courseDetailTemp);
             await this.dataContext.SaveChangesAsync();
             return this.RedirectToAction("Create");
+        }
+
+        public async Task<IActionResult> DeleteStudent(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var courseDetail = await this.dataContext.CourseDetails.FindAsync(id);
+            if (courseDetail == null)
+            {
+                return NotFound();
+            }
+            this.dataContext.CourseDetails.Remove(courseDetail);
+            await this.dataContext.SaveChangesAsync();
+            return this.RedirectToAction("Index");
         }
 
         public async Task<IActionResult> EditStudent(int? id)
@@ -266,11 +299,11 @@
                     ConversationStrategies = model.StudentGrade.ConversationStrategies,
                     Vocabulary = model.StudentGrade.Vocabulary,
                     Fluency = model.StudentGrade.Fluency,
-                    Listening=model.StudentGrade.Listening,
+                    Listening = model.StudentGrade.Listening,
                     Reading = model.StudentGrade.Reading,
-                    SpokenInteraction=model.StudentGrade.SpokenInteraction,
-                    SpokenProduction= model.StudentGrade.SpokenProduction,
-                    ClassFluency=model.StudentGrade.ClassFluency,
+                    SpokenInteraction = model.StudentGrade.SpokenInteraction,
+                    SpokenProduction = model.StudentGrade.SpokenProduction,
+                    ClassFluency = model.StudentGrade.ClassFluency,
                     FinalProject = model.StudentGrade.FinalProject
 
                 };
@@ -280,7 +313,10 @@
                 studentGrade.Id = model.Id;
                 studentGrade.Student = await this.dataContext.Students.FindAsync(model.Student.Id);
                 studentGrade.StudentGrade = grades;
-                studentGrade.FinalGrade= (grades.WQGrade * 0.3) + (grades.OQGrade * 0.3) + (grades.CPQGrage * 0.3) + (grades.FinalProject * 0.1);
+                double calTemp = (grades.WQGrade * 0.3) + (grades.OQGrade * 0.3) + (grades.CPQGrage * 0.3) + (grades.FinalProject * 0.1);
+                if (calTemp > 10)
+                    calTemp = 10;
+                studentGrade.FinalGrade = calTemp; 
 
                 this.dataContext.Update(studentGrade);
             }
@@ -305,7 +341,7 @@
                     SpokenInteraction = model.StudentGrade.SpokenInteraction,
                     SpokenProduction = model.StudentGrade.SpokenProduction,
                     ClassFluency = model.StudentGrade.ClassFluency,
-                    FinalProject=model.StudentGrade.FinalProject
+                    FinalProject = model.StudentGrade.FinalProject
                 };
 
                 this.dataContext.Update(grades);
