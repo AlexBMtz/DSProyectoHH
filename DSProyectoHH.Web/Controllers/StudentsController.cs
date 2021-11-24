@@ -188,8 +188,12 @@ namespace DSProyectoHH.Web.Controllers
                 .Include(u => u.User)
                 .FirstOrDefaultAsync(t => t.Id == id);
             dataContext.Students.Remove(student);
-            var user = await dataContext.Users.FindAsync(student.User.Id);
+            var user = await dataContext.Users
+                .FindAsync(student.User.Id);
             dataContext.Users.Remove(user);
+            var coursedetail = await dataContext.CourseDetails
+                .FirstOrDefaultAsync(cd => cd.Student.Id == student.Id);
+            dataContext.CourseDetails.Remove(coursedetail);
 
             await dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

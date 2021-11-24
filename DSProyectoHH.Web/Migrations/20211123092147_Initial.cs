@@ -397,7 +397,7 @@ namespace DSProyectoHH.Web.Migrations
                         column: x => x.StudentGradeId,
                         principalTable: "StudentGrades",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CourseDetails_Students_StudentId",
                         column: x => x.StudentId,
