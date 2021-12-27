@@ -131,22 +131,30 @@
         {
             if (this.ModelState.IsValid)
             {
-                var course = new Course
+                if (dataContext.Courses.FirstOrDefault(c => c.CourseId == model.CourseId) == null)
                 {
-                    Id = model.Id,
-                    CourseId = model.CourseId,
-                    CourseName = model.CourseName,
-                    CourseType = await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId),
-                    Frequency = await this.dataContext.Frequencies.FindAsync(model.FrequencyId),
-                    GradeGrid = model.GradeGrid,
-                    Schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId),
-                    StartingDate = model.StartingDate,
-                    Teacher = await this.dataContext.Teachers.FindAsync(model.TeacherId)
-                };
+                    var course = new Course
+                    {
+                        Id = model.Id,
+                        CourseId = model.CourseId,
+                        CourseName = model.CourseName,
+                        CourseType = await this.dataContext.CourseTypes.FindAsync(model.CourseTypeId),
+                        Frequency = await this.dataContext.Frequencies.FindAsync(model.FrequencyId),
+                        GradeGrid = model.GradeGrid,
+                        Schedule = await this.dataContext.Schedules.FindAsync(model.ScheduleId),
+                        StartingDate = model.StartingDate,
+                        Teacher = await this.dataContext.Teachers.FindAsync(model.TeacherId)
+                    };
 
-                this.dataContext.Update(course);
-                await dataContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    this.dataContext.Update(course);
+                    await dataContext.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Ya existe un curso con ese Id.");
+                    return View(model);
+                }
             }
             return View(model);
         }

@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DSProyectoHH.Web.Controllers
 {
-   [Authorize(Roles = "Coordinator,Admin")]
+    [Authorize(Roles = "Coordinator,Admin")]
     public class StudentsController : Controller
     {
+        private static int idNumber = 3006000;
         private readonly DataContext dataContext;
         private readonly IImageHelper imageHelper;
         private readonly IUserHelper userHelper;
@@ -64,6 +64,8 @@ namespace DSProyectoHH.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                idNumber += 1;
+
                 var user = await userHelper.GetUserByIdAsync(model.User.Id);
                 if (user == null)
                 {
@@ -75,7 +77,7 @@ namespace DSProyectoHH.Web.Controllers
                         Email = model.User.Email,
                         UserName = model.User.Email
                     };
-                    var result = await userHelper.AddUserAsync(user, model.StudentId.ToString());
+                    var result = await userHelper.AddUserAsync(user, idNumber.ToString());
                     if (result != IdentityResult.Success)
                     {
                         throw new InvalidOperationException("ERROR. No se pudo crear el usuario.");
@@ -85,7 +87,7 @@ namespace DSProyectoHH.Web.Controllers
 
                 var student = new Student
                 {
-                    StudentId = model.StudentId,
+                    StudentId = idNumber,
                     AdmissionDate = model.AdmissionDate,
                     ImageUrl = await imageHelper.UploadImageAsync(model.ImageFile, model.User.FullName, "Students"),
                     User = await this.dataContext.Users.FindAsync(user.Id)
@@ -145,9 +147,9 @@ namespace DSProyectoHH.Web.Controllers
                     Id = model.Id,
                     StudentId = model.StudentId,
                     AdmissionDate = model.AdmissionDate,
-                    ImageUrl = (model.ImageUrl != null ? 
-                        (model.ImageUrl.Contains("_default.png") ? 
-                        await imageHelper.UploadImageAsync(model.ImageFile, model.User.FullName, "Students") : 
+                    ImageUrl = (model.ImageUrl != null ?
+                        (model.ImageUrl.Contains("_default.png") ?
+                        await imageHelper.UploadImageAsync(model.ImageFile, model.User.FullName, "Students") :
                         await imageHelper.UpdateImageAsync(model.ImageFile, model.ImageUrl)) :
                         await imageHelper.UploadImageAsync(model.ImageFile, model.User.FullName, "Students")),
                     User = await this.dataContext.Users.FindAsync(user.Id)
@@ -187,26 +189,29 @@ namespace DSProyectoHH.Web.Controllers
             var student = await dataContext.Students
                 .Include(u => u.User)
                 .FirstOrDefaultAsync(t => t.Id == id);
+
+            var courseDetail = await dataContext.CourseDetails
+                .FirstOrDefaultAsync(cd => cd.Student.Id == student.Id);
+
+            if(courseDetail!=null)
+                dataContext.CourseDetails.Remove(courseDetail);
+
             dataContext.Students.Remove(student);
+
             var user = await dataContext.Users
                 .FindAsync(student.User.Id);
             dataContext.Users.Remove(user);
-            var coursedetail = await dataContext.CourseDetails
-                .FirstOrDefaultAsync(cd => cd.Student.Id == student.Id);
-            dataContext.CourseDetails.Remove(coursedetail);
 
-            await dataContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool StudentExists(int id)
-        {
-            return dataContext.Students.Any(e => e.Id == id);
-        }
-
-        private bool UserExists(string id)
-        {
-            return dataContext.Users.Any(e => e.Id == id);
+            try
+            {
+                await dataContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                ModelState.AddModelError(string.Empty, "El alumno está asignado a un curso. No se puede eliminar");
+                return View(student);
+            }
         }
     }
 }

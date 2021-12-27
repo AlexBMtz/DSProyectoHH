@@ -15,14 +15,10 @@
     <div class="col-md-4">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StudentId" />
             <input type="hidden" asp-for="User.Id" />
             <input type="hidden" asp-for="ImageUrl" />
 
-            <div class="form-group">
-                <label asp-for="StudentId" class="control-label"></label>
-                <input asp-for="StudentId" class="form-control" minlength="7" />
-                <span asp-validation-for="StudentId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="User.FirstName" class="control-label"></label>
                 <input asp-for="User.FirstName" class="form-control" />

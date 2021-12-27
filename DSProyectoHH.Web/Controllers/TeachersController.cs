@@ -15,6 +15,7 @@ namespace DSProyectoHH.Web.Controllers
     [Authorize(Roles = "Coordinator,Admin")] 
     public class TeachersController : Controller
     {
+        private static int idNumber = 4006000;
         private readonly DataContext dataContext;
         private readonly IImageHelper imageHelper;
         private readonly IUserHelper userHelper;
@@ -64,6 +65,8 @@ namespace DSProyectoHH.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                idNumber += 1;
+
                 var user = await userHelper.GetUserByIdAsync(model.User.Id);
                 if (user == null)
                 {
@@ -75,7 +78,7 @@ namespace DSProyectoHH.Web.Controllers
                         Email = model.User.Email,
                         UserName = model.User.Email
                     };
-                    var result = await userHelper.AddUserAsync(user, model.TeacherId.ToString());
+                    var result = await userHelper.AddUserAsync(user, idNumber.ToString());
                     if (result != IdentityResult.Success)
                     {
                         throw new InvalidOperationException("ERROR. No se pudo crear el usuario.");
@@ -85,7 +88,7 @@ namespace DSProyectoHH.Web.Controllers
 
                 var teacher = new Teacher
                 {
-                    TeacherId = model.TeacherId,
+                    TeacherId = idNumber,
                     HiringDate = model.HiringDate,
                     RFC = model.RFC,
                     ImageUrl = await imageHelper.UploadImageAsync(
@@ -197,18 +200,16 @@ namespace DSProyectoHH.Web.Controllers
             var user = await dataContext.Users.FindAsync(teacher.User.Id);
             dataContext.Users.Remove(user);
 
-            await dataContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool TeacherExists(int id)
-        {
-            return dataContext.Teachers.Any(e => e.Id == id);
-        }
-
-        private bool UserExists(string id)
-        {
-            return dataContext.Users.Any(e => e.Id == id);
+            try
+            {
+                await dataContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                ModelState.AddModelError(string.Empty, "El Teacher está asignado a un curso. No se puede eliminar");
+                return View(teacher);
+            }
         }
     }
 }

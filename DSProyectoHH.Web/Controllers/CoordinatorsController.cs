@@ -15,6 +15,7 @@ namespace DSProyectoHH.Web.Controllers
     [Authorize(Roles = "Admin")]
     public class CoordinatorsController : Controller
     {
+        private static int idNumber = 5006000;
         private readonly IUserHelper userHelper;
         private readonly DataContext dataContext;
         private readonly IImageHelper imageHelper;
@@ -33,11 +34,17 @@ namespace DSProyectoHH.Web.Controllers
                 .ToListAsync());
         }
 
+        [Route("404")]
+        public IActionResult PageNotFound()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return PageNotFound();
             }
 
             var coordinator = await this.dataContext.Coordinators
@@ -63,6 +70,8 @@ namespace DSProyectoHH.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                idNumber += 1;
+
                 var user = await userHelper.GetUserByIdAsync(model.User.Id);
                 if (user == null)
                 {
@@ -74,7 +83,7 @@ namespace DSProyectoHH.Web.Controllers
                         Email = model.User.Email,
                         UserName = model.User.Email
                     };
-                    var result = await userHelper.AddUserAsync(user, model.CoordinatorId.ToString());
+                    var result = await userHelper.AddUserAsync(user, idNumber.ToString());
                     if (result != IdentityResult.Success)
                     {
                         throw new InvalidOperationException("ERROR. No se pudo crear el usuario.");
@@ -84,7 +93,7 @@ namespace DSProyectoHH.Web.Controllers
 
                 var coordinator = new Coordinator
                 {
-                    CoordinatorId = model.CoordinatorId,
+                    CoordinatorId = idNumber,
                     HiringDate = model.HiringDate,
                     RFC = model.RFC,
                     ImageUrl = await imageHelper.UploadImageAsync(
@@ -105,7 +114,7 @@ namespace DSProyectoHH.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return PageNotFound();
             }
 
             var coordinator = await this.dataContext.Coordinators
@@ -114,7 +123,7 @@ namespace DSProyectoHH.Web.Controllers
 
             if (coordinator == null)
             {
-                return NotFound();
+                return PageNotFound();
             }
 
             var model = new CoordinatorViewModel
@@ -171,7 +180,7 @@ namespace DSProyectoHH.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return PageNotFound();
             }
 
             var coordinator = await this.dataContext.Coordinators
@@ -179,7 +188,7 @@ namespace DSProyectoHH.Web.Controllers
                 .FirstOrDefaultAsync(t => t.Id == id);
             if (coordinator == null)
             {
-                return NotFound();
+                return PageNotFound();
             }
 
             return View(coordinator);
@@ -200,14 +209,5 @@ namespace DSProyectoHH.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TeacherExists(int id)
-        {
-            return dataContext.Coordinators.Any(e => e.Id == id);
-        }
-
-        private bool UserExists(string id)
-        {
-            return dataContext.Users.Any(e => e.Id == id);
-        }
     }
 }

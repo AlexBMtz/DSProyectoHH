@@ -17,12 +17,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="User.Id" />
             <input type="hidden" asp-for="ImageUrl" />
+            <input type="hidden" asp-for="CoordinatorId"/>
 
-            <div class="form-group">
-                <label asp-for="CoordinatorId" class="control-label"></label>
-                <input asp-for="CoordinatorId" class="form-control" minlength="7" />
-                <span asp-validation-for="CoordinatorId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="User.FirstName" class="control-label"></label>
                 <input asp-for="User.FirstName" class="form-control" />
